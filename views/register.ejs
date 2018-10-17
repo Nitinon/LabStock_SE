@@ -1,319 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Bootstrap Theme The Band</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
-        .container {
-            margin-right: auto;
-            margin-left: auto;
-            padding-right: 70px;
-            padding-left: 70px;
-            width: 90%;
-        }
-        .navbar {
-            margin-bottom: 0;
-            background-color: #2d2d30;
-            border: 0;
-            font-size: 11px !important;
-            letter-spacing: 4px;
-            opacity: 0.9;
-        }
-
-        /* Add a gray color to all navbar links */
-        .navbar li a,
-        .navbar .navbar-brand {
-            color: #d5d5d5 !important;
-        }
-
-        /* On hover, the links will turn white */
-        .navbar-nav li a:hover {
-            color: #fff !important;
-        }
-
-        /* The active link */
-        .navbar-nav li.active a {
-            color: #fff !important;
-            background-color: #29292c !important;
-        }
-
-        /* Remove border color from the collapsible button */
-        .navbar-default .navbar-toggle {
-            border-color: transparent;
-        }
-
-        /* Dropdown */
-        .open .dropdown-toggle {
-            color: #fff;
-            background-color: #555 !important;
-        }
-
-        /* Dropdown links */
-        .dropdown-menu li a {
-            color: #000 !important;
-        }
-
-        /* On hover, the dropdown links will turn red */
-        .dropdown-menu li a:hover {
-            background-color: gray !important;
-        }
-        .thumbnail {
-            padding: 0 0 0px 0;
-            border: none;
-            border-radius: 0;
-            width: 100%;
-
-        }
-
-        .thumbnail p {
-            margin-top: 5px;
-            color: #555;
-            font-size: 15px;
-        }
-        .btn:hover,
-        .btn:focus {
-            border: 1px solid #333;
-            background-color: #fff;
-            color: #000;
-        }
-
-        .modal-header,
-        h4,
-        .close {
-            background-color: #333;
-            color: #fff !important;
-            text-align: center;
-            font-size: 30px;
-        }
-
-        .modal-header,
-        .modal-body {
-            padding: 40px 50px;
-        }
-
-        /* Set gray background color and 100% height */
-        .row.content {
-            height: 550px
-        }
-
-        /* Set gray background color and 100% height */
-        .sidenav {
-            background-color: #f1f1f1;
-            position: relative;
-            height: 100%;
-        }
-    .btn-block{
-            padding: 7px 20px;
-            background-color: #333;
-            color: #f1f1f1;
-            border-radius: 0;
-            transition: .2s;
-        
-    }
-        /* On small screens, set height to 'auto' for the grid */
-    </style>
-</head>
-
-<body>
-
-        <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
+<% include ./partials/header%>
+    <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheet/tump-btn.css">
 
 
-   <%include ./partials/navbar%>
-            
-<br>
-<br>
-<br>
+    </head>
 
+    <body>
+            <%include ./partials/navbar%>
+            <%if(error && error.length>0){%>
+                <div class="container" style="margin-top:60px; margin-bottom: 1px">
+                    <div class="alert alert-danger" role="alert">
+                        <%=error%>
+                    </div>
+                </div>
+            <%}%>
+            <%if(success && success.length>0){%>
+                <div class="container" style="margin-top:60px; margin-bottom: 1px">
+                    <div class="alert alert-success" role="alert">
+                        <%=success%>
+                    </div>
+                </div>
+            <%}%>
+        <br>
+        <br>
+        <br>
         <!------ Include the above in your HEAD tag ---------->
         <div class="container">
             <div class="row">
-         <form class="form-horizontal" action="/register" method="POST">
-            <fieldset>
-            
-            <!-- Form Name -->
-            <legend><h1> Register</h1></legend>
-            
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="Name">Username</label>  
-                <div class="col-md-5">
-                    <input id="Name" name="username" type="text" placeholder="username" class="form-control input-md" required="">
-                </div>
-            </div>
-            
-            <!-- Password input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="passwordinput">Password</label>
-                <div class="col-md-5">
-                    <input id="passwordinput" name="password" type="password" placeholder="" class="form-control input-md" required="">
-                </div>
-            </div>
-            
-            <!-- Password input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="confirm_password">Confirm Password</label>
-                <div class="col-md-5">
-                    <input id="confirm_password" name="confirm_password" type="password" placeholder="Re-type password" class="form-control input-md" required="">
-                </div>
-            </div>
-            
-            <!-- ST-ID input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="Studen ID">Studen ID</label>
-                <div class="col-md-5">
-                    <input id="Studen_ID" name="studentID" type="Studen_ID" placeholder="Studen ID" class="form-control input-md" required="">
-                </div>
-            </div>
+                <form class="form-horizontal" action="/register" method="POST">
+                    <fieldset>
 
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="mobilenumber">Mobile Number</label>  
-                <div class="col-md-5">
-                    <input id="mobilenumber" name="tel" type="text" placeholder="Mobile Number" class="form-control input-md" required="">
-                </div>
-            </div>
-            
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="emailId">Email</label>  
-                <div class="col-md-6">
-                    <input id="emailId" name="email" type="text" placeholder="user@domain.com" class="form-control input-md" required="">
-                </div>
-            </div>
-                
-            <!-- Textarea -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="address">Address</label>
-                <div class="col-md-4">                     
-                    <textarea class="form-control" id="address" name="address"></textarea>
-                </div>
-            </div>
-            
-            <!-- Button -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="submit"></label>
-                <div class="col-md-4">
-                    <a href="register.html"><button id="submit" name="submit" class="btn btn-success">Submit</button>></a>
-                    <a href="index.html"><button id="submit" name="submit" class="btn btn-warning">Cancel</button>></a>
-                </div>
-            </div>
-            </fieldset>
-        </form>
-            </div>
-        </div>
+                        <!-- Form Name -->
+                        <legend>
+                            <h1> Register</h1>
+                        </legend>
 
-       <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4><span class="glyphicon glyphicon-lock"></span> Your account</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- form login -->
-                    <form role="form" action="/login" method="POST">
+                        <!-- Text input-->
                         <div class="form-group">
-                            <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                            <input type="text" name="username" class="form-control" id="usrname" placeholder="Username">
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd"><span class="glyphicon glyphicon-barcode"></span> Password</label>
-                            <input type="text" name="password" class="form-control" id="usrname" placeholder="Password">
-                        </div>
-                        <button type="submit" class="btn btn-block">Log in
-                            <span class="glyphicon glyphicon-log-in"></span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4><span class="glyphicon glyphicon-lock"></span> Your account</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- form login -->
-                    <form role="form" action="/login" method="POST">
-                        <div class="form-group">
-                            <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                            <input type="text" name="username" class="form-control" id="usrname" placeholder="Username">
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd"><span class="glyphicon glyphicon-barcode"></span> Password</label>
-                            <input type="text" name="password" class="form-control" id="usrname" placeholder="Password">
-                        </div>
-                        <button type="submit" class="btn btn-block">Log in
-                            <span class="glyphicon glyphicon-log-in"></span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4><span class="glyphicon glyphicon-lock"></span> Your account</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- form login -->
-                    <form role="form" action="/login" method="POST">
-                        <div class="form-group">
-                            <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                            <input type="text" name="username" class="form-control" id="usrname" placeholder="Username">
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd"><span class="glyphicon glyphicon-barcode"></span> Password</label>
-                            <input type="text" name="password" class="form-control" id="usrname" placeholder="Password">
-                        </div>
-                        <button type="submit" class="btn btn-block">Log in
-                            <span class="glyphicon glyphicon-log-in"></span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4><span class="glyphicon glyphicon-lock"></span> Your account</h4>
-                    </div>
-                    <div class="modal-body">
-                        <!-- form login -->
-                        <form role="form" action="/login" method="POST">
-                            <div class="form-group">
-                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                                <input type="text" name="username" class="form-control" id="usrname" placeholder="Username">
+                            <label class="col-md-4 control-label" for="Name">Username</label>
+                            <div class="col-md-5">
+                                <input id="Name" name="username" type="text" placeholder="username" class="form-control input-md" required="">
                             </div>
-                            <div class="form-group">
-                                <label for="pwd"><span class="glyphicon glyphicon-barcode"></span> Password</label>
-                                <input type="text" name="password" class="form-control" id="usrname" placeholder="Password">
+                        </div>
+
+                        <!-- Password input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="passwordinput">Password</label>
+                            <div class="col-md-5">
+                                <input id="passwordinput" name="password" type="password" placeholder="password" class="form-control input-md" required="">
                             </div>
-                            <button type="submit" class="btn btn-block">Log in
-                                <span class="glyphicon glyphicon-log-in"></span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
+                        </div>
+
+                        <!-- Password input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="confirm_password">Confirm Password</label>
+                            <div class="col-md-5">
+                                <input id="confirm_password" name="confirm_password" type="password" placeholder="Re-type password" class="form-control input-md"
+                                    required="">
+                            </div>
+                        </div>
+
+                        <!-- name -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="name">Name</label>
+                            <div class="col-md-5">
+                                <input id="name" name="name" type="name" placeholder="Somsak" class="form-control input-md" required="">
+                            </div>
+                        </div>
+
+                        <!-- surname -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="surname">Surname</label>
+                            <div class="col-md-5">
+                                <input id="surname" name="surname" type="surname" placeholder="Jirakul" class="form-control input-md" required="">
+                            </div>
+                        </div>
+
+                        <!-- ST-ID input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="Studen ID">Studen ID</label>
+                            <div class="col-md-5">
+                                <input id="Studen_ID" name="studentID" type="Studen_ID" placeholder="Studen ID" class="form-control input-md" required="">
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="mobilenumber">Mobile Number</label>
+                            <div class="col-md-5">
+                                <input id="mobilenumber" name="tel" type="text" placeholder="Mobile Number" class="form-control input-md" required="">
+                            </div>
+                        </div>
+
+                        <!-- line ID input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="lineID">Line ID</label>
+                            <div class="col-md-5">
+                                <input id="lineID" name="lineID" type="text" placeholder="Line ID" class="form-control input-md" required="">
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="emailId">Email</label>
+                            <div class="col-md-5">
+                                <input id="emailId" name="email" type="text" placeholder="user@domain.com" class="form-control input-md" required="">
+                            </div>
+                        </div>
+
+                        <!-- Textarea -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="address">Address</label>
+                            <div class="col-md-4">
+                                <textarea class="form-control" id="address" name="address"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="submit"></label>
+                            <div class="col-md-4">
+                                <button id="submit" name="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
             </div>
         </div>
-</body>
+        <% include ./partials/modalLogin %>
 
-</html>
+    </body>
+
+    </html>

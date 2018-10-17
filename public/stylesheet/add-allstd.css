@@ -1,0 +1,13 @@
+.container2 {
+    margin-top: 10%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 70px;
+    padding-left: 70px;
+    width: 90%;
+    text-align: center;
+}
+.container2 h1 {
+    font-size: 80px;
+    text-align: center;
+}

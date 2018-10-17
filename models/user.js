@@ -5,6 +5,8 @@ var uniqueValidator=require("mongoose-unique-validator")
 var UserSchema=new mongoose.Schema({
     username    :String,
     studentID   :{type:String,unique:true},
+    name        :String,
+    surname     :String,
     tel         :String,
     lineID      :String,
     email       :String,

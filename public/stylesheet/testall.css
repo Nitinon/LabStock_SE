@@ -1,0 +1,154 @@
+body{
+    background: #ffe9e9;
+}
+h1{
+    color: #c58ec3;
+}
+.footer {
+    position: absolute;
+    bottom: 1;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    /* background-color: #c58ec3; */
+    background-color: #c58ec3;
+    display: block;
+}
+.footer p{
+    color: #000;
+}
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 70px;
+    padding-left: 70px;
+    width: 90%;
+}
+
+.col {
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%;
+}
+
+.person {
+    border: 10px solid transparent;
+    margin-bottom: 25px;
+    width: 80%;
+    height: 80%;
+    opacity: 0.7;
+}
+
+.person:hover {
+    border-color: #f1f1f1;
+}
+
+.carousel-inner img {
+    width: 30%;
+    /* Set width to 100% */
+    margin: auto;
+}
+
+.carousel-caption h3 {
+    color: #fff !important;
+}
+
+/* Add a dark background color with a little bit see-through */
+.navbar {
+    margin-bottom: 0;
+    background-color: #c58ec3;
+    border: 0;
+    font-size: 11px !important;
+    letter-spacing: 4px;
+   
+}
+
+/* Add a gray color to all navbar links */
+.navbar li a,
+.navbar .navbar-brand {
+    color: #ffffff !important;
+}
+
+/* On hover, the links will turn white */
+.navbar-nav li a:hover {
+    color: rgb(255, 255, 255) !important;
+}
+.navbar-nav li:hover{
+    background-color: #fe8aa5
+
+}
+/* The active link */
+.navbar-nav li.active a {
+    color: #fff !important;
+    background-color: #29292c !important;
+}
+
+/* Remove border color from the collapsible button */
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+}
+
+/* Dropdown */
+.open .dropdown-toggle {
+    color: #fff;
+    background-color: #555 !important;
+}
+
+/* Dropdown links */
+.dropdown-menu li a {
+    color: #000 !important;
+}
+
+/* On hover, the dropdown links will turn red */
+.dropdown-menu li a:hover {
+    background-color: gray !important;
+}
+
+@media (max-width: 600px) {
+    .carousel-caption {
+        display: none;
+        /* Hide the carousel text when the screen is less than 600 pixels wide */
+    }
+}
+
+/* Remove rounded borders from list */
+.list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+
+/* Set gray background color and 100% height */
+.row.content {
+    height: 550px
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+    background-color: #f1f1f1;
+    position: relative;
+    height: 100%;
+}
+
+/* On small screens, set height to 'auto' for the grid */
+@media screen and (max-width: 767px) {
+    .row.content {
+        height: auto;
+    }
+}
+
+.nav-tabs {
+    padding-top: 1%;
+}
+
+.navbar-form {
+    margin-top: 0%;
+}
