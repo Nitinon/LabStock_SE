@@ -94,10 +94,12 @@ app.get("/editInfo/:user_id", function (req, res) {
 })
 app.put("/updateInfo/:user_id",function(req,res){
     User.findByIdAndUpdate(req.params.user_id,req.body.user,function(err,updatedUser){
+        console.log(req.body.user)
         if(err){
             console.log(err)
         }else{
-            
+            req.flash("success","Update Info Complete")
+            res.redirect("/")
         }
 
     })

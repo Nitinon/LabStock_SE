@@ -16,7 +16,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="registerform">
-                            <form class="form-horizontal" action="/register" method="POST">
+                            <form class="form-horizontal" action="/updateInfo/<%=currentUser._id%>?_method=PUT" method="POST">
                                 <fieldset>
 
                                     <!-- Form Name -->
@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="name">Name</label>
                                         <div class="col-md-5">
-                                            <input id="name" name="name" type="name" placeholder="Somsak" class="form-control input-md" value="<%=currentUser.name%>"
+                                            <input id="name" name="user[name]" type="name" placeholder="Somsak" class="form-control input-md" value="<%=currentUser.name%>"
                                                 required="">
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="surname">Surname</label>
                                         <div class="col-md-5">
-                                            <input id="surname" name="surname" type="surname" placeholder="Jirakul" class="form-control input-md" value="<%=currentUser.surname%>"
+                                            <input id="surname" name="user[surname]" type="surname" placeholder="Jirakul" class="form-control input-md" value="<%=currentUser.surname%>"
                                                 required="">
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="mobilenumber">Mobile Number</label>
                                         <div class="col-md-5">
-                                            <input id="mobilenumber" name="tel" type="text" placeholder="Mobile Number" class="form-control input-md" value="<%=currentUser.tel%>"
+                                            <input id="mobilenumber" name="user[tel]" type="text" placeholder="Mobile Number" class="form-control input-md" value="<%=currentUser.tel%>"
                                                 required="">
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="lineID">Line ID</label>
                                         <div class="col-md-5">
-                                            <input id="lineID" name="lineID" type="text" placeholder="Line ID" class="form-control input-md" value="<%=currentUser.lineID%>"
+                                            <input id="lineID" name="user[lineID]" type="text" placeholder="Line ID" class="form-control input-md" value="<%=currentUser.lineID%>"
                                                 required="">
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="emailId">Email</label>
                                         <div class="col-md-5">
-                                            <input id="emailId" name="email" type="text" placeholder="user@domain.com" class="form-control input-md" value="<%=currentUser.email%>"
+                                            <input id="emailId" name="user[email]" type="text" placeholder="user@domain.com" class="form-control input-md" value="<%=currentUser.email%>"
                                                 required="">
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="address">Address</label>
                                         <div class="col-md-4">
-                                            <textarea class="form-control" id="address" name="address"><%=currentUser.address%></textarea>
+                                            <textarea class="form-control" id="address" name="user[address]"><%=currentUser.address%></textarea>
                                         </div>
                                     </div>
 
@@ -104,7 +104,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="submit"></label>
                                         <div class="col-md-4">
-                                            <a href="register.html"><button id="submit" name="submit" class="btn btn-success btn-lg">Submit</button></a>
+                                            <button id="submit" name="submit" class="btn btn-success btn-lg">Submit</button>
                                             <a href="/changePass/<%=currentUser._id%>" class="pull-right">change password</a>
                                         </div>
                                     </div>
