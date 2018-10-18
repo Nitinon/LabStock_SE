@@ -3,6 +3,7 @@ var passportLocalMongoose=require("passport-local-mongoose")
 var uniqueValidator=require("mongoose-unique-validator")
 
 var UserSchema=new mongoose.Schema({
+    role        :String,
     username    :String,
     studentID   :{type:String,unique:true},
     name        :String,

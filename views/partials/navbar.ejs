@@ -9,6 +9,44 @@
                 <a class="navbar-brand" href="/">LabStock</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
+                <%if(currentUser){%>
+                    <%if(currentUser.role=="borrower"){%>
+                        <ul class="nav navbar-nav navbar-left">
+                                <li><a href="History-nonmem-br.html">History<span class="glyphicon glyphicon-calendar"></span></a></li>
+                                <li><a href="view-br.html">Borrow<span class="glyphicon glyphicon-book"></span></a></li>
+                                <li><a href="re-nonmem.html">Return<span class="glyphicon glyphicon-repeat"></span></a></li>
+                        </ul>
+                    <%}else{%>
+                        <ul class="nav navbar-nav navbar-left">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">History
+                                        <span class="glyphicon glyphicon-calendar"></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="History-mem-br.html">My history</a></li>
+                                        <li><a href="History-all-br.html">All history</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Approve
+                                        <span class="glyphicon glyphicon-check"></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="app-borrow.html">Borrow</a></li>
+                                        <li><a href="app-return.html">Return</a></li>
+                                    </ul>
+                                </li>
+                            
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Edit items
+                                        <span class="glyphicon glyphicon-list-alt"></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="edit-items-add.html">Add</a></li>
+                                        <li><a href="edit-items-del.html">Delete</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="allstd.html">Student info<span class="glyphicon glyphicon-info-sign"></span></a></li>
+                            </ul>
+                    <%}%>
+                <%}%>
                 <ul class="nav navbar-nav navbar-right">
                     <%if(!currentUser){%>
                         <li><a href="#home" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span>Login</a></li>

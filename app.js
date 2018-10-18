@@ -45,6 +45,7 @@ app.get("/register", function (req, res) {
 })
 app.post("/register", function (req, res) {
     var user = new User({
+        role:"borrower",
         username: req.body.username,
         studentID: req.body.studentID,
         name: req.body.name,
