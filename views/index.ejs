@@ -1,227 +1,230 @@
 <% include ./partials/header%>
     <link rel="stylesheet" type="text/css" href="stylesheet/testall.css">
     <link rel="stylesheet" type="text/css" href="stylesheet/tump-btn.css">
-    <style>
-        body{
-            margin-top:50px;
-        }
-    </style>
+
     </head>
+
     <body>
-        <%include ./partials/navbar%>
- 
+        <div id="wrapper">
+            <div id="content">
+                <%include ./partials/navbar%>
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                        </ol>
 
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="container2">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <img src="slide-01.jpg" alt="New York" width="1200" height="700">
+                                    <div class="carousel-caption">
+                                        <h3>New York</h3>
+                                        <p>The atmosphere in New York is lorem ipsum.</p>
+                                    </div>
+                                </div>
 
-                <!-- Wrapper for slides -->
-                <div class="container2">
-                    <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <img src="slide-01.jpg" alt="New York" width="1200" height="700">
-                            <div class="carousel-caption">
-                                <h3>New York</h3>
-                                <p>The atmosphere in New York is lorem ipsum.</p>
+                                <div class="item">
+                                    <img src="slide-03.jpg" alt="Chicago" width="1200" height="700">
+                                    <div class="carousel-caption">
+                                        <h3>Chicago</h3>
+                                        <p>Thank you, Chicago - A night we won't forget.</p>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <img src="slide-04.jpg" alt="Los Angeles" width="1200" height="700">
+                                    <div class="carousel-caption">
+                                        <h3>Nong Pam</h3>
+                                        <p>น้องแพมน่ารักมากๆครับ</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="item">
-                            <img src="slide-03.jpg" alt="Chicago" width="1200" height="700">
-                            <div class="carousel-caption">
-                                <h3>Chicago</h3>
-                                <p>Thank you, Chicago - A night we won't forget.</p>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <img src="slide-04.jpg" alt="Los Angeles" width="1200" height="700">
-                            <div class="carousel-caption">
-                                <h3>LA</h3>
-                                <p>Even though the traffic was a mess, we had the best time playing at Venice Beach!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-
-    
-
-            <div class="container">
-                <ul class="nav nav-tabs">
-                    <form class="navbar-form navbar-right" action="/action_page.php">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button class="btn " type="submit">
-                                    <i class="glyphicon glyphicon-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <li><a href="#">All</a></li>
-                    <li><a href="#">General</a></li>
-                    <li><a href="#">Network Devices</a></li>
-                    <li><a href="#">Stationary</a></li>
-                    <li><a href="#">Kitchenware</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Type
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">ID</a></li>
-                            <li><a href="#">Non-ID</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-
-            <%if(error && error.length>0){%>
-                <div class="container" style="margin-top:60px; margin-bottom: 1px">
-                    <div class="alert alert-danger" role="alert">
-                        <%=error%>
-                    </div>
-                </div>
-            <%}%>
-            <%if(success && success.length>0){%>
-                <div class="container" style="margin-top:60px; margin-bottom: 1px">
-                    <div class="alert alert-success" role="alert">
-                        <%=success%>
-                    </div>
-                </div>
-            <%}%>
-
-
-            <div class="container">
-                <BR>
-                <div class="row text-center">
-                    <div class="col-sm-3">
-                        <div class="thumbnail">
-                            <img src="01.jpg" alt="Paris">
-                            <p><strong>items name</strong></p>
-                            <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="thumbnail">
-                            <img src="01.jpg" alt="New York">
-                            <p><strong>items name</strong></p>
-                            <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="thumbnail">
-                            <img src="01.jpg" alt="San Francisco">
-                            <p><strong>items name</strong></p>
-                            <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="thumbnail">
-                            <img src="01.jpg" alt="San Francisco">
-                            <p><strong>items name</strong></p>
-                            <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                        </div>
+                        <!-- Left and right controls -->
+                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
 
-                    <div class="col-sm-3">
-                        <div class="thumbnail">
-                            <img src="01.jpg" alt="San Francisco">
-                            <p><strong>items name</strong></p>
-                            <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="thumbnail">
-                            <img src="01.jpg" alt="San Francisco">
-                            <p><strong>items name</strong></p>
-                            <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="thumbnail">
-                            <img src="01.jpg" alt="San Francisco">
-                            <p><strong>items name</strong></p>
-                            <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="thumbnail">
-                            <img src="01.jpg" alt="San Francisco">
-                            <p><strong>items name</strong></p>
-                            <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-            <% include ./partials/modalLogin %>
-                <div class="modal fade" id="myModal2" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4><span class="glyphicon glyphicon-folder-open"></span> :Items name</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <div class="thumbnail">
-                                            <img src="02.jpg" alt="San Francisco">
-                                            <h3>Detail</h3>
-                                            <p>items info</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sel1">Quantity:</label>
-                                            <select class="form-control" id="sel1">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                            </select>
+                    <div class="bar">
+                        <div class="container">
+
+
+                            <ul class="nav nav-tabs">
+
+
+
+                                <form class="navbar-form navbar-right" action="/action_page.php">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                        <div class="input-group-btn">
+                                            <button class="btn " type="submit">
+                                                <i class="glyphicon glyphicon-search"></i>
+                                            </button>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-block">Add in cart
-                                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    </button>
                                 </form>
-                            </div>
+                                <li><a href="#">All</a></li>
+                                <li><a href="#">General</a></li>
+                                <li><a href="#">Network Devices</a></li>
+                                <li><a href="#">Stationary</a></li>
+                                <li><a href="#">Kitchenware</a></li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Type
+                                        <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">ID</a></li>
+                                        <li><a href="#">Non-ID</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
                         </div>
                     </div>
-                </div>
-                <ul class="pager">
-                    <li><a href="#">Previous</a></li>
-                    <li><a href="#">Next</a></li>
-                    <br>
-                    <ul class="pagination pagination-sm">
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                    </ul>
 
-                </ul>
-    </body>
-    
-    <footer class="footer">
-        <div class="container">
-            <span>Copyright © 2018, Kiki team. All rights reserved.</span>
+
+                    <%if(error && error.length>0){%>
+                        <div class="container" style="margin-top:60px; margin-bottom: 1px">
+                            <div class="alert alert-danger" role="alert">
+                                <%=error%>
+                            </div>
+                        </div>
+                        <%}%>
+                            <%if(success && success.length>0){%>
+                                <div class="container" style="margin-top:60px; margin-bottom: 1px">
+                                    <div class="alert alert-success" role="alert">
+                                        <%=success%>
+                                    </div>
+                                </div>
+                                <%}%>
+
+                    <div class="container">
+                        <BR>
+                        <div class="row text-center">
+                            <div class="col-sm-3">
+                                <div class="thumbnail">
+                                    <img src="01.jpg" alt="Paris">
+                                    <p><strong>items name</strong></p>
+                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="thumbnail">
+                                    <img src="01.jpg" alt="New York">
+                                    <p><strong>items name</strong></p>
+                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="thumbnail">
+                                    <img src="01.jpg" alt="San Francisco">
+                                    <p><strong>items name</strong></p>
+                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="thumbnail">
+                                    <img src="01.jpg" alt="San Francisco">
+                                    <p><strong>items name</strong></p>
+                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="thumbnail">
+                                    <img src="01.jpg" alt="San Francisco">
+                                    <p><strong>items name</strong></p>
+                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="thumbnail">
+                                    <img src="01.jpg" alt="San Francisco">
+                                    <p><strong>items name</strong></p>
+                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="thumbnail">
+                                    <img src="01.jpg" alt="San Francisco">
+                                    <p><strong>items name</strong></p>
+                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="thumbnail">
+                                    <img src="01.jpg" alt="San Francisco">
+                                    <p><strong>items name</strong></p>
+                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <% include ./partials/modalLogin %>
+                        <div class="modal fade" id="myModal2" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4><span class="glyphicon glyphicon-folder-open"></span> :Items name
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form role="form">
+                                            <div class="form-group">
+                                                <div class="thumbnail">
+                                                    <img src="02.jpg" alt="San Francisco">
+                                                    <h3>Detail</h3>
+                                                    <p>items info</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sel1">Quantity:</label>
+                                                    <select class="form-control" id="sel1">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-block">Add in cart
+                                                <span class="glyphicon glyphicon-shopping-cart"></span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="pager">
+                            <li><a href="#">Previous</a></li>
+                            <li><a href="#">Next</a></li>
+                            <br>
+                            <ul class="pagination pagination-sm">
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                            </ul>
+
+                        </ul>
+            </div>
+            <% include ./partials/footer %>
         </div>
-    </footer>
-    
+
+    </body>
+
     </html>

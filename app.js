@@ -20,7 +20,7 @@ app.use(require("express-session")({
     secret: "Secret",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60000 }
+    // cookie: { maxAge: 60000 }
 }))
 
 app.use(passport.initialize())
@@ -90,6 +90,16 @@ app.get("/editInfo/:user_id", function (req, res) {
         } else {
             res.render("editInfo")
         }
+    })
+})
+app.put("/updateInfo/:user_id",function(req,res){
+    User.findByIdAndUpdate(req.params.user_id,req.body.user,function(err,updatedUser){
+        if(err){
+            console.log(err)
+        }else{
+            
+        }
+
     })
 })
 app.get("/changePass/:user_id", function (req, res) {

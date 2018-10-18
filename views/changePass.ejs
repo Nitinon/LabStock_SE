@@ -5,63 +5,67 @@
     </head>
 
     <body>
-        <%include ./partials/navbar%>
-            <br>
-            <br>
-            <br>
-            <!------ Include the above in your HEAD tag ---------->
-            <div class="container">
-                <div class="row">
-                    <form class="form-horizontal" action="/changePass/<%=currentUser._id%>" method="POST">
-                        <fieldset>
+        <div id="wrapper">
+            <div id="content">
+                <%include ./partials/navbar%>
+                    <!------ Include the above in your HEAD tag ---------->
+                    <div class="container">
+                        <div class="row">
+                            <div class="registerform">
+                                <form class="form-horizontal" action="/changePass/<%=currentUser._id%>" method="POST">
+                                    <fieldset>
 
-                            <!-- Form Name -->
-                            <legend>
-                                <h1>
-                                    <%=currentUser.username%>
-                                </h1>
-                            </legend>
+                                        <!-- Form Name -->
+                                        <legend>
+                                            <h1>
+                                                Change Password
+                                                <%=currentUser.username%>
+                                            </h1>
+                                        </legend>
 
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="oldPassword">Old Password</label>
-                                <div class="col-md-5">
-                                    <input id="oldPassword" name="oldPassword" type="password" placeholder="old password" class="form-control input-md" required="">
-                                </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="oldPassword">Old Password</label>
+                                            <div class="col-md-5">
+                                                <input id="oldPassword" name="oldPassword" type="password" placeholder="old password" class="form-control input-md" required="">
+                                            </div>
+                                        </div>
+
+                                        <!-- Password input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="passwordinput">New Password</label>
+                                            <div class="col-md-5">
+                                                <input id="newPassword" name="newPassword" type="password" placeholder="newPassword" class="form-control input-md" required="">
+                                            </div>
+                                        </div>
+
+                                        <!-- Password input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="confirm_password">Confirm New Password</label>
+                                            <div class="col-md-5">
+                                                <input id="confirm_newPassword" name="confirm_newPassword" type="password" placeholder="Re-type password" class="form-control input-md"
+                                                    required="">
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Button -->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="submit"></label>
+                                            <div class="col-md-4">
+
+                                                <button id="submit" name="submit" class="btn btn-success">Submit</button>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
                             </div>
-
-                            <!-- Password input-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="passwordinput">New Password</label>
-                                <div class="col-md-5">
-                                    <input id="newPassword" name="newPassword" type="password" placeholder="newPassword" class="form-control input-md" required="">
-                                </div>
-                            </div>
-
-                            <!-- Password input-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="confirm_password">Confirm New Password</label>
-                                <div class="col-md-5">
-                                    <input id="confirm_newPassword" name="confirm_newPassword" type="password" placeholder="Re-type password" class="form-control input-md"
-                                        required="">
-                                </div>
-                            </div>
-
-
-                            <!-- Button -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="submit"></label>
-                                <div class="col-md-4">
-
-                                    <button id="submit" name="submit" class="btn btn-success">Submit</button>
-
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
+                        </div>
+                    </div>
             </div>
             <% include ./partials/modalLogin %>
-
+            <% include ./partials/footer%>
+        </div>
     </body>
 
     </html>
