@@ -6,8 +6,24 @@ var express = require("express"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
+    nodemailer = require("nodemailer"), //mail
     User = require("./models/user")
+// var bot = LINEBot.Client({
+//     channelID: '1615804977',
+//     channelSecret: '45af17b1c01431c416d5a66b0dcfa25a',
+//     channelAccessToken: 'WCKFzX3mTTtXe7dGMWwwG1KEQkzGoduoCmQZkkrSFCdpcWRCA+TCU9sEkG9XcDNPeBc1qQYNrP3DNpGX99RXWM7akZGYnWNB7kxq0Gi83TsINrAHcZD5DtlWn8D/AkdCqUvtleTL1hA6Xnab/W1yXAdB04t89/1O/w1cDnyilFU='
+//   });
 
+
+
+var smtpTransport = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    auth: {
+        user: "LabStock.KMITL@gmail.com",
+        pass: "Nitinon.556"
+    }
+});
 
 app.use(express.static(__dirname + "/public"))
 mongoose.connect("mongodb://localhost/Lab_stock")
@@ -36,6 +52,9 @@ app.use(function (req, res, next) {
     next();
 });
 
+
+
+
 app.get("/", function (req, res) {
     res.render('index', { message: req.flash('error') }
     );
@@ -45,7 +64,7 @@ app.get("/register", function (req, res) {
 })
 app.post("/register", function (req, res) {
     var user = new User({
-        role:"borrower",
+        role: "borrower",
         username: req.body.username,
         studentID: req.body.studentID,
         name: req.body.name,
@@ -93,13 +112,13 @@ app.get("/editInfo/:user_id", function (req, res) {
         }
     })
 })
-app.put("/updateInfo/:user_id",function(req,res){
-    User.findByIdAndUpdate(req.params.user_id,req.body.user,function(err,updatedUser){
+app.put("/updateInfo/:user_id", function (req, res) {
+    User.findByIdAndUpdate(req.params.user_id, req.body.user, function (err, updatedUser) {
         console.log(req.body.user)
-        if(err){
+        if (err) {
             console.log(err)
-        }else{
-            req.flash("success","Update Info Complete")
+        } else {
+            req.flash("success", "Update Info Complete")
             res.redirect("/")
         }
 
@@ -117,9 +136,9 @@ app.post("/changePass/:user_id", function (req, res) {
             // if(req.body.oldPassword==req.body.newPassword){
             user.changePassword(req.body.oldPassword, req.body.newPassword, function (err) {
                 if (err) {
-                    req.flash("error",error)
+                    req.flash("error", error)
                 } else {
-                    req.flash("success","change password success")
+                    req.flash("success", "change password success")
                     res.redirect("/")
                 }
             })
@@ -127,6 +146,29 @@ app.post("/changePass/:user_id", function (req, res) {
     })
 })
 
+app.get("/hihi", function (req, res) {
+    User.find({}, "email", function (err, mails) {
+        mails.forEach(function (Element) {
+            var mailOptions = {
+                to: Element.email,
+                subject: req.query.subject,
+                text: req.query.text
+            }
+            console.log(mailOptions);
+            smtpTransport.sendMail(mailOptions, function (error, response) {
+                if (error) {
+                    console.log(error);
+                    res.end("error");
+                } else {
+                    console.log("Message sent: " + response.message);
+                    res.end("sent");
+                }
+            });
+        })
+    })
+})
+
+// app.listen("3000","172.20.10.6", function () {
 app.listen("3000", function () {
     console.log("connected")
 })
