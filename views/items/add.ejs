@@ -1,0 +1,145 @@
+<% include ../partials/header%>
+    <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheet/tump-btn.css">
+
+    </head>
+
+    <body>
+        <%include ../partials/navbar%>
+
+            <!------ Include the above in your HEAD tag ---------->
+            <div id="wrapper">
+                <div id="content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="registerform">
+                                <!-- <form action "/" method="POST" enctype="multipart/form-data">
+                                    <input type="file" name="myimage"></input>
+                                    <input type="submit" name="submit" value="submit"></input>
+                                </form> -->
+                                <form action="/up" class="form-horizontal" method="POST" enctype="multipart/form-data">
+                                    <fieldset>
+
+                                        <!-- Form Name -->
+                                        <legend>
+                                            <h1> Add Items</h1>
+                                        </legend>
+
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="Name">Items Name</label>
+                                            <div class="col-md-5">
+                                                <input id="Name" name="name" type="text" placeholder="Items Name" class="form-control input-md" required="">
+                                            </div>
+                                        </div>
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="mobilenumber">Category</label>
+                                            <div class="col-md-5">
+                                                <select class="form-control" id="sel1" name="category">
+                                                    <option value="general">General</option>
+                                                    <option value="network">Network Devices</option>
+                                                    <option value="staionary">Stationary</option>
+                                                    <option value="kitchenware">Kitchenware</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="Name">Select Type</label>
+                                            <div class="col-md-5">
+                                                <label class="radio-inline"><input type="radio" name="type" class="IDsele"
+                                                        value="ID" checked>ID</label>
+                                                <label class="radio-inline"><input type="radio" name="type" class="nonIDsele"
+                                                        value="nonID">Non ID
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label wrap1" for="Name">Items ID</label>
+                                            <div class="col-md-5">
+                                                <input id="Name" name="itemID" type="text" placeholder="Items ID" class="form-control input-md input-itemID" required="">
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label wrap2" for="Name">Quantity</label>
+                                            <div class="col-md-5">
+                                                <input id="Name" name="qty" type="text" placeholder="Quantity" class="form-control input-md input-quantity" required="">
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="Name">Duration limit</label>
+                                            <div class="col-md-5">
+                                                <input id="Name" name="limit" type="text" placeholder="7 Days" class="form-control input-md" required="">
+                                            </div>
+                                        </div>
+
+                                        <!-- Textarea -->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="address">Detail</label>
+                                            <div class="col-md-4">
+                                                <textarea class="form-control" id="Detail" name="detail"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="submit">Image</label>
+                                            <div class="col-md-4">
+                                                <input type="file" name="myimage">
+                                            </div>
+                                        </div>
+
+                                        <!-- Button -->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="submit"></label>
+                                            <div class="col-md-4 pull-right">
+                                                <input type="submit" name="submit" value="submit"></input>
+                                            </div>
+
+                                        </div>
+
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <% include ../partials/footer %>
+
+            </div>
+    </body>
+
+    </html>
+
+    <script>
+        $(document).ready(function () {
+            // By Default Disable radio button
+            $(".input-quantity").attr('disabled', true);
+            $(".input-itemID").attr('disabled', false);
+            $(".wrap2").css('opacity', '0.2');
+
+            $("form input:radio").change(function () {
+                if ($(this).val() == "nonID") {
+                    // $(".input-itemID").attr('checked', false);
+                    $(".input-itemID").attr('disabled', true);
+                    $(".input-quantity").attr('disabled', false);
+                    $(".wrap1").css('opacity', '0.2');
+                    $(".wrap2").css('opacity', '1');
+                }
+                // Else Enable radio buttons.
+                else {
+                    $(".input-itemID").attr('disabled', false);
+                    $(".input-quantity").attr('disabled', true);
+                    $(".wrap1").css('opacity', '1');
+                    $(".wrap2").css('opacity', '0.2');
+                }
+            });
+        });
+    </script>

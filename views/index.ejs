@@ -1,7 +1,7 @@
 <% include ./partials/header%>
     <link rel="stylesheet" type="text/css" href="stylesheet/testall.css">
     <link rel="stylesheet" type="text/css" href="stylesheet/tump-btn.css">
-
+    <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
     </head>
 
     <body>
@@ -108,112 +108,76 @@
                                     </div>
                                 </div>
                                 <%}%>
-
+                                
                     <div class="container">
                         <BR>
-                        <div class="row text-center">
-                            <div class="col-sm-3">
-                                <div class="thumbnail">
-                                    <img src="01.jpg" alt="Paris">
-                                    <p><strong>items name</strong></p>
-                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumbnail">
-                                    <img src="01.jpg" alt="New York">
-                                    <p><strong>items name</strong></p>
-                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumbnail">
-                                    <img src="01.jpg" alt="San Francisco">
-                                    <p><strong>items name</strong></p>
-                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumbnail">
-                                    <img src="01.jpg" alt="San Francisco">
-                                    <p><strong>items name</strong></p>
-                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="thumbnail">
-                                    <img src="01.jpg" alt="San Francisco">
-                                    <p><strong>items name</strong></p>
-                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumbnail">
-                                    <img src="01.jpg" alt="San Francisco">
-                                    <p><strong>items name</strong></p>
-                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumbnail">
-                                    <img src="01.jpg" alt="San Francisco">
-                                    <p><strong>items name</strong></p>
-                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="thumbnail">
-                                    <img src="01.jpg" alt="San Francisco">
-                                    <p><strong>items name</strong></p>
-                                    <button class="btn" data-toggle="modal" data-target="#myModal2">Add</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <% include ./partials/modalLogin %>
-                        <div class="modal fade" id="myModal2" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4><span class="glyphicon glyphicon-folder-open"></span> :Items name
-                                        </h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form role="form">
-                                            <div class="form-group">
-                                                <div class="thumbnail">
-                                                    <img src="02.jpg" alt="San Francisco">
-                                                    <h3>Detail</h3>
-                                                    <p>items info</p>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sel1">Quantity:</label>
-                                                    <select class="form-control" id="sel1">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                    </select>
-                                                </div>
+                        <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                            <%items.forEach(function(item){%>
+                                <div class="col-lg-3 col-md-6 col-xs-12">
+                                    <div class="thumbnail">
+                                        <div class="center-cropped">
+                                            <img class="itemPic" src="<%=item.originalname%>" alt="Paris">
+                                        </div>
+                                            <div class="itemName">
+                                                <p><strong><%=item.name%></strong></p>
                                             </div>
-                                            <button type="submit" class="btn btn-block">Add in cart
-                                                <span class="glyphicon glyphicon-shopping-cart"></span>
-                                            </button>
-                                        </form>
+                                        <div class="btn-item">
+                                            <button class="btn btn-success btn-md " data-toggle="modal" data-target="#myModal2<%=item._id%>">Add</button>
+                                            <button class="btn btn-warning btn-md " data-toggle="modal" data-target="#myModal2">more detail</button>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            <%})%>
+                                
+                            </div>
+                            <%items.forEach(function(item){%>
+
+                            <div class="modal fade" id="myModal2<%=item._id%>" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4><span class="glyphicon glyphicon-folder-open"></span> :Items name <%=item.name%>
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form role="form">
+                                                <div class="form-group">
+                                                    <div class="thumbnail">
+                                                        <img src="<%=item.originalname%>" alt="San Francisco">
+                                                        <h3>Detail</h3>
+                                                        <p>items info</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sel1">Quantity:</label>
+                                                        <select class="form-control" id="sel1">
+                                                            <option>1</option>
+                                                            <option>2</option>
+                                                            <option>3</option>
+                                                            <option>4</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-block">Add in cart
+                                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <ul class="pager">
-                            <li><a href="#">Previous</a></li>
-                            <li><a href="#">Next</a></li>
-                            <br>
-                            <ul class="pagination pagination-sm">
-                                <li><a href="#">1</a></li>
+                            <%})%>
+
+                            <% include ./partials/modalLogin %>
+
+                            <ul class="pager">
+                                <li><a href="#">Previous</a></li>
+                                <li><a href="#">Next</a></li>
+                                <br>
+                                <ul class="pagination pagination-sm">
+                                    <li><a href="#">1</a></li>
                                 <li><a href="#">2</a></li>
                                 <li><a href="#">3</a></li>
                                 <li><a href="#">4</a></li>
