@@ -23,11 +23,17 @@ var upload = multer({
     storage: storage
 });
 
-router.get('/', function (req, res, next) {
+router.get("/:category",function (req,res) {
+    Item.find({category:req.params.category},function(err,allItems){
+        res.render('index', { message: req.flash('error'),items:allItems,category:req.params.category});
+    })
+
+})
+router.get('/addItems', function (req, res, next) {
     res.render('items/add');
 });
 
-router.post('/',upload.any(),function (req,res) {
+router.post('/addItems',upload.any(),function (req,res) {
     var path = req.files[0].path;
     var imageName = req.files[0].filename;
     var imagepath = {};

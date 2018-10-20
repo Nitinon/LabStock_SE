@@ -6,7 +6,7 @@ var Item=require("../models/item");
 
 router.get("/", function (req, res) {
     Item.find({},function(err,allItems){
-        res.render('index', { message: req.flash('error'),items:allItems});
+        res.render('index', { message: req.flash('error'),items:allItems,category:"all"});
     })
 })
 router.get("/addItems", function (req, res) {
@@ -57,6 +57,8 @@ router.get("/logout", function (req, res) {
     res.redirect("/");
 });
 router.get("/editInfo/:user_id", function (req, res) {
+    req.session.cart={}
+    console.log(req.session)
     User.findById(req.params.user_id, function (err, user) {
         if (err) {
             console.log(err)

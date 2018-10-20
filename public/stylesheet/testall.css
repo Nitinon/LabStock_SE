@@ -205,6 +205,11 @@ ul.nav.nav-tabs{
     color: navy;
 }
 
+.nav-tabs>li>a.Active {
+    background-color:#fdc900;
+    color: navy;
+}
+
 .navbar-form {
     margin-top: 0%;
 }
