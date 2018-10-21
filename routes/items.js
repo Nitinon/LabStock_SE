@@ -3,6 +3,8 @@ var router = express.Router();
 var Item = require("../models/item");
 var multer = require("multer");
 var fs=require("fs");
+var middleware=require("../middleware");
+
 router.getImages = function (callback, limit) {
     Item.find(callback).limit(limit);
 }
@@ -24,7 +26,7 @@ var upload = multer({
     storage: storage
 });
 
-router.get("/editItems", function (req, res) {
+router.get("/editItems",middleware.isMember, function (req, res) {
     req.session.edit=true
     res.redirect("/")
     // console.log();
@@ -44,7 +46,7 @@ router.get("/editItems/success",function(req,res){
     req.session.edit=null
     res.redirect("/")
 })
-router.get("/delItems/:id",function(req,res){
+router.get("/delItems/:id",middleware.isMember,function(req,res){
 
     Item.findById(req.params.id,function(err,item){
         if(err){
@@ -61,7 +63,7 @@ router.get("/delItems/:id",function(req,res){
     })
 })
 
-router.get('/addItems', function (req, res, next) {
+router.get('/addItems',middleware.isMember, function (req, res, next) {
     res.render('items/add');
 });
 
@@ -96,8 +98,7 @@ router.post('/addItems', upload.any(), function (req, res) {
     })
 
 });
-router.get("/edit", function (res, req) {
-    req.session.edit = true
+router.get("/edit",middleware.isMember,middleware.canEdit, function (res, req) {
     res.redirect("/")
 })
 router.get("/:category", function (req, res) {

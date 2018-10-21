@@ -3,6 +3,7 @@ var router=express.Router()
 var passport=require("passport");
 var User=require("../models/user");
 var Item=require("../models/item");
+var middleware=require("../middleware");
 
 router.get("/", function (req, res) {
     Item.find({},function(err,allItems){
@@ -55,9 +56,8 @@ router.get("/logout", function (req, res) {
     req.flash("success", "Log out success")
     res.redirect("/");
 });
-router.get("/editInfo/:user_id", function (req, res) {
+router.get("/editInfo/:user_id",middleware.isLoggedIn, function (req, res) {
     req.session.cart={}
-    console.log(req.session)
     User.findById(req.params.user_id, function (err, user) {
         if (err) {
             console.log(err)
@@ -78,7 +78,7 @@ router.put("/updateInfo/:user_id", function (req, res) {
 
     })
 })
-router.get("/changePass/:user_id", function (req, res) {
+router.get("/changePass/:user_id",middleware.isLoggedIn, function (req, res) {
     res.render("changePass")
 })
 router.post("/changePass/:user_id", function (req, res) {
