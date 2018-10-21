@@ -82,7 +82,7 @@
                         <BR>
                         <div class="row text-center" style="display:flex; flex-wrap: wrap;">
                             <%items.forEach(function(item){%>
-                                <div class="col-lg-3 col-md-6 col-xs-12">
+                                <div class="col-lg-2 col-md-6 col-xs-12">
                                     <div class="thumbnail">
                                     <%if(edit){%>
                                         <div class="btn-item">
@@ -98,7 +98,7 @@
                                             </div>
                                         <div class="btn-item">
                                             <%if(edit){%>
-                                                <a class="btn btn-primary btn-md " data-toggle="modal" href="/editItems/success">Edit</a>
+                                                <a class="btn btn-primary btn-md " data-toggle="modal" href="/editItems/<%=item._id%>">Edit</a>
                                                 <a class="btn btn-warning btn-md " data-toggle="modal"href="/editItems/success">Exit Edit</a>
 
                                             <%}else{%>

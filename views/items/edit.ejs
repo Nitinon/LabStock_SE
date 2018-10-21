@@ -1,7 +1,20 @@
 <% include ../partials/header%>
     <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
     <link rel="stylesheet" type="text/css" href="/stylesheet/tump-btn.css">
-
+    <style>
+        .center-cropped {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.5px;
+            margin-left: 25%;
+            background-color: rgb(236, 236, 236);
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            document.getElementById("<%=item.category%>").selected = "true";
+        })
+    </script>
     </head>
 
     <body>
@@ -13,97 +26,76 @@
                     <div class="container">
                         <div class="row">
                             <div class="registerform">
-                                <!-- <form action "/" method="POST" enctype="multipart/form-data">
-                                    <input type="file" name="myimage"></input>
-                                    <input type="submit" name="submit" value="submit"></input>
-                                </form> -->
-                                <form action="/addItems" class="form-horizontal" method="POST" enctype="multipart/form-data">
+                                <form action="/editItems/<%=item._id%>?_method=PUT" class="form-horizontal" method="POST">
                                     <fieldset>
-
-                                        <!-- Form Name -->
                                         <legend>
-                                            <h1> Edit Items</h1>
+                                            <h1>
+                                                <%=item.name%>
+                                            </h1>
                                         </legend>
-
-                                        <!-- Text input-->
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="Name">Items Name</label>
-                                            <div class="col-md-5">
-                                                <input id="Name" name="name" type="text" placeholder="Items Name" class="form-control input-md" required="">
+                                        <div class="row">
+                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <div class="center-cropped">
+                                                    <img class="itemPic" src="../<%=item.originalname%>" alt="Paris">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <!-- Text input-->
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="mobilenumber">Category</label>
-                                            <div class="col-md-5">
-                                                <select class="form-control" id="sel1" name="category">
-                                                    <option value="general">General</option>
-                                                    <option value="network">Network Devices</option>
-                                                    <option value="staionary">Stationary</option>
-                                                    <option value="kitchenware">Kitchenware</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="Name">Select Type</label>
-                                            <div class="col-md-5">
-                                                <label class="radio-inline"><input type="radio" name="type" class="IDsele"
-                                                        value="ID" checked>ID</label>
-                                                <label class="radio-inline"><input type="radio" name="type" class="nonIDsele"
-                                                        value="nonID">Non ID
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label wrap1" for="Name">Items ID</label>
-                                            <div class="col-md-5">
-                                                <input id="Name" name="itemID" type="text" placeholder="Items ID" class="form-control input-md input-itemID" required="">
-                                            </div>
-                                        </div>
+                                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                                <!-- Text input-->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="Name">Items Name</label>
+                                                    <div class="col-md-5">
+                                                        <input id="Name" name="item[name]" type="text" placeholder="Items Name" class="form-control input-md" value="<%=item.name%>" required="">
+                                                    </div>
+                                                </div>
+                                                <!-- Text input-->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="mobilenumber">Category</label>
+                                                    <div class="col-md-5" id="seleCat">
+                                                        <select class="form-control" id="sel1" name="item[category]">
+                                                            <option id="general" value="general">General</option>
+                                                            <option id="network" value="network">Network Devices</option>
+                                                            <option id="stationary" value="staionary">Stationary</option>
+                                                            <option id="kitchenware" value="kitchenware">Kitchenware</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!-- Text input-->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label wrap2" for="Name">Quantity</label>
+                                                    <div class="col-md-5">
+                                                        <input id="Name" name="item[qty]" type="text" placeholder="Quantity" class="form-control input-md input-quantity" value="<%=item.qty%>"
+                                                            required="">
+                                                    </div>
+                                                </div>
 
 
-                                        <!-- Text input-->
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label wrap2" for="Name">Quantity</label>
-                                            <div class="col-md-5">
-                                                <input id="Name" name="qty" type="text" placeholder="Quantity" class="form-control input-md input-quantity" required="">
-                                            </div>
-                                        </div>
+                                                <!-- Text input-->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="Name">Duration limit</label>
+                                                    <div class="col-md-5">
+                                                        <input id="Name" name="item[limit]" type="text" placeholder="7 Days" class="form-control input-md" value="<%=item.limit%>" required="">
+                                                    </div>
+                                                </div>
 
+                                                <!-- Textarea -->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="address">Detail</label>
+                                                    <div class="col-md-4">
+                                                        <textarea class="form-control" id="Detail" name="item[detail]"><%=item.detail%></textarea>
+                                                    </div>
+                                                </div>
+                                                <!-- Button -->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="submit"></label>
+                                                    <div class="col-md-4 pull-right">
+                                                        <input type="submit" class="btn btn-success" name="submit" value="submit">
+                                                    </div>
 
-                                        <!-- Text input-->
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="Name">Duration limit</label>
-                                            <div class="col-md-5">
-                                                <input id="Name" name="limit" type="text" placeholder="7 Days" class="form-control input-md" required="">
-                                            </div>
-                                        </div>
+                                                </div>
 
-                                        <!-- Textarea -->
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="address">Detail</label>
-                                            <div class="col-md-4">
-                                                <textarea class="form-control" id="Detail" name="detail"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="submit">Image</label>
-                                            <div class="col-md-4">
-                                                <input type="file" name="myimage">
-                                            </div>
-                                        </div>
-
-                                        <!-- Button -->
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="submit"></label>
-                                            <div class="col-md-4 pull-right">
-                                                <input type="submit" name="submit" value="submit"></input>
                                             </div>
 
                                         </div>
-
                                     </fieldset>
                                 </form>
                             </div>
@@ -117,5 +109,3 @@
     </body>
 
     </html>
-
-    

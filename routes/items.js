@@ -46,6 +46,25 @@ router.get("/editItems/success",function(req,res){
     req.session.edit=null
     res.redirect("/")
 })
+router.get("/editItems/:item_id", function (req, res) {
+// router.get("/editItems/:item_id",middleware.canEdit, function (req, res) {
+    Item.findById(req.params.item_id,function(err,item){
+        if(err){
+            console.log(err)
+        }else{
+            res.render("items/edit",{item:item})
+        }
+    })
+})
+router.put("/editItems/:item_id", function (req, res) {
+        Item.findByIdAndUpdate(req.params.item_id,req.body.item,function(err){
+            if(err){
+                console.log(err)
+            }else{
+                res.redirect("/")
+            }
+        })
+    })
 router.get("/delItems/:id",middleware.isMember,function(req,res){
 
     Item.findById(req.params.id,function(err,item){
@@ -98,9 +117,7 @@ router.post('/addItems', upload.any(), function (req, res) {
     })
 
 });
-router.get("/edit",middleware.isMember,middleware.canEdit, function (res, req) {
-    res.redirect("/")
-})
+
 router.get("/:category", function (req, res) {
     Item.find({ category: req.params.category }, function (err, allItems) {
         res.render('index', { message: req.flash('error'), items: allItems, category: req.params.category });
