@@ -4,7 +4,7 @@ var ItemShcema = new mongoose.Schema({
     name: String,
     category: String,
     type: String,
-    itemID: String,
+    itemID: [],
     qty: Number,
     limit: Number,
     detail: String,

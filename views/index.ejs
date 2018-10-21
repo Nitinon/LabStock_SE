@@ -57,6 +57,7 @@
                     </div>
                     
                     <%include ./partials/categoryBar%>
+                        
                     <script>
                             $('#<%=category%>_tab').addClass("Active");
                     </script>
@@ -83,15 +84,27 @@
                             <%items.forEach(function(item){%>
                                 <div class="col-lg-3 col-md-6 col-xs-12">
                                     <div class="thumbnail">
+                                    <%if(edit){%>
+                                        <div class="btn-item">
+                                            <a class="btn btn-danger btn-md " data-toggle="modal" href="/delItems/<%=item._id%>">X</a>
+                                        </div>
+                                    <%}%>
                                         <div class="center-cropped">
+
                                             <img class="itemPic" src="<%=item.originalname%>" alt="Paris">
                                         </div>
                                             <div class="itemName">
                                                 <p><strong><%=item.name%></strong></p>
                                             </div>
                                         <div class="btn-item">
+                                            <%if(edit){%>
+                                                <a class="btn btn-primary btn-md " data-toggle="modal" href="/editItems/success">Edit</a>
+                                                <a class="btn btn-warning btn-md " data-toggle="modal"href="/editItems/success">Exit Edit</a>
+
+                                            <%}else{%>
                                             <button class="btn btn-success btn-md " data-toggle="modal" data-target="#myModal2<%=item._id%>">Add</button>
                                             <button class="btn btn-warning btn-md " data-toggle="modal" data-target="#myModal2">more detail</button>
+                                            <%}%>
                                         </div>
     
                                     </div>
@@ -111,7 +124,6 @@
                                             </h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form role="form">
                                                 <div class="form-group">
                                                     <div class="thumbnail">
                                                         <img src="<%=item.originalname%>" alt="San Francisco">
@@ -128,9 +140,9 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-block">Add in cart
+                                                <a href="/kiki/<%=item._id%>"><button class="btn btn-block">Add in cart
                                                     <span class="glyphicon glyphicon-shopping-cart"></span>
-                                                </button>
+                                                </button></a> 
                                             </form>
                                         </div>
                                     </div>

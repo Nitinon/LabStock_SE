@@ -49,13 +49,15 @@ app.use(function (req, res, next) {
     res.locals.currentUser = req.user;
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
+    res.locals.edit = req.session.edit;
+
     // sadsad
-    res.locals.session = req.session;
+    // res.locals.session = req.session;
     next();
 });
         
-app.use(itemRoute);
 app.use(indexRoute)
+app.use(itemRoute);
 // app.get("/hihi", function (req, res) {
 //     User.find({}, "email", function (err, mails) {
 //         mails.forEach(function (Element) {

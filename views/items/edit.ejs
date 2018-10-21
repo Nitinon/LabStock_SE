@@ -22,7 +22,7 @@
 
                                         <!-- Form Name -->
                                         <legend>
-                                            <h1> Add Items</h1>
+                                            <h1> Edit Items</h1>
                                         </legend>
 
                                         <!-- Text input-->
@@ -91,7 +91,7 @@
                                         <div class="form-group">
                                             <label class="col-md-4 control-label" for="submit">Image</label>
                                             <div class="col-md-4">
-                                                <input type="file" name="myimage" required>
+                                                <input type="file" name="myimage">
                                             </div>
                                         </div>
 
@@ -118,28 +118,4 @@
 
     </html>
 
-    <script>
-        $(document).ready(function () {
-            // By Default Disable radio button
-            $(".input-quantity").attr('disabled', true);
-            $(".input-itemID").attr('disabled', false);
-            $(".wrap2").css('opacity', '0.2');
-
-            $("form input:radio").change(function () {
-                if ($(this).val() == "nonID") {
-                    // $(".input-itemID").attr('checked', false);
-                    $(".input-itemID").attr('disabled', true);
-                    $(".input-quantity").attr('disabled', false);
-                    $(".wrap1").css('opacity', '0.2');
-                    $(".wrap2").css('opacity', '1');
-                }
-                // Else Enable radio buttons.
-                else {
-                    $(".input-itemID").attr('disabled', false);
-                    $(".input-quantity").attr('disabled', true);
-                    $(".wrap1").css('opacity', '1');
-                    $(".wrap2").css('opacity', '0.2');
-                }
-            });
-        });
-    </script>
+    

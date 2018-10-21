@@ -9,9 +9,7 @@ router.get("/", function (req, res) {
         res.render('index', { message: req.flash('error'),items:allItems,category:"all"});
     })
 })
-router.get("/addItems", function (req, res) {
-    res.render('items/add', { message: req.flash('error') });
-})
+
 router.get("/register", function (req, res) {
     res.render("register")
 })
@@ -52,6 +50,7 @@ router.post("/login", passport.authenticate("local",
     }
 ))
 router.get("/logout", function (req, res) {
+    req.session.edit=null
     req.logout();
     req.flash("success", "Log out success")
     res.redirect("/");
