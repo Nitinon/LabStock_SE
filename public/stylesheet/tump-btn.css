@@ -17,8 +17,7 @@
     border-color: blue;
     border: 10px solid transparent;
     width: 80%;
-    
-    /* height: 100px; */
+    height: 200px;
 }
 .itemName{
     padding-left: 15%;
