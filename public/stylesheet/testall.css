@@ -1,6 +1,13 @@
 html,body{
     height: 100%;
 }
+.out-of-stock{
+    margin-bottom:0;
+    color: red;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-align: center;
+}
 body{
     background: #dbdbdb;
     height: 100%;
@@ -226,3 +233,5 @@ ul.nav.nav-tabs{
     -moz-box-shadow: 10px 10px 31px -6px rgba(0,0,0,0.55);
     box-shadow: 10px 10px 31px -6px rgba(0,0,0,0.55);
 }
+
+

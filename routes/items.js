@@ -65,6 +65,36 @@ router.put("/editItems/:item_id", function (req, res) {
             }
         })
     })
+router.post("/editItems/:item_id/addID",function(req,res){
+    Item.findById(req.params.item_id,function(err,foundedItem){
+        if(err){
+            console.log(err)
+        }else{
+            foundedItem.itemID.push(req.body.newID)
+            foundedItem.qty++
+            foundedItem.save()
+            console.log(foundedItem)
+            req.flash("success","Add ID Complete")
+            res.redirect("/editItems/"+req.params.item_id)
+        }
+    })
+})
+
+router.post("/editItems/:item_id/delID",function(req,res){
+    Item.findById(req.params.item_id,function(err,foundedItem){
+        if(err){
+            console.log(err)
+        }else{
+            console.log(req.body)
+            foundedItem.itemID.splice(req.body.selectDel, 1)
+            foundedItem.qty--
+            foundedItem.save()
+            console.log(foundedItem)
+            req.flash("success","Del ID Complete")
+            res.redirect("/editItems/"+req.params.item_id)
+        }
+    })
+})
 router.get("/delItems/:id",middleware.isMember,function(req,res){
 
     Item.findById(req.params.id,function(err,item){
