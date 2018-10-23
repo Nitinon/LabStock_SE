@@ -5,7 +5,7 @@ var User = require("../models/user");
 var middleware = require("../middleware");
 
 // router
-router.post("/addCart/:item_id", function (req, res) {
+router.post("/addCart/:item_id",middleware.isLoggedIn, function (req, res) {
     User.findById(req.user._id, function (err, user) {
         Item.findById(req.params.item_id, function (err, item) {
             // new

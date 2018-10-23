@@ -6,13 +6,27 @@ var Item = require("../models/item");
 var middleware = require("../middleware");
 
 router.get("/", function (req, res) {
-    Item.find({}, function (err, allItems) {
-        middleware.countQty(req,function(numcart){
-            res.render('index', { message: req.flash('error'), items: allItems, category: "all", numcart: numcart });
-        });
-    })
+    res.redirect("/p/1")
 })
+router.get('/p/:page', function(req, res, next) {
+    var perPage = 4
+    var page = req.params.page || 1
 
+    Item
+        .find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function(err, allItems) {
+            Item.count().exec(function(err, count) {
+                if (err) return next(err)
+                middleware.countQty(req,function(numcart){
+                    // res.render('index', { message: req.flash('error'), items: allItems, category: "all", numcart: numcart });
+                    res.render('index', { message: req.flash('error'),items: allItems, category: "all", numcart: numcart,current: page,pages: Math.ceil(count / perPage)
+                    })
+                });
+            })
+        })
+})
 router.get("/register", function (req, res) {
     res.render("register")
 })
@@ -59,6 +73,7 @@ router.get("/logout", function (req, res) {
     res.redirect("/");
 });
 router.get("/editInfo/:user_id", middleware.isLoggedIn, function (req, res) {
+    
     req.session.cart = {}
     User.findById(req.params.user_id, function (err, user) {
         if (err) {
@@ -75,7 +90,7 @@ router.put("/updateInfo/:user_id", function (req, res) {
             console.log(err)
         } else {
             req.flash("success", "Update Info Complete")
-            res.redirect("/")
+            res.redirect("/1")
         }
 
     })
@@ -95,11 +110,12 @@ router.post("/changePass/:user_id", function (req, res) {
                     req.flash("error", error)
                 } else {
                     req.flash("success", "change password success")
-                    res.redirect("/")
+                    res.redirect("/1")
                 }
             })
         }
     })
 })
+
 
 module.exports = router;
