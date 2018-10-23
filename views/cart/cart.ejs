@@ -19,6 +19,7 @@
                             <th>Quantity</th>
                             <th>Limit</th>
                             <th>ID</th>
+                            <th>Del</th>
 
                         </tr>
                     </thead>
@@ -29,8 +30,9 @@
                             <td><%=cart.itemID[item]%></td>
                             <td><%=cart.qty[item]%></td>
                             <td><%=cart.limit[item]%></td>
-                            <td><%=cart.ID[item]%>
-                            </td>
+                            <%if(cart.ID[item]==""){%><td>Non-ID</td>
+                            <%}else{%><td><%=cart.ID[item]%></td><%}%>
+                            <td><a href="/cart/delItem/<%=item%>" class="btn btn-danger">Del</a></td>
                         </tr>
                         <%}%>
                       

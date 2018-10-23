@@ -10,19 +10,20 @@ var express = require("express"),
     User = require("./models/user")
 
 var path = require('path');
-var indexRoute=require("./routes/index"),
+var indexRoute = require("./routes/index"),
+    cartRoute = require("./routes/cart"),
     itemRoute = require("./routes/items")
 
 
 // var smtpTransport = nodemailer.createTransport({
-    //     service: "gmail",
-    //     host: "smtp.gmail.com",
-    //     auth: {
-        //         user: "LabStock.KMITL@gmail.com",
-        //         pass: "Nitinon.556"
-        //     }
-        // });
-        
+//     service: "gmail",
+//     host: "smtp.gmail.com",
+//     auth: {
+//         user: "LabStock.KMITL@gmail.com",
+//         pass: "Nitinon.556"
+//     }
+// });
+
 app.use(express.static(__dirname + "/public"))
 app.use(express.static(__dirname + "/uploads"));
 
@@ -31,20 +32,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs")
 app.use(methodOverride("_method"))
 app.use(flash())
-        
+
 app.use(require("express-session")({
     secret: "Secret",
     resave: false,
     saveUninitialized: false,
     // cookie: { maxAge: 60000 }
 }))
-        
+
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-        // local
+// local
 app.use(function (req, res, next) {
     res.locals.currentUser = req.user;
     res.locals.error = req.flash("error");
@@ -55,9 +56,11 @@ app.use(function (req, res, next) {
     // res.locals.session = req.session;
     next();
 });
-        
+
 app.use(indexRoute)
+app.use(cartRoute);
 app.use(itemRoute);
+
 // app.get("/hihi", function (req, res) {
 //     User.find({}, "email", function (err, mails) {
 //         mails.forEach(function (Element) {
