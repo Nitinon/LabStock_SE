@@ -30,19 +30,41 @@ var upload = multer({
 
 router.get("/addCart/:item_id",function(req,res){
     User.findById(req.user._id,function(err,user){
-        if(user.cart.itemID.indexOf(req.params.item_id)==-1){
-            user.cart.itemID.push(req.params.item_id)
-            user.cart.qty.push(1)
+        Item.findById(req.params.item_id,function(err,item){
+            // new
+            if(user.cart.itemID.indexOf(req.params.item_id)==-1){
+                user.cart.itemID.push(req.params.item_id)
+                user.cart.qty.push(1)
+                if(item.type=="ID"){
+                    user.cart.ID.push([])
+                    var a=user.cart.itemID.indexOf(req.params.item_id)
+                    user.cart.ID[a].push("ssss")
+                }else{
+                    user.cart.ID.push([])
+                }
+            }else{
+                var temp=user.cart.qty
+                temp[user.cart.itemID.indexOf(req.params.item_id)]++
+                user.cart.qty=[]
+                user.cart.qty=temp
+
+                if(item.type=="ID"){
+                    var a=user.cart.itemID.indexOf(req.params.item_id)
+                    var kk=user.cart.ID
+                    var eiei=kk[a]
+                    eiei.push("eeeee")
+                    user.cart.ID=[]
+                    user.cart.ID=kk
+                    console.log(user.cart.ID)
+
+                }
+                
+            }
             
-        }else{
-            var temp=user.cart.qty
-            temp[user.cart.itemID.indexOf(req.params.item_id)]++
-            user.cart.qty=[]
-            console.log(temp)
-            user.cart.qty=temp
-        }
+        })
+        console.log(user.cart)
         user.save()
-        console.log(user.cart);
+        res.redirect("/")
 
     })
 })
@@ -50,7 +72,7 @@ router.get("/clearCart",function(req,res){
     User.findById(req.user._id,function(err,user){
         user.cart.itemID=[]
         user.cart.qty=[]
-
+        user.cart.ID=[]
         user.save()
         console.log(user.cart);
         res.redirect("/")
