@@ -30,7 +30,7 @@ router.post("/register", function (req, res) {
         req.flash("error", "password and comfirm password not match!!");
         res.redirect("/register");
     } else {
-        User.register(user, req.body.password, function (err, user) {
+        User.register(user,req.body.password, function (err, user) {
             if (err) {
                 req.flash("error", err.message);
                 res.redirect("/register");

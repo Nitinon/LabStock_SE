@@ -103,7 +103,8 @@
                                                                             <a class="btn btn-primary btn-md " data-toggle="modal" href="/editItems/<%=item._id%>">Edit</a>
                                                                     <%}else{%>
                                                                         <%if(item.qty!=0){%>
-                                                                            <button class="btn btn-success btn-md " data-toggle="modal" data-target="#myModal2<%=item._id%>">Add</button>
+                                                                            <!-- <button class="btn btn-success btn-md " data-toggle="modal" data-target="#myModal2<%=item._id%>">Add</button> -->
+                                                                            <a href="/addCart/<%=item._id%>" class="btn btn-success btn-md ">Add</a>
                                                                             <button class="btn btn-warning btn-md " data-toggle="modal" data-target="#myModal2">more detail</button>
                                                                         <%}else{%>
                                                                                 <p class="out-of-stock">out of stock</p>
@@ -158,19 +159,7 @@
 
                                                 <% include ./partials/modalLogin %>
 
-                                                    <ul class="pager">
-                                                        <li><a href="#">Previous</a></li>
-                                                        <li><a href="#">Next</a></li>
-                                                        <br>
-                                                        <ul class="pagination pagination-sm">
-                                                            <li><a href="#">1</a></li>
-                                                            <li><a href="#">2</a></li>
-                                                            <li><a href="#">3</a></li>
-                                                            <li><a href="#">4</a></li>
-                                                            <li><a href="#">5</a></li>
-                                                        </ul>
-
-                                                    </ul>
+                                               
                                     </div>
                                     <% include ./partials/footer %>
         </div>
