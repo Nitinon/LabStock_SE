@@ -1,0 +1,47 @@
+<% include ../partials/header%>
+
+<link rel="stylesheet" type="text/css" href="stylesheet/testall.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/add-app-return.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <%include ../partials/navbar%>
+
+            <div class="container">
+                <h1>Check out</h1>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Items name</th>
+                            <th>Items ID</th>
+                            <th>Quantity</th>
+                            <th>Limit</th>
+                            <th>ID</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%for(var item=0; item<cart.itemID.length;item++){ %>
+                        <tr>
+                            <td><%=cart.name[item]%></td>
+                            <td><%=cart.itemID[item]%></td>
+                            <td><%=cart.qty[item]%></td>
+                            <td><%=cart.limit[item]%></td>
+                            <td><%=cart.ID[item]%>
+                            </td>
+                        </tr>
+                        <%}%>
+                      
+                    </tbody>
+                </table>
+                <a href="/clearCart"><button id="submit" name="submit" class="btn btn-warning pull-right">ClearCart</button></a>
+                <a href="History-mem-br.html"> <button id="submit" name="submit" class="btn btn-success pull-right">Checkout</button></a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

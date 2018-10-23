@@ -14,6 +14,8 @@ var UserSchema = new mongoose.Schema({
     address: String,
     cart: {
         itemID: [],
+        name:[],
+        limit:[],
         ID:[],
         qty: []
 

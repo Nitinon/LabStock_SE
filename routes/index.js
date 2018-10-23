@@ -7,21 +7,9 @@ var middleware = require("../middleware");
 
 router.get("/", function (req, res) {
     Item.find({}, function (err, allItems) {
-        if (req.isAuthenticated()) {
-            User.findById(req.user.id,function(err,user){
-                // count in cart
-                var num=0
-                user.cart.qty.forEach(function(qty){
-                    num+=qty
-                })
-                console.log(user.cart)
-                res.render('index', { message: req.flash('error'), items: allItems, category: "all",numcart:num});
-            })
-        }
-        else {
-            res.render('index', { message: req.flash('error'), items: allItems, category: "all" });
-
-        }
+        middleware.countQty(req,function(numcart){
+            res.render('index', { message: req.flash('error'), items: allItems, category: "all", numcart: numcart });
+        });
     })
 })
 
