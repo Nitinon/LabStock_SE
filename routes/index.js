@@ -1,13 +1,27 @@
-var express=require("express")
-var router=express.Router()
-var passport=require("passport");
-var User=require("../models/user");
-var Item=require("../models/item");
-var middleware=require("../middleware");
+var express = require("express")
+var router = express.Router()
+var passport = require("passport");
+var User = require("../models/user");
+var Item = require("../models/item");
+var middleware = require("../middleware");
 
 router.get("/", function (req, res) {
-    Item.find({},function(err,allItems){
-        res.render('index', { message: req.flash('error'),items:allItems,category:"all"});
+    Item.find({}, function (err, allItems) {
+        if (req.isAuthenticated()) {
+            User.findById(req.user.id,function(err,user){
+                // count in cart
+                var num=0
+                user.cart.qty.forEach(function(qty){
+                    num+=qty
+                })
+                console.log(user.cart)
+                res.render('index', { message: req.flash('error'), items: allItems, category: "all",numcart:num});
+            })
+        }
+        else {
+            res.render('index', { message: req.flash('error'), items: allItems, category: "all" });
+
+        }
     })
 })
 
@@ -30,7 +44,7 @@ router.post("/register", function (req, res) {
         req.flash("error", "password and comfirm password not match!!");
         res.redirect("/register");
     } else {
-        User.register(user,req.body.password, function (err, user) {
+        User.register(user, req.body.password, function (err, user) {
             if (err) {
                 req.flash("error", err.message);
                 res.redirect("/register");
@@ -51,13 +65,13 @@ router.post("/login", passport.authenticate("local",
     }
 ))
 router.get("/logout", function (req, res) {
-    req.session.edit=null
+    req.session.edit = null
     req.logout();
     req.flash("success", "Log out success")
     res.redirect("/");
 });
-router.get("/editInfo/:user_id",middleware.isLoggedIn, function (req, res) {
-    req.session.cart={}
+router.get("/editInfo/:user_id", middleware.isLoggedIn, function (req, res) {
+    req.session.cart = {}
     User.findById(req.params.user_id, function (err, user) {
         if (err) {
             console.log(err)
@@ -78,7 +92,7 @@ router.put("/updateInfo/:user_id", function (req, res) {
 
     })
 })
-router.get("/changePass/:user_id",middleware.isLoggedIn, function (req, res) {
+router.get("/changePass/:user_id", middleware.isLoggedIn, function (req, res) {
     res.render("changePass")
 })
 router.post("/changePass/:user_id", function (req, res) {
@@ -100,4 +114,4 @@ router.post("/changePass/:user_id", function (req, res) {
     })
 })
 
-module.exports=router;
+module.exports = router;

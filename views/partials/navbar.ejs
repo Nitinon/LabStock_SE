@@ -52,7 +52,7 @@
                         <li><a href="#home" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span>Login</a></li>
                         <li><a href="/register"><span class="glyphicon glyphicon-edit"></span>Register</a></li>
                     <%}else{%>
-                        <li><a href="#tour"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+                        <li><a href="#tour"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="badge badge-warning"><%=numcart%></span></a></li>
                         <li><a href="/editInfo/<%=currentUser._id%>"><%=currentUser.username%></a></li>
                         <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
                     <%}%>
