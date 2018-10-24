@@ -57,12 +57,13 @@ router.post("/addCart/:item_id",middleware.isLoggedIn, function (req, res) {
                 }
             }
             user.save()
-            res.redirect("/")
+            res.redirect("/p/1")
         })
 
     })
 })
 router.get("/cart", function (req, res) {
+    
     middleware.countQty(req, function (numcart) {
         res.render("cart/cart", { numcart: numcart, cart: req.user.cart })
     })

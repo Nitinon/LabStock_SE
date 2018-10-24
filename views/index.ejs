@@ -82,6 +82,8 @@
             <div class="container">
                 <BR>
                 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                    <!-- ตอนแรกเป็น for each -->
+                    <%if(found==false){%> <h1>Not Found</h1><%}%>
                     <% for (var i = 0; i < items.length; i++) { %>
                     <div class="col-lg-2 col-md-6 col-xs-12">
                         <div class="thumbnail">
@@ -100,9 +102,10 @@
                             </div>
                             <div class="btn-item">
                                 <%if(edit){%>
-                                <a id="addCart_<%=items[i].name%>" class="btn btn-warning btn-md " data-toggle="modal" href="/editItems/success">Exit
+                                <a id="addCart_<%=items[i].name%>" class="btn btn-warning btn-md " data-toggle="modal"
+                                    href="/editItems/success">Exit
                                     Edit</a>
-                                <a class="btn btn-primary btn-md " data-toggle="modal" href="/editItems/<%=item._id%>">Edit</a>
+                                <a class="btn btn-primary btn-md " data-toggle="modal" href="/editItems/<%=items[i]._id%>">Edit</a>
                                 <%}else{%>
                                 <%if(items[i].qty!=0){%>
                                 <button class="btn btn-success btn-md " data-toggle="modal" data-target="#myModal2<%=items[i]._id%>">Add</button>
@@ -137,7 +140,7 @@
                             <div class="modal-body">
                                 <form action="/addCart/<%=item._id%>" method="POST">
                                     <%if(item.type=="ID"){%>
-                                    <select name="itemID" id="">
+                                    <select name="itemID">
                                         <%item.itemID.forEach(function(ID){%>
                                         <option value="<%=ID%>">
                                             <%=ID%>
@@ -145,7 +148,7 @@
                                         <%})%>
                                     </select>
                                     <%}else{%>
-                                    <input name="qty" type="text">
+                                    <input name="qty" type="number">
                                     <%}%>
                                     <input type="submit">
                                 </form>
@@ -157,36 +160,51 @@
 
                 <% include ./partials/modalLogin %>
             </div>
-            <% if (pages > 0) { %>
-            <ul class="pagination text-center">
-                <% if (current == 1) { %>
-                <li class="disabled"><a>First</a></li>
-                <% } else { %>
-                <li><a href="/p/1">First</a></li>
+            <!-- เพิ่มก้อนนี้ -->
+            <div class="text-center">
+
+                <% if (pages > 0) { %>
+                <ul class="pagination text-center">
+                    <% if (current == 1) { %>
+                    <li class="disabled"><a>First</a></li>
+                    <% } else { %>
+                    <li><a href="/p/1">First</a></li>
+                    <% } %>
+                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                    <li class="disabled"><a>...</a></li>
+                    <% } %>
+                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                    <% if (i == current) { %>
+                    <li class="active"><a>
+                            <%= i %></a></li>
+                    <% } else { %>
+                    <%if(category=="all"){%>
+                    <li><a href="/p/<%= i %>">
+                            <%= i %></a></li>
+                    <%}else{%>
+                    <li><a href="/<%=category%>/p/<%= i %>">
+                            <%= i %></a></li>
+
+                    <%}%>
+
+                    <% } %>
+                    <% if (i == Number(current) + 4 && i < pages) { %>
+                    <li class="disabled"><a>...</a></li>
+                    <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                    <li class="disabled"><a>Last</a></li>
+                    <% } else { %>
+                    <%if(category=="all"){%>
+                    <li><a href="/p/<%= pages %>">Last</a></li>
+                    <%}else{%>
+                    <li><a href="/<%=category%>/p/<%= pages %>">Last</a></li>
+                    <%}%>
+                    <% } %>
+                </ul>
                 <% } %>
-                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-                <% if (i !== 1) { %>
-                <li class="disabled"><a>...</a></li>
-                <% } %>
-                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
-                <% if (i == current) { %>
-                <li class="active"><a>
-                        <%= i %></a></li>
-                <% } else { %>
-                <li><a href="/p/<%= i %>">
-                        <%= i %></a></li>
-                <% } %>
-                <% if (i == Number(current) + 4 && i < pages) { %>
-                <li class="disabled"><a>...</a></li>
-                <% } %>
-                <% } %>
-                <% if (current == pages) { %>
-                <li class="disabled"><a>Last</a></li>
-                <% } else { %>
-                <li><a href="/p/<%= pages %>">Last</a></li>
-                <% } %>
-            </ul>
-            <% } %>
+            </div>
         </div>
 
     </div>

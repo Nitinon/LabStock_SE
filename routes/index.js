@@ -21,7 +21,7 @@ router.get('/p/:page', function(req, res, next) {
                 if (err) return next(err)
                 middleware.countQty(req,function(numcart){
                     // res.render('index', { message: req.flash('error'), items: allItems, category: "all", numcart: numcart });
-                    res.render('index', { message: req.flash('error'),items: allItems, category: "all", numcart: numcart,current: page,pages: Math.ceil(count / perPage)
+                    res.render('index', { message: req.flash('error'),items: allItems, category: "all", numcart: numcart,current: page,pages: Math.ceil(count / perPage),found:true
                     })
                 });
             })

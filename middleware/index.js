@@ -1,6 +1,3 @@
-// 
-
-
 module.exports = middlewareObj;
 var Item = require("../models/item");
 var User = require("../models/user");
