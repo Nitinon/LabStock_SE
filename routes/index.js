@@ -9,9 +9,8 @@ router.get("/", function (req, res) {
     res.redirect("/p/1")
 })
 router.get('/p/:page', function(req, res, next) {
-    var perPage = 4
+    var perPage = 6
     var page = req.params.page || 1
-
     Item
         .find({})
         .skip((perPage * page) - perPage)
@@ -79,7 +78,9 @@ router.get("/editInfo/:user_id", middleware.isLoggedIn, function (req, res) {
         if (err) {
             console.log(err)
         } else {
-            res.render("editInfo")
+            middleware.countQty(req,function(numcart){
+                res.render("editInfo",{numcart:numcart})
+            })
         }
     })
 })
@@ -90,7 +91,7 @@ router.put("/updateInfo/:user_id", function (req, res) {
             console.log(err)
         } else {
             req.flash("success", "Update Info Complete")
-            res.redirect("/1")
+            res.redirect("/p/1")
         }
 
     })

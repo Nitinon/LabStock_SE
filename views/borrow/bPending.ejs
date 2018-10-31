@@ -1,0 +1,121 @@
+<% include ../partials/header%>
+
+<link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
+<link rel="stylesheet" type="text/css" href="/stylesheet/add-app-return.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <%include ../partials/navbar%>
+            <div class="container">
+                <ul class="nav nav-tabs">
+                    <li><a href="History-mem-br.html">Borrowed</a></li>
+                    <li><a href="History-mem-re.html">Return</a></li>
+                    <li class="active"><a href="#">Borrow pending</a></li>
+                    <li><a href="History-mem-pen-re.html">Return pending</a></li>
+                </ul>
+            </div>
+
+            <div class="container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Borrow ID</th>
+                            <th>Author</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%borrows.forEach(function(borrow){%>
+                        <tr>
+                            <td> <a href="/borrow/del/<%=borrow._id%>">X</a>
+                                <%=borrow._id%>
+                            </td>
+                            <td>
+                                <%=borrow.author.name%>
+                            </td>
+                            <td>
+                                <%=borrow.repatriate%>
+                                <a data-toggle="modal" data-target="#myModal2<%=borrow._id%>">assa</a>
+                            </td>
+                        </tr>
+                        <%})%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <% include ../partials/footer %>
+    </div>
+
+    <%borrows.forEach(function(borrow){%>
+
+    <div class="modal fade" id="myModal2<%=borrow._id%>" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4><span class="glyphicon glyphicon-folder-open"></span>
+                        :Item list
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Picture</th>
+                                <th>Items Name</th>
+                                <th>Quantity</th>
+                                <th>ID</th>
+                                <th>Del</th>
+
+                            </tr>
+                            <form action="/borrow/confirm/<%=borrow._id%>" method="POST">
+                        </thead>
+                        <tbody>
+                            <%for(var item=0; item<borrow.itemID.length;item++){ %>
+                            <tr>
+                                <td><img src="/<%=borrow.pic[item]%>" style="width:50px;"></td>
+                                <td>
+                                    <%=borrow.itemName[item]%></strong></p>
+
+                                </td>
+                                <td>
+                                    <%if(borrow.ID[item]==""){%>
+                                    <%=borrow.qty[item]%>
+                                    <%}else{%>
+                                    <%=borrow.qty[item]%>
+                                    <%}%>
+                                </td>
+
+                                <%if(borrow.ID[item]==""){%>
+
+                                <td>Non-ID <input type="checkbox" name="item" value=<%=item%>></td>
+                                <%}else{%>
+                                <td>
+                                    <%for(var ID=0; ID<borrow.ID[item].length;ID++){ %>
+                                    <p>
+                                        <%=ID%><input type="checkbox" name="item" value=<%=item%>
+                                        <%=ID%>>
+                                    </p>
+                                    <%}%>
+                                </td>
+                                <%}%>
+                            </tr>
+                            <%}%>
+
+                        </tbody>
+                        <input type="submit">
+                    </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%})%>
+
+</body>
+
+</html>
