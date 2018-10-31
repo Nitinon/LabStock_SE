@@ -97,8 +97,7 @@
                                 <td>
                                     <%for(var ID=0; ID<borrow.ID[item].length;ID++){ %>
                                     <p>
-                                        <%=ID%><input type="checkbox" name="item" value=<%=item%>
-                                        <%=ID%>>
+                                        <%=borrow.ID[item][ID]%><input type="checkbox" name="item" value=<%=item%><%=ID%>>
                                     </p>
                                     <%}%>
                                 </td>

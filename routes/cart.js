@@ -93,7 +93,7 @@ router.get("/cart/delItem/:item_id", function (req, res) {
 
     })
 })
-router.get("/cart/incItem/:indexItem",function(req,res){
+router.get("/cart/incItem/:indexItem", function (req, res) {
     User.findById(req.user._id, function (err, user) {
         var cart = user.cart
         var temp = user.cart.qty
@@ -105,7 +105,7 @@ router.get("/cart/incItem/:indexItem",function(req,res){
         res.redirect("/cart")
     })
 })
-router.get("/cart/decItem/:indexItem",function(req,res){
+router.get("/cart/decItem/:indexItem", function (req, res) {
     User.findById(req.user._id, function (err, user) {
         var cart = user.cart
         var temp = user.cart.qty
@@ -149,10 +149,10 @@ router.get("/cart/:indexItem/:indexID", function (req, res) {
 router.get("/checkout", function (req, res) {
     User.findById(req.user._id, function (err, user) {
         var cart = user.cart
-        var author={
-            id:req.user._id,
-            name:req.user.name,
-            surname:req.user.surname
+        var author = {
+            id: req.user._id,
+            name: req.user.name,
+            surname: req.user.surname
         };
         var newOrder = new Borrow({
             author: author,
@@ -169,6 +169,34 @@ router.get("/checkout", function (req, res) {
             if (err) {
                 console.log(err)
             } else {
+                // newOrder.itemID.forEach(function (itemID, i) {
+                //     if (req.user.cart.ID[i] == "") { //it's mean Non id
+                //         console.log(req.user.cart.itemID[i] + "  " + req.user.cart.qty[i])
+                //         // ค่า i
+                //         Item.findById(req.user.cart.itemID[i], function (err, item) {
+                //             if (err) {
+                //                 console.log(err)
+                //             }
+                //             item.qty -= req.user.cart.qty[i];
+                //             item.save();
+                //         })
+                //     } else {
+                //         req.user.cart.ID[i].forEach(function (ID) {
+                //             console.log("ID: " + ID)
+                //             console.log("itemID "+req.user.cart.itemID[i])
+                //             Item.findById(req.user.cart.itemID[i], function (err,item) {
+                //                 if(err){
+                //                     console.log(err);
+                //                 }
+                //                 item.itemID.splice(item.itemID.indexOf(ID), 1)
+                //                 item.qty--;
+                //                 item.save();
+                //             })
+
+                //         })
+
+                //     }
+                // })
                 user.borrow.push(newBorrow)
                 user.cart.itemID = []
                 user.cart.ID = []
@@ -181,7 +209,6 @@ router.get("/checkout", function (req, res) {
                 res.redirect("/p/1")
             }
         })
-        // Borrow.create()
     })
 })
 router.get("/clearCart", function (req, res) {
