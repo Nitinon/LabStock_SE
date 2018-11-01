@@ -62,15 +62,15 @@ ul.nav.nav-tabs{
     font-size: 20px;
 }
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
-    height: 60px;
-    line-height: 60px;
+    max-height: 10vh;
+    line-height: 5vh;
     text-align: center;
     background-color: #090c30;
     display: block;
-    
+    z-index: 999;
 }
 .footer span{
     color: rgb(250, 250, 250);
