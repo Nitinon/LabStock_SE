@@ -162,8 +162,7 @@ router.get("/checkout", function (req, res) {
             limit: cart.limit,
             ID: cart.ID,
             qty: cart.qty,
-            repatriate: false,
-            aprove: false
+            approve: false
         })
         Borrow.create(newOrder, function (err, newBorrow) {
             if (err) {

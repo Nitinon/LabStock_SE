@@ -18,7 +18,7 @@ var BorrowShcema = new mongoose.Schema({
     limit: [],
     ID: [],
     qty: [],
-    repatriate:Boolean,
-    approve:Boolean
+    approve:Boolean,
+    date:Date
 })
 module.exports = mongoose.model("Borrow", BorrowShcema)

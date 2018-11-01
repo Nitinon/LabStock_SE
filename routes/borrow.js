@@ -5,13 +5,47 @@ var User = require("../models/user");
 var Borrow = require("../models/borrow");
 var middleware = require("../middleware");
 
+router.get("/borrow/pending/member", function (req, res) {
+    // User.findById(req.user._id).populate("borrow").exec(function (err, user) {
+    User.findById(req.user._id, function (err, user) {
+        Borrow.find({
+            approve: "false"
+        }, function (err, foundedBorrow) {
+            middleware.countQty(req, function (numcart) {
+                res.render("borrow/bPending_member", {
+                    cart: user.cart,
+                    numcart: numcart,
+                    borrows: foundedBorrow,
+                    approve:true
+                })
+            })
+        })
+    })
+})
 router.get("/borrow/pending", function (req, res) {
-    User.findById(req.user._id).populate("borrow").exec(function (err, user) {
+    User.findById(req.user._id).populate({
+        path: 'borrow',
+        match: { approve:false},
+    }).exec(function (err, user) {
         middleware.countQty(req, function (numcart) {
             res.render("borrow/bPending", {
                 cart: user.cart,
                 numcart: numcart,
-                borrows: user.borrow
+                borrows: user.borrow,
+            })
+        })
+    })
+})
+router.get("/borrow/borrowed", function (req, res) {
+    User.findById(req.user._id).populate({
+        path: 'borrow',
+        match: { approve:true},
+    }).exec(function (err, user) {
+        middleware.countQty(req, function (numcart) {
+            res.render("borrow/bPending", {
+                cart: user.cart,
+                numcart: numcart,
+                borrows: user.borrow,
             })
         })
     })
@@ -63,16 +97,16 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
                 temp.pic.splice(indexItem_temp, 1);
             }
         })
-        temp.itemID.forEach(function (itemID,i) {
-            console.log(itemID+" "+i+" "+temp.itemName[i])
-            var fItem=temp2.itemID.indexOf(itemID)
-            temp.ID[i].forEach(function(ID,j){
-                console.log("ID: "+ID)
-                var fID=temp2.ID[fItem].indexOf(ID)
-                temp2.ID[fItem].splice(fID,1)
+        temp.itemID.forEach(function (itemID, i) {
+            console.log(itemID + " " + i + " " + temp.itemName[i])
+            var fItem = temp2.itemID.indexOf(itemID)
+            temp.ID[i].forEach(function (ID, j) {
+                console.log("ID: " + ID)
+                var fID = temp2.ID[fItem].indexOf(ID)
+                temp2.ID[fItem].splice(fID, 1)
                 temp2.qty[fItem]--;
             })
-            if(temp2.ID[fItem]==""){
+            if (temp2.ID[fItem] == "") {
                 temp2.itemID.splice(fItem, 1);
                 temp2.ID.splice(fItem, 1);
                 temp2.itemName.splice(fItem, 1);
@@ -91,7 +125,7 @@ router.get("/borrow/del/:borrow_id", function (req, res) {
             user.borrow.splice(user.borrow.indexOf(borrow._id), 1);
             user.save();
         })
-        res.redirect("/borrow/pending");
+        res.redirect("/borrow/pending/member");
     })
 })
 
