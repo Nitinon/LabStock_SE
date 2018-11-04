@@ -16,7 +16,7 @@ router.get("/borrow/pending/member", function (req, res) {
                     cart: user.cart,
                     numcart: numcart,
                     borrows: foundedBorrow,
-                    approve:true
+                    approve: true
                 })
             })
         })
@@ -25,7 +25,9 @@ router.get("/borrow/pending/member", function (req, res) {
 router.get("/borrow/pending", function (req, res) {
     User.findById(req.user._id).populate({
         path: 'borrow',
-        match: { approve:false},
+        match: {
+            approve: false
+        },
     }).exec(function (err, user) {
         middleware.countQty(req, function (numcart) {
             res.render("borrow/bPending", {
@@ -39,7 +41,9 @@ router.get("/borrow/pending", function (req, res) {
 router.get("/borrow/borrowed", function (req, res) {
     User.findById(req.user._id).populate({
         path: 'borrow',
-        match: { approve:true},
+        match: {
+            approve: true
+        },
     }).exec(function (err, user) {
         middleware.countQty(req, function (numcart) {
             res.render("borrow/bPending", {
@@ -115,7 +119,49 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
                 temp2.pic.splice(fItem, 1);
             }
         })
-        console.log(temp2)
+        // temp2.approve=true
+        // test
+        borrow.itemID = temp2.itemID
+        borrow.itemName = temp2.itemName
+        borrow.pic = temp2.pic
+        borrow.ID = temp2.ID
+        borrow.limit = temp2.limit
+        borrow.qty = temp2.qty
+        borrow.approve = true
+
+        borrow.itemID.forEach(function (itemID, i) {
+            if (borrow.ID[i] == "") { //it's mean Non id
+                console.log(borrow.itemID[i] + "  " + borrow.qty[i])
+                // ค่า i
+                Item.findById(borrow.itemID[i], function (err, item) {
+                    if (err) {
+                        console.log(err)
+                    }
+                    item.qty -= borrow.qty[i];
+                    item.save();
+                })
+            } else {
+                borrow.ID[i].forEach(function (ID) {
+                    console.log("ID: " + ID)
+                    console.log("itemID " + borrow.itemID[i])
+                    Item.findById(borrow.itemID[i], function (err, item) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        item.itemID.splice(item.itemID.indexOf(ID), 1)
+                        item.qty--;
+                        item.save();
+                    })
+
+                })
+
+            }
+        })
+
+        borrow.save()
+
+        console.log(borrow)
+
         console.log("=================================================")
     })
 })

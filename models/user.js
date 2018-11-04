@@ -31,6 +31,10 @@ var UserSchema = new mongoose.Schema({
     borrow: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Borrow"
+    }],
+    return: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Return"
     }]
 })
 UserSchema.plugin(passportLocalMongoose)

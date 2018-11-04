@@ -168,34 +168,7 @@ router.get("/checkout", function (req, res) {
             if (err) {
                 console.log(err)
             } else {
-                // newOrder.itemID.forEach(function (itemID, i) {
-                //     if (req.user.cart.ID[i] == "") { //it's mean Non id
-                //         console.log(req.user.cart.itemID[i] + "  " + req.user.cart.qty[i])
-                //         // ค่า i
-                //         Item.findById(req.user.cart.itemID[i], function (err, item) {
-                //             if (err) {
-                //                 console.log(err)
-                //             }
-                //             item.qty -= req.user.cart.qty[i];
-                //             item.save();
-                //         })
-                //     } else {
-                //         req.user.cart.ID[i].forEach(function (ID) {
-                //             console.log("ID: " + ID)
-                //             console.log("itemID "+req.user.cart.itemID[i])
-                //             Item.findById(req.user.cart.itemID[i], function (err,item) {
-                //                 if(err){
-                //                     console.log(err);
-                //                 }
-                //                 item.itemID.splice(item.itemID.indexOf(ID), 1)
-                //                 item.qty--;
-                //                 item.save();
-                //             })
 
-                //         })
-
-                //     }
-                // })
                 user.borrow.push(newBorrow)
                 user.cart.itemID = []
                 user.cart.ID = []

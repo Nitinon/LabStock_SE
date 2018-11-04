@@ -13,7 +13,8 @@ var path = require('path');
 var indexRoute = require("./routes/index"),
     cartRoute = require("./routes/cart"),
     itemRoute = require("./routes/items"),
-    borrowRoute = require("./routes/borrow")
+    borrowRoute = require("./routes/borrow"),
+    returnRoute = require("./routes/return")
 
 
 
@@ -63,7 +64,7 @@ app.use(indexRoute)
 app.use(cartRoute);
 app.use(itemRoute);
 app.use(borrowRoute);
-
+app.use(returnRoute);
 
 // app.get("/hihi", function (req, res) {
 //     User.find({}, "email", function (err, mails) {
