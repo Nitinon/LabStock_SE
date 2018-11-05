@@ -163,6 +163,7 @@ router.get("/checkout", function (req, res) {
             ID: cart.ID,
             qty: cart.qty,
             approve: false
+            
         })
         Borrow.create(newOrder, function (err, newBorrow) {
             if (err) {

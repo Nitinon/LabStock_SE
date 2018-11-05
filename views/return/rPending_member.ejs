@@ -16,7 +16,12 @@
     <div id="wrapper">
         <div id="content">
             <%include ../partials/navbar%>
-            <h1>Request Return</h1>
+            <div class="container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#">Borrow pending</a></li>
+                    <li><a href="History-mem-pen-re.html">Return pending</a></li>
+                </ul>
+            </div>
             <div class="container">
                 <table class="table table-hover">
                     <thead>
@@ -28,25 +33,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <%borrows.forEach(function(borrow){%>
-                            <%if(borrow.returnRequest==false){%>
-
+                        <%returnns.forEach(function(returnn){%>
                         <tr>
 
                             <td>
-                                    <%=borrow._id%>
+                                <a class="btn btn-danger btn-xs" href="/returnn/del/<%=returnn._id%>">X</a>
+                                <%=returnn._id%>
                             </td>
                             <td>
-                                <%=borrow.author.name%>
+                                <%=returnn.author.name%>
                             </td>
                             <td>
-                                <%=borrow.repatriate%>
-                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal2<%=borrow._id%>">detail</a>
+                                <%=returnn.repatriate%>
+                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal2<%=returnn._id%>">detail</a>
 
                             </td>
                         </tr>
-                        <%}%>
-
                         <%})%>
                     </tbody>
                 </table>
@@ -55,8 +57,8 @@
         <% include ../partials/footer %>
     </div>
 
-    <%borrows.forEach(function(borrow){%>
-    <div class="modal fade" id="myModal2<%=borrow._id%>" role="dialog">
+    <%returnns.forEach(function(returnn){%>
+    <div class="modal fade" id="myModal2<%=returnn._id%>" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -76,39 +78,38 @@
                                 <th>ID</th>
                                 <th>Del</th>
                             </tr>
-                            <form action="/return/request/<%=borrow._id%>" method="POST">
+                            <form action="/returnn/confirm/<%=returnn._id%>" method="POST">
                         </thead>
                         <tbody>
-                            <%for(var item=0; item<borrow.itemID.length;item++){ %>
+                            <%for(var item=0; item<returnn.itemID.length;item++){ %>
                             <tr>
-                                <td><img src="/<%=borrow.pic[item]%>" style="width:50px;"></td>
+                                <td><img src="/<%=returnn.pic[item]%>" style="width:50px;"></td>
                                 <td>
-                                    <%=borrow.itemName[item]%></strong></p>
+                                    <%=returnn.itemName[item]%></strong></p>
 
                                 </td>
                                 <td>
-                                    <%if(borrow.ID[item]==""){%>
-                                    <%=borrow.qty[item]%>
+                                    <%if(returnn.ID[item]==""){%>
+                                    <%=returnn.qty[item]%>
                                     <%}else{%>
-                                    <%=borrow.qty[item]%>
+                                    <%=returnn.qty[item]%>
                                     <%}%>
                                 </td>
 
-                                <%if(borrow.ID[item]==""){%>
+                                <%if(returnn.ID[item]==""){%>
 
                                 <td>Non-ID <input type="checkbox" name="item" value=<%=item%>></td>
                                 <%}else{%>
                                 <td>
-                                    <%for(var ID=0; ID<borrow.ID[item].length;ID++){ %>
+                                    <%for(var ID=0; ID<returnn.ID[item].length;ID++){ %>
                                     <p>
-                                        <%=borrow.ID[item][ID]%><input type="checkbox" name="item" value=<%=item%>
+                                        <%=returnn.ID[item][ID]%><input type="checkbox" name="item" value=<%=item%>
                                         <%=ID%>>
                                     </p>
                                     <%}%>
                                 </td>
                                 <%}%>
                             </tr>
-
                             <%}%>
 
                         </tbody>

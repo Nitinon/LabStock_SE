@@ -6,6 +6,23 @@ var Borrow = require("../models/borrow");
 var Return = require("../models/return");
 var middleware = require("../middleware");
 
+router.get("/return/pending/member", function (req, res) {
+    // User.findById(req.user._id).populate("borrow").exec(function (err, user) {
+    User.findById(req.user._id, function (err, user) {
+        Return.find({
+            approve: "false"
+        }, function (err, foundedReturn) {
+            middleware.countQty(req, function (numcart) {
+                res.render("return/rPending_member", {
+                    cart: user.cart,
+                    numcart: numcart,
+                    returnns: foundedReturn,
+                    approve: true
+                })
+            })
+        })
+    })
+})
 router.get("/return", function (req, res) {
     User.findById(req.user._id).populate({
         path: 'borrow',
@@ -89,7 +106,13 @@ router.post("/return/request/:borrow_id", function (req, res) {
         })
         // temp2.approve=true
         // test
+        var author = {
+            id: req.user._id,
+            name: req.user.name,
+            surname: req.user.surname
+        };
         var requestReuturn = new Return({
+            author:author,
             itemID:temp2.itemID,
             itemName:temp2.itemName,
             pic : temp2.pic,
@@ -97,7 +120,6 @@ router.post("/return/request/:borrow_id", function (req, res) {
             limit: temp2.limit,
             qty : temp2.qty,
             approve :false
-
         })
         Return.create(requestReuturn,function(err,request){
             if(err){
@@ -115,7 +137,8 @@ router.post("/return/request/:borrow_id", function (req, res) {
             }
         })
         res.redirect("/")
-        
+        borrow.returnRequest=true
+        borrow.save();
         // borrow.itemID = temp2.itemID
         // borrow.itemName = temp2.itemName
         // borrow.pic = temp2.pic

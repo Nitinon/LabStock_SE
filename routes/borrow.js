@@ -157,12 +157,11 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
 
             }
         })
-
+        borrow.returnRequest=false;
         borrow.save()
-
         console.log(borrow)
-
         console.log("=================================================")
+        res.redirect("/borrow/pending/member")
     })
 })
 router.get("/borrow/del/:borrow_id", function (req, res) {
