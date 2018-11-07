@@ -18,27 +18,24 @@
             <%include ../partials/navbar%>
             <div class="container">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#">Borrow pending</a></li>
-                    <li><a href="History-mem-pen-re.html">Return pending</a></li>
+                    <li ><a href="/borrow/pending/member">Borrow pending</a></li>
+                    <li class="active"><a href="/return/pending/member">Return pending</a></li>
                 </ul>
             </div>
             <div class="container">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Borrow ID</th>
+                            <th>Date Pending</th>
                             <th>Author</th>
                             <th>Date</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <%returnns.forEach(function(returnn){%>
                         <tr>
-
                             <td>
-                                <a class="btn btn-danger btn-xs" href="/returnn/del/<%=returnn._id%>">X</a>
-                                <%=returnn._id%>
+                                    <%=returnn.date.toDateString()%> <%=returnn.date.toLocaleTimeString()%>
                             </td>
                             <td>
                                 <%=returnn.author.name%>
@@ -46,7 +43,6 @@
                             <td>
                                 <%=returnn.repatriate%>
                                 <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal2<%=returnn._id%>">detail</a>
-
                             </td>
                         </tr>
                         <%})%>
@@ -103,8 +99,7 @@
                                 <td>
                                     <%for(var ID=0; ID<returnn.ID[item].length;ID++){ %>
                                     <p>
-                                        <%=returnn.ID[item][ID]%><input type="checkbox" name="item" value=<%=item%>
-                                        <%=ID%>>
+                                        <%=returnn.ID[item][ID]%><input type="checkbox" name="item" value="<%=item%><%=ID%>">
                                     </p>
                                     <%}%>
                                 </td>

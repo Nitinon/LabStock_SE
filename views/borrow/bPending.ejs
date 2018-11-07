@@ -38,7 +38,7 @@
                         <%borrows.forEach(function(borrow){%>
                         <tr>
                             <td>
-                                <%=borrow._id%>
+                                <%=borrow.date.toDateString()%> <%=borrow.date.toLocaleTimeString()%>
                             </td>
                             <td>
                                 <%=borrow.author.name%>

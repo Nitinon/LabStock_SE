@@ -18,17 +18,17 @@
             <%include ../partials/navbar%>
             <div class="container">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#">Borrow pending</a></li>
-                    <li><a href="History-mem-pen-re.html">Return pending</a></li>
+                    <li class="active"><a href="/borrow/pending/member">Borrow pending</a></li>
+                    <li ><a href="/return/pending/member">Return pending</a></li>
                 </ul>
             </div>
             <div class="container">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Borrow ID</th>
-                            <th>Author</th>
                             <th>Date</th>
+                            <th>Author</th>
+                            <th>Approve</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -38,7 +38,7 @@
 
                             <td>
                                 <a class="btn btn-danger btn-xs" href="/borrow/del/<%=borrow._id%>">X</a>
-                                <%=borrow._id%>
+                                <%=borrow.date.toDateString()%> <%=borrow.date.toLocaleTimeString()%>
                             </td>
                             <td>
                                 <%=borrow.author.name%>
@@ -86,7 +86,6 @@
                                 <td><img src="/<%=borrow.pic[item]%>" style="width:50px;"></td>
                                 <td>
                                     <%=borrow.itemName[item]%></strong></p>
-
                                 </td>
                                 <td>
                                     <%if(borrow.ID[item]==""){%>
@@ -95,23 +94,19 @@
                                     <%=borrow.qty[item]%>
                                     <%}%>
                                 </td>
-
                                 <%if(borrow.ID[item]==""){%>
-
                                 <td>Non-ID <input type="checkbox" name="item" value=<%=item%>></td>
                                 <%}else{%>
                                 <td>
                                     <%for(var ID=0; ID<borrow.ID[item].length;ID++){ %>
                                     <p>
-                                        <%=borrow.ID[item][ID]%><input type="checkbox" name="item" value=<%=item%>
-                                        <%=ID%>>
+                                        <%=borrow.ID[item][ID]%><input type="checkbox" name="item" value=<%=item%><%=ID%>>
                                     </p>
                                     <%}%>
                                 </td>
                                 <%}%>
                             </tr>
                             <%}%>
-
                         </tbody>
                         <input type="submit">
                         <input type="checkbox" class="align-right" onClick="toggle(this)" />Approve All<br />
@@ -121,7 +116,6 @@
             </div>
         </div>
     </div>
-
     <%})%>
 
 </body>

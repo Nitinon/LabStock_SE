@@ -67,7 +67,7 @@ router.post("/addCart/:item_id", middleware.isLoggedIn, function (req, res) {
 
     })
 })
-router.get("/cart", function (req, res) {
+router.get("/cart",middleware.isLoggedIn,function (req, res) {
     User.findById(req.user._id, function (err, user) {
         middleware.countQty(req, function (numcart) {
             // res.render('index', { message: req.flash('error'), items: allItems, category: "all", numcart: numcart });
@@ -80,7 +80,7 @@ router.get("/cart", function (req, res) {
 
 })
 // del item type ID
-router.get("/cart/delItem/:item_id", function (req, res) {
+router.get("/cart/delItem/:item_id",middleware.isLoggedIn,function (req, res) {
     User.findById(req.user._id, function (err, user) {
         user.cart.itemID.splice(req.params.item_id, 1);
         user.cart.ID.splice(req.params.item_id, 1);
@@ -93,7 +93,7 @@ router.get("/cart/delItem/:item_id", function (req, res) {
 
     })
 })
-router.get("/cart/incItem/:indexItem", function (req, res) {
+router.get("/cart/incItem/:indexItem",middleware.isLoggedIn,function (req, res) {
     User.findById(req.user._id, function (err, user) {
         var cart = user.cart
         var temp = user.cart.qty
@@ -105,7 +105,7 @@ router.get("/cart/incItem/:indexItem", function (req, res) {
         res.redirect("/cart")
     })
 })
-router.get("/cart/decItem/:indexItem", function (req, res) {
+router.get("/cart/decItem/:indexItem",middleware.isLoggedIn,function (req, res) {
     User.findById(req.user._id, function (err, user) {
         var cart = user.cart
         var temp = user.cart.qty
@@ -125,7 +125,7 @@ router.get("/cart/decItem/:indexItem", function (req, res) {
         res.redirect("/cart")
     })
 })
-router.get("/cart/:indexItem/:indexID", function (req, res) {
+router.get("/cart/:indexItem/:indexID",middleware.isLoggedIn,function (req, res) {
     User.findById(req.user._id, function (err, user) {
         var cart = user.cart
         cart.ID[req.params.indexItem].splice(req.params.indexID, 1);
@@ -146,7 +146,7 @@ router.get("/cart/:indexItem/:indexID", function (req, res) {
         res.redirect("/cart")
     })
 })
-router.get("/checkout", function (req, res) {
+router.get("/checkout",middleware.isLoggedIn,function (req, res) {
     User.findById(req.user._id, function (err, user) {
         var cart = user.cart
         var author = {
@@ -154,6 +154,7 @@ router.get("/checkout", function (req, res) {
             name: req.user.name,
             surname: req.user.surname
         };
+        var now=new Date();
         var newOrder = new Borrow({
             author: author,
             itemID: cart.itemID,
@@ -162,7 +163,8 @@ router.get("/checkout", function (req, res) {
             limit: cart.limit,
             ID: cart.ID,
             qty: cart.qty,
-            approve: false
+            approve: false,
+            date:now
             
         })
         Borrow.create(newOrder, function (err, newBorrow) {
@@ -184,7 +186,7 @@ router.get("/checkout", function (req, res) {
         })
     })
 })
-router.get("/clearCart", function (req, res) {
+router.get("/clearCart",middleware.isLoggedIn,function (req, res) {
     clearCart(req);
     res.redirect("/");
 })

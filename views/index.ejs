@@ -80,8 +80,7 @@
                             </div>
                             <%}%>
                             <div class="center-cropped">
-
-                                <img class="itemPic" src="/<%=items[i].originalname%>" alt="Paris">
+                                <img class="itemPic" src="/<%=items[i].originalname%>">
                             </div>
                             <div class="itemName">
                                 <p><strong>
@@ -136,7 +135,7 @@
                                         <%})%>
                                     </select>
                                     <%}else{%>
-                                    <input name="qty" type="number">
+                                    <input name="qty" type="number" min=1>
                                     <%}%>
                                     <input type="submit">
                                 </form>

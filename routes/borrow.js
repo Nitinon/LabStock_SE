@@ -65,12 +65,13 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
             req.body.item = [req.body.item]
         }
         // กรณีส่งมาหลายตัว
+        console.log(req.body.item)
         req.body.item.forEach(function (item, i) {
             if (item.length != 1) { //ของ Type ID
                 var indexItem = item.substring(0, 1)
                 // console.log(indexItem + " " + borrow.itemID[indexItem] + " " + borrow.itemName[indexItem])
                 var indexID = item.substring(1, )
-                // console.log("ItemID: " + borrow.ID[indexItem][indexID])
+                console.log("ItemID: " + borrow.ID[indexItem][indexID])
 
                 var fItem = String(borrow.itemID[indexItem]);
                 var indexItem_temp = temp.itemID.indexOf(fItem);
@@ -102,10 +103,10 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
             }
         })
         temp.itemID.forEach(function (itemID, i) {
-            console.log(itemID + " " + i + " " + temp.itemName[i])
+            // console.log(itemID + " " + i + " " + temp.itemName[i])clea
             var fItem = temp2.itemID.indexOf(itemID)
             temp.ID[i].forEach(function (ID, j) {
-                console.log("ID: " + ID)
+                // console.log("ID: " + ID)
                 var fID = temp2.ID[fItem].indexOf(ID)
                 temp2.ID[fItem].splice(fID, 1)
                 temp2.qty[fItem]--;
@@ -128,7 +129,7 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
         borrow.limit = temp2.limit
         borrow.qty = temp2.qty
         borrow.approve = true
-
+// ==================================================================================
         borrow.itemID.forEach(function (itemID, i) {
             if (borrow.ID[i] == "") { //it's mean Non id
                 console.log(borrow.itemID[i] + "  " + borrow.qty[i])
@@ -141,25 +142,22 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
                     item.save();
                 })
             } else {
-                borrow.ID[i].forEach(function (ID) {
-                    console.log("ID: " + ID)
-                    console.log("itemID " + borrow.itemID[i])
-                    Item.findById(borrow.itemID[i], function (err, item) {
-                        if (err) {
-                            console.log(err);
-                        }
+                Item.findById(borrow.itemID[i], function (err, item) {
+                    borrow.ID[i].forEach(function (ID) {
+                        console.log("ID: " + ID)
+                        console.log("itemID " + borrow.itemID[i])
                         item.itemID.splice(item.itemID.indexOf(ID), 1)
                         item.qty--;
-                        item.save();
                     })
+                    item.save();
 
                 })
 
             }
         })
-        borrow.returnRequest=false;
+        borrow.returnRequest = false;
         borrow.save()
-        console.log(borrow)
+// ==================================================================================
         console.log("=================================================")
         res.redirect("/borrow/pending/member")
     })

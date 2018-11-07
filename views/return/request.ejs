@@ -34,7 +34,7 @@
                         <tr>
 
                             <td>
-                                    <%=borrow._id%>
+                                    <%=borrow.date.toDateString()%> <%=borrow.date.toLocaleTimeString()%>
                             </td>
                             <td>
                                 <%=borrow.author.name%>
@@ -84,7 +84,6 @@
                                 <td><img src="/<%=borrow.pic[item]%>" style="width:50px;"></td>
                                 <td>
                                     <%=borrow.itemName[item]%></strong></p>
-
                                 </td>
                                 <td>
                                     <%if(borrow.ID[item]==""){%>
@@ -93,16 +92,13 @@
                                     <%=borrow.qty[item]%>
                                     <%}%>
                                 </td>
-
                                 <%if(borrow.ID[item]==""){%>
-
                                 <td>Non-ID <input type="checkbox" name="item" value=<%=item%>></td>
                                 <%}else{%>
                                 <td>
                                     <%for(var ID=0; ID<borrow.ID[item].length;ID++){ %>
                                     <p>
-                                        <%=borrow.ID[item][ID]%><input type="checkbox" name="item" value=<%=item%>
-                                        <%=ID%>>
+                                        <%=borrow.ID[item][ID]%><input type="checkbox" name="item" value=<%=item%><%=ID%>>
                                     </p>
                                     <%}%>
                                 </td>

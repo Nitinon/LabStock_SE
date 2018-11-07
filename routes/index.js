@@ -8,7 +8,7 @@ var middleware = require("../middleware");
 router.get("/", function (req, res) {
     res.redirect("/p/1")
 })
-router.get('/p/:page', function(req, res, next) {
+router.get('/p/:page',function(req, res, next) {
     var perPage = 6
     var page = req.params.page || 1
     Item

@@ -50,10 +50,11 @@ router.post("/return/request/:borrow_id", function (req, res) {
             req.body.item = [req.body.item]
         }
         // กรณีส่งมาหลายตัว
+        console.log(req.body.item)
         req.body.item.forEach(function (item, i) {
             if (item.length != 1) { //ของ Type ID
                 var indexItem = item.substring(0, 1)
-                // console.log(indexItem + " " + borrow.itemID[indexItem] + " " + borrow.itemName[indexItem])
+                console.log(indexItem + " " + borrow.itemID[indexItem] + " " + borrow.itemName[indexItem])
                 var indexID = item.substring(1, )
                 // console.log("ItemID: " + borrow.ID[indexItem][indexID])
 
@@ -119,8 +120,24 @@ router.post("/return/request/:borrow_id", function (req, res) {
             ID : temp2.ID,
             limit: temp2.limit,
             qty : temp2.qty,
-            approve :false
+            approve :false,
+            date:new Date()
         })
+
+     
+        borrow.itemID = temp.itemID
+        borrow.itemName = temp.itemName
+        borrow.pic = temp.pic
+        borrow.ID = temp.ID
+        borrow.limit = temp.limit
+        borrow.qty = temp.qty
+        // borrow.returnRequest=true
+        
+        console.log(borrow)
+        console.log("=============================")
+        console.log(requestReuturn)
+
+        
         Return.create(requestReuturn,function(err,request){
             if(err){
                 console.log(err)
@@ -136,49 +153,16 @@ router.post("/return/request/:borrow_id", function (req, res) {
                 })
             }
         })
-        res.redirect("/")
-        borrow.returnRequest=true
+       
+        // console.log(requestReuturn)
         borrow.save();
-        // borrow.itemID = temp2.itemID
-        // borrow.itemName = temp2.itemName
-        // borrow.pic = temp2.pic
-        // borrow.ID = temp2.ID
-        // borrow.limit = temp2.limit
-        // borrow.qty = temp2.qty
-        // borrow.approve = true
-
-        // borrow.itemID.forEach(function (itemID, i) {
-        //     if (borrow.ID[i] == "") { //it's mean Non id
-        //         console.log(borrow.itemID[i] + "  " + borrow.qty[i])
-        //         // ค่า i
-        //         Item.findById(borrow.itemID[i], function (err, item) {
-        //             if (err) {
-        //                 console.log(err)
-        //             }
-        //             item.qty -= borrow.qty[i];
-        //             item.save();
-        //         })
-        //     } else {
-        //         borrow.ID[i].forEach(function (ID) {
-        //             console.log("ID: " + ID)
-        //             console.log("itemID " + borrow.itemID[i])
-        //             Item.findById(borrow.itemID[i], function (err, item) {
-        //                 if (err) {
-        //                     console.log(err);
-        //                 }
-        //                 item.itemID.splice(item.itemID.indexOf(ID), 1)
-        //                 item.qty--;
-        //                 item.save();
-        //             })
-
-        //         })
-
-        //     }
-        // })
-
-        // borrow.save()
-
-        // console.log(borrow)
+        if(borrow.itemID==""){
+            Borrow.findByIdAndDelete(borrow._id,function(err,borrow){
+                if(err)console.log(err)
+            })
+        }
+        res.redirect("/")
+        
         console.log("=================================================")
     })
 })
