@@ -71,8 +71,8 @@ router.post("/returnn/confirm/:id_return",function(req,res){
              }
          })
          returnn.approve=true;
-         console.log(temp)
-         console.log(temp2)
+        //  console.log(temp)
+        //  console.log(temp2)
         //  temp2 is seleted item
         // temp is not selected item
 
@@ -80,6 +80,17 @@ router.post("/returnn/confirm/:id_return",function(req,res){
 
 
 //  // ==================================================================================
+        if(temp.itemID!=""){
+            Borrow.findById(temp.borrowID,function(err,founded){
+                founded.itemID=temp.itemID
+                founded.itemName=temp.itemName
+                founded.pic=temp.pic
+                founded.qty=temp.qty
+                founded.ID=temp.ID
+                founded.limit=temp.limit
+                founded.save();
+            })
+        }
         temp2.itemID.forEach(function (itemID, i) {
              if (temp2.ID[i] == "") { //it's mean Non id
                  console.log(temp2.itemID[i] + "  " + temp2.qty[i])

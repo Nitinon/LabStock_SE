@@ -155,7 +155,6 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
 
             }
         })
-        borrow.returnRequest = false;
         borrow.save()
 // ==================================================================================
         console.log("=================================================")
