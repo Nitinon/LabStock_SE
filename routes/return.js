@@ -4,6 +4,7 @@ var Item = require("../models/item");
 var User = require("../models/user");
 var Borrow = require("../models/borrow");
 var Return = require("../models/return");
+var History=require("../models/history")
 var middleware = require("../middleware");
 
 router.post("/returnn/confirm/:id_return",function(req,res){
@@ -71,14 +72,13 @@ router.post("/returnn/confirm/:id_return",function(req,res){
              }
          })
          returnn.approve=true;
+         
         //  console.log(temp)
         //  console.log(temp2)
         //  temp2 is seleted item
         // temp is not selected item
 
         //  ================== add item to DB================================================
-
-
 //  // ==================================================================================
         if(temp.itemID!=""){
             Borrow.findById(temp.borrowID,function(err,founded){
@@ -121,15 +121,45 @@ router.post("/returnn/confirm/:id_return",function(req,res){
  
              }
          })
+
+         var approver={
+            id:req.user._id,
+            name:req.user.name,
+            surname:req.user.surname
+        }
+        var now=new Date();
+        var historyR={
+            author:returnn.author,
+            approver:approver,
+            type:"return",
+            itemID:temp2,
+            itemName:temp2.itemName,
+            pic:temp2.pic,
+            ID:temp2.ID,
+            qty:temp2.qty,
+            date:now
+        }
+        History.create(historyR,function(err,history){
+            if(err) console.log(err)
+            else{
+            User.findById(req.user._id,function(err,user){
+                if(err)console.log(err)
+                else{
+                    user.history.push(history)
+                    user.save()
+                }
+            })
+        }
+        })
          returnn.save();
-         res.redirect("/p/1")
+         res.redirect("/return/pending/member")
     })
 })
 router.get("/return/pending/member", function (req, res) {
     // User.findById(req.user._id).populate("borrow").exec(function (err, user) {
     User.findById(req.user._id, function (err, user) {
         Return.find({
-            approve: "false"
+        approve: "false"
         }, function (err, foundedReturn) {
             middleware.countQty(req, function (numcart) {
                 res.render("return/rPending_member", {
@@ -147,13 +177,52 @@ router.get("/return", function (req, res) {
         path: 'borrow',
         match: {
             approve: true
-        }
+        },
+        options:{sort:{date:-1}}
     }).exec(function (err, user) {
         middleware.countQty(req, function (numcart) {
             res.render("return/request", {
                 cart: user.cart,
                 numcart: numcart,
-                borrows: user.borrow,
+                returnns: user.borrow,
+                status:"request"
+            })
+        })
+    })
+})
+router.get("/return/returned", function (req, res) {
+    User.findById(req.user._id).populate({
+        path: 'history',
+        match: {
+            type:"return"
+        },
+        options:{sort:{date:-1}}
+    })
+    .exec(function (err, user) {
+        middleware.countQty(req, function (numcart) {
+            res.render("return/request", {
+                cart: user.cart,
+                numcart: numcart,
+                returnns: user.history,
+                status:"returned"
+            })
+        })
+    })
+})
+router.get("/return/pending", function (req, res) {
+    User.findById(req.user._id).populate({
+        path: 'return',
+        match: {
+            approve: false
+        },
+        options:{sort:{date:-1}}
+    }).exec(function (err, user) {
+        middleware.countQty(req, function (numcart) {
+            res.render("return/request", {
+                cart: user.cart,
+                numcart: numcart,
+                returnns: user.return,
+                status:"pending"
             })
         })
     })
@@ -270,14 +339,8 @@ router.post("/return/request/:borrow_id", function (req, res) {
             }
         })
        
-        // console.log(requestReuturn)
         borrow.save();
-        // if(borrow.itemID==""){
-        //     Borrow.findByIdAndDelete(borrow._id,function(err,borrow){
-        //         if(err)console.log(err)
-        //     })
-        // }
-        res.redirect("/")
+        res.redirect("/return")
         
         console.log("=================================================")
     })

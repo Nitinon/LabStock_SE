@@ -18,12 +18,13 @@
             <%include ../partials/navbar%>
             <div class="container">
                 <ul class="nav nav-tabs">
-                    <li><a href="/borrow/borrowed">Borrowed</a></li>
-                    <li><a href="History-nonmem-re.html">Return</a></li>
-                    <li class="active"><a href="/borrow/pending">Borrow pending</a></li>
-                    <li><a href="History-mem-pen-re.html">Return pending</a></li>
+                    <li ><a href="/borrow/pending" id="pending_tab">Borrow pending</a></li>
+                    <li ><a href="/borrow/borrowed" id="borrowed_tab">Borrowed</a></li>
                 </ul>
             </div>
+            <script>
+                $('#<%=status%>_tab').addClass("Active");
+            </script>
             <div class="container">
                 <table class="table table-hover">
                     <thead>
@@ -37,18 +38,13 @@
                     <tbody>
                         <%borrows.forEach(function(borrow){%>
                         <tr>
-                            <td>
-                                <%=borrow.date.toDateString()%> <%=borrow.date.toLocaleTimeString()%>
-                            </td>
-                            <td>
-                                <%=borrow.author.name%>
-                            </td>
-                            <td>
+                            <td  class="col-md-4"><%=borrow.date.toDateString()%> <%=borrow.date.toLocaleTimeString()%></td>
+                            <td class="col-md-4"><%=borrow.author.name%></td>
+                            <td class="col-md-4">
                                 <%=borrow.repatriate%>
                                 <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal3<%=borrow._id%>">detail</a>
 
                             </td>
-                        </tr>
                         <%})%>
                     </tbody>
                 </table>

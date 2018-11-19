@@ -3,6 +3,7 @@ var router = express.Router();
 var Item = require("../models/item");
 var User = require("../models/user");
 var Borrow = require("../models/borrow");
+var History=require("../models/history");
 var middleware = require("../middleware");
 
 router.get("/borrow/pending/member", function (req, res) {
@@ -26,41 +27,43 @@ router.get("/borrow/pending", function (req, res) {
     User.findById(req.user._id).populate({
         path: 'borrow',
         match: {
-            approve: false
+            approve: "false"
         },
+        options:{sort:{date:-1}}
     }).exec(function (err, user) {
         middleware.countQty(req, function (numcart) {
             res.render("borrow/bPending", {
                 cart: user.cart,
                 numcart: numcart,
                 borrows: user.borrow,
+                status:"pending"
             })
         })
     })
 })
 router.get("/borrow/borrowed", function (req, res) {
     User.findById(req.user._id).populate({
-        path: 'borrow',
+        path: 'history',
         match: {
-            approve: true
+            type: "borrow"
         },
+        options:{sort:{date:-1}}
     }).exec(function (err, user) {
         middleware.countQty(req, function (numcart) {
             res.render("borrow/bPending", {
                 cart: user.cart,
                 numcart: numcart,
-                borrows: user.borrow,
+                borrows: user.history,
+                status:"borrowed"
+
             })
         })
     })
 })
 router.post("/borrow/confirm/:borrow_id", function (req, res) {
     Borrow.findById(req.params.borrow_id, function (err, borrow) {
-        // var temp = borrow;
         var temp = JSON.parse(JSON.stringify(borrow)); //clone OBJ
         var temp2 = JSON.parse(JSON.stringify(borrow)); //clone OBJ
-
-
         if (!Array.isArray(req.body.item)) { //กรณีส่งมาตัวเดียวมันจะไม่เป็น array ก็จับมันยัดเข้า array ไป 
             req.body.item = [req.body.item]
         }
@@ -103,10 +106,8 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
             }
         })
         temp.itemID.forEach(function (itemID, i) {
-            // console.log(itemID + " " + i + " " + temp.itemName[i])clea
             var fItem = temp2.itemID.indexOf(itemID)
             temp.ID[i].forEach(function (ID, j) {
-                // console.log("ID: " + ID)
                 var fID = temp2.ID[fItem].indexOf(ID)
                 temp2.ID[fItem].splice(fID, 1)
                 temp2.qty[fItem]--;
@@ -120,8 +121,6 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
                 temp2.pic.splice(fItem, 1);
             }
         })
-        // temp2.approve=true
-        // test
         borrow.itemID = temp2.itemID
         borrow.itemName = temp2.itemName
         borrow.pic = temp2.pic
@@ -150,14 +149,41 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
                         item.qty--;
                     })
                     item.save();
-
                 })
-
             }
         })
         borrow.save()
+        var approver={
+            id:req.user._id,
+            name:req.user.name,
+            surname:req.user.name
+        }
+        var now=new Date();
+        var historyB={
+            author:borrow.author,
+            approver:approver,
+            type:"borrow",
+            itemID:temp2,
+            itemName:temp2.itemName,
+            pic:temp2.pic,
+            ID:temp2.ID,
+            qty:temp2.qty,
+            date:now
+        }
+        console.log(historyB)
+        History.create(historyB,function(err,history){
+            if(err) console.log(err)
+            else{
+            User.findById(req.user._id,function(err,user){
+                if(err)console.log(err)
+                else{
+                    user.history.push(history)
+                    user.save()
+                }
+            })
+        }
+        })
 // ==================================================================================
-        console.log("=================================================")
         res.redirect("/borrow/pending/member")
     })
 })

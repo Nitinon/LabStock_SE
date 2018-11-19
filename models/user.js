@@ -35,6 +35,10 @@ var UserSchema = new mongoose.Schema({
     return: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Return"
+    }],
+    history: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "History"
     }]
 })
 UserSchema.plugin(passportLocalMongoose)

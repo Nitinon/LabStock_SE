@@ -16,32 +16,42 @@
     <div id="wrapper">
         <div id="content">
             <%include ../partials/navbar%>
-            <h1>Request Return</h1>
+            <div class="container">
+                    <ul class="nav nav-tabs">
+                        <li ><a href="/return" id="request_tab">Return request</a></li>
+                        <li ><a href="/return/pending" id="pending_tab">Return pending</a></li>
+                        <li ><a href="/return/returned" id="pending_tab">Returned</a></li>
+
+                    </ul>
+            </div>
+            <script>
+                    $('#<%=status%>_tab').addClass("Active");
+            </script>
             <div class="container">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Borrow ID</th>
+                            <th>Return ID</th>
                             <th>Author</th>
                             <th>Date</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <%borrows.forEach(function(borrow){%>
-                            <%if(borrow.itemID!=""){%>
+                        <%returnns.forEach(function(returnn){%>
+                            <%if(returnn.itemID!=""){%>
 
                         <tr>
 
                             <td>
-                                    <%=borrow.date.toDateString()%> <%=borrow.date.toLocaleTimeString()%>
+                                    <%=returnn.date.toDateString()%> <%=returnn.date.toLocaleTimeString()%>
                             </td>
                             <td>
-                                <%=borrow.author.name%>
+                                <%=returnn.author.name%>
                             </td>
                             <td>
-                                <%=borrow.repatriate%>
-                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal2<%=borrow._id%>">detail</a>
+                                <%=returnn.repatriate%>
+                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal2<%=returnn._id%>">detail</a>
 
                             </td>
                         </tr>
@@ -55,8 +65,8 @@
         <% include ../partials/footer %>
     </div>
 
-    <%borrows.forEach(function(borrow){%>
-    <div class="modal fade" id="myModal2<%=borrow._id%>" role="dialog">
+    <%returnns.forEach(function(returnn){%>
+    <div class="modal fade" id="myModal2<%=returnn._id%>" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -74,31 +84,31 @@
                                 <th>Items Name</th>
                                 <th>Quantity</th>
                                 <th>ID</th>
-                                <th>Del</th>
                             </tr>
-                            <form action="/return/request/<%=borrow._id%>" method="POST">
+                            <form action="/return/request/<%=returnn._id%>" method="POST">
                         </thead>
                         <tbody>
-                            <%for(var item=0; item<borrow.itemID.length;item++){ %>
+                            <%for(var item=0; item<returnn.itemID.length;item++){ %>
                             <tr>
-                                <td><img src="/<%=borrow.pic[item]%>" style="width:50px;"></td>
+                                <td><img src="/<%=returnn.pic[item]%>" style="width:50px;"></td>
                                 <td>
-                                    <%=borrow.itemName[item]%></strong></p>
+                                    <%=returnn.itemName[item]%></strong></p>
                                 </td>
                                 <td>
-                                    <%if(borrow.ID[item]==""){%>
-                                    <%=borrow.qty[item]%>
+                                    <%if(returnn.ID[item]==""){%>
+                                    <%=returnn.qty[item]%>
                                     <%}else{%>
-                                    <%=borrow.qty[item]%>
+                                    <%=returnn.qty[item]%>
                                     <%}%>
                                 </td>
-                                <%if(borrow.ID[item]==""){%>
-                                <td>Non-ID <input type="checkbox" name="item" value=<%=item%>></td>
+                                <%if(returnn.ID[item]==""){%>
+                                <td>Non-ID <%if(status!="pending"){%><input type="checkbox" name="item" value=<%=item%><%}%></td>
                                 <%}else{%>
                                 <td>
-                                    <%for(var ID=0; ID<borrow.ID[item].length;ID++){ %>
+                                    <%for(var ID=0; ID<returnn.ID[item].length;ID++){ %>
                                     <p>
-                                        <%=borrow.ID[item][ID]%><input type="checkbox" name="item" value=<%=item%><%=ID%>>
+<!-- ===============================================Auto Format cation ============================================== -->
+                                        <%=returnn.ID[item][ID]%><%if(status!="pending"){%><input type="checkbox" name="item" value=<%=item%><%=ID%>><%}%>
                                     </p>
                                     <%}%>
                                 </td>
@@ -108,8 +118,10 @@
                             <%}%>
 
                         </tbody>
+                        <%if(status!="pending"){%>
                         <input type="submit">
                         <input type="checkbox" class="align-right" onClick="toggle(this)" />Approve All<br />
+                        <%}%>
                     </table>
                     </form>
                 </div>
