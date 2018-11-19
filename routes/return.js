@@ -90,6 +90,11 @@ router.post("/returnn/confirm/:id_return",function(req,res){
                 founded.limit=temp.limit
                 founded.save();
             })
+        }else{
+            Borrow.findById(temp.borrowID,function(err,founded){
+                if(founded.itemID=="")
+                founded.remove();
+            })
         }
         temp2.itemID.forEach(function (itemID, i) {
              if (temp2.ID[i] == "") { //it's mean Non id
@@ -117,7 +122,7 @@ router.post("/returnn/confirm/:id_return",function(req,res){
              }
          })
          returnn.save();
-
+         res.redirect("/p/1")
     })
 })
 router.get("/return/pending/member", function (req, res) {
