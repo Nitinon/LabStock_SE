@@ -10,7 +10,7 @@ middlewareObj.isLoggedIn = function (req, res, next) {
     }
     console.log(req.user)
     req.flash("error", "Please Login First");
-    res.redirect("/");
+    res.redirect("/p/1");
 }
 middlewareObj.isMember = function (req, res, next) {
     if (req.isAuthenticated() && req.user.role == "member") {

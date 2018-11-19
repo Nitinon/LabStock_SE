@@ -82,7 +82,7 @@ router.put("/editItems/:item_id", function (req, res) {
             console.log(err)
         } else {
             req.flash("success", "updated")
-            res.redirect("/editItems/" + req.params.item_id)
+            res.redirect("/p/1");
         }
     })
 })

@@ -9,6 +9,11 @@ var ReturnShcema = new mongoose.Schema({
         name: String,
         surname: String
     },
+    borrowID:{
+        type: mongoose.Schema.ObjectId,
+        ref: "BorrowID"
+    
+    },
     itemID: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "item"
@@ -18,7 +23,7 @@ var ReturnShcema = new mongoose.Schema({
     limit: [],
     ID: [],
     qty: [],
-    approve:Boolean,
-    date:Date
+    approve: Boolean,
+    date: Date
 })
 module.exports = mongoose.model("Return", ReturnShcema)

@@ -29,7 +29,7 @@
                     </thead>
                     <tbody>
                         <%borrows.forEach(function(borrow){%>
-                            <%if(borrow.returnRequest==false){%>
+                            <%if(borrow.returnRequest==false&&borrow.itemID!=""){%>
 
                         <tr>
 
