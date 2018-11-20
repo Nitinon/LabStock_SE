@@ -67,6 +67,8 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
         if (!Array.isArray(req.body.item)) { //กรณีส่งมาตัวเดียวมันจะไม่เป็น array ก็จับมันยัดเข้า array ไป 
             req.body.item = [req.body.item]
         }
+        var now=new Date();
+        temp2.date=now;
         // กรณีส่งมาหลายตัว
         console.log(req.body.item)
         req.body.item.forEach(function (item, i) {
@@ -127,6 +129,7 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
         borrow.ID = temp2.ID
         borrow.limit = temp2.limit
         borrow.qty = temp2.qty
+        borrow.date=temp2.date
         borrow.approve = true
 // ==================================================================================
         borrow.itemID.forEach(function (itemID, i) {
@@ -158,7 +161,6 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
             name:req.user.name,
             surname:req.user.surname
         }
-        var now=new Date();
         var historyB={
             author:borrow.author,
             approver:approver,
@@ -168,7 +170,7 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
             pic:temp2.pic,
             ID:temp2.ID,
             qty:temp2.qty,
-            date:now
+            date:temp2.date
         }
         console.log(historyB)
         History.create(historyB,function(err,history){

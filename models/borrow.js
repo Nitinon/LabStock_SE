@@ -19,6 +19,7 @@ var BorrowShcema = new mongoose.Schema({
     ID: [],
     qty: [],
     approve:Boolean,
-    date:Date
+    date:Date,
+    lateStatus:Boolean
 })
 module.exports = mongoose.model("Borrow", BorrowShcema)

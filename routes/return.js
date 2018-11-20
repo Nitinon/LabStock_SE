@@ -127,7 +127,7 @@ router.post("/returnn/confirm/:id_return",function(req,res){
             name:req.user.name,
             surname:req.user.surname
         }
-        var now=new Date();
+        
         var historyR={
             author:returnn.author,
             approver:approver,
@@ -137,7 +137,7 @@ router.post("/returnn/confirm/:id_return",function(req,res){
             pic:temp2.pic,
             ID:temp2.ID,
             qty:temp2.qty,
-            date:now
+            date:temp2.date
         }
         History.create(historyR,function(err,history){
             if(err) console.log(err)

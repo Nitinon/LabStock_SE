@@ -73,6 +73,7 @@
                             <tr>
                                 <th>Picture</th>
                                 <th>Items Name</th>
+                                <th>Dead Line</th>
                                 <th>Quantity</th>
                                 <th>ID</th>
                             </tr>
@@ -83,8 +84,10 @@
                                 <td><img src="/<%=history.pic[item]%>" style="width:50px;"></td>
                                 <td>
                                     <%=history.itemName[item]%></strong></p>
-
                                 </td>
+                                <!-- show dead line item -->
+                                <%history.date.setDate(history.date.getDate()+parseInt(history.limit[item]))%>
+                                <td><%=history.date.toDateString()%></td>
                                 <td>
                                     <%if(history.ID[item]==""){%>
                                     <%=history.qty[item]%>

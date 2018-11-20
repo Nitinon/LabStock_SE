@@ -77,7 +77,6 @@ router.get("/logout", function (req, res) {
     res.redirect("/");
 });
 router.get("/editInfo/:user_id", middleware.isLoggedIn, function (req, res) {
-
     req.session.cart = {}
     User.findById(req.params.user_id, function (err, user) {
         if (err) {
@@ -85,7 +84,8 @@ router.get("/editInfo/:user_id", middleware.isLoggedIn, function (req, res) {
         } else {
             middleware.countQty(req, function (numcart) {
                 res.render("editInfo", {
-                    numcart: numcart
+                    numcart: numcart,
+                    user:user
                 })
             })
         }

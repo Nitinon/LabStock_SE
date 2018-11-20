@@ -8,6 +8,8 @@ var express = require("express"),
     methodOverride = require("method-override"),
     nodemailer = require("nodemailer"), //mail
     User = require("./models/user")
+var middleware = require("./middleware");
+
 
 var path = require('path');
 var indexRoute = require("./routes/index"),
@@ -15,7 +17,7 @@ var indexRoute = require("./routes/index"),
     itemRoute = require("./routes/items"),
     borrowRoute = require("./routes/borrow"),
     returnRoute = require("./routes/return"),
-    historyRoute=require("./routes/history")
+    historyRoute = require("./routes/history")
 
 
 // var smtpTransport = nodemailer.createTransport({
@@ -31,7 +33,9 @@ app.use(express.static(__dirname + "/public"))
 app.use(express.static(__dirname + "/uploads"));
 
 mongoose.connect("mongodb://localhost/Lab_stock")
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.set("view engine", "ejs")
 app.use(methodOverride("_method"))
 app.use(flash())
@@ -91,6 +95,19 @@ app.use(historyRoute);
 // })
 
 // app.listen("3000","172.20.10.6", function () {
+app.get("/studentInfo", function (req, res) {
+    User.findById(req.user._id, function (err, user) {
+        User.find({}, function (err, listUser) {
+            middleware.countQty(req, function (numcart) {
+                res.render("studentInfo", {
+                    cart: user.cart,
+                    numcart: numcart,
+                    studentInfo: listUser,
+                })
+            })
+        })
+    })
+})
 app.listen("3000", function () {
     console.log("connected")
 })
