@@ -1,0 +1,122 @@
+<% include ../partials/header%>
+
+<link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
+<link rel="stylesheet" type="text/css" href="/stylesheet/add-app-return.css">
+
+<script>
+    function toggle(source) {
+  checkboxes = document.getElementsByName('item');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+    </script>
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <%include ../partials/navbar%>
+            <div class="registerform">
+                <legend>
+                    <h1> history</h1>
+                </legend>
+                <table class="table table-hover paginated">
+                    <thead>
+                        <tr>
+                            <th>Return ID</th>
+                            <th>Type</th>
+                            <th>Author</th>
+                            <th>Approver</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%histories.forEach(function(history){%>
+                        <tr>
+                            <td>
+                                <%=history.date.toDateString()%>
+                                <%=history.date.toLocaleTimeString()%>
+                            </td>
+                            <td><%=history.type%></td>
+                            <td>
+                                <%=history.author.name%>
+                            </td>
+                            <td><%=history.approver.name%> <%=history.approver.surname%></td>
+                            <td>
+                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal<%=history._id%>">detail</a>
+                            </td>
+                        </tr>
+                        <%})%>
+                    </tbody>
+            </div>
+            </table>
+        </div>
+    </div>
+    <% include ../partials/footer %>
+    </div>
+    <%histories.forEach(function(history){%>
+    <div class="modal fade" id="myModal<%=history._id%>" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4><span class="glyphicon glyphicon-folder-open"></span>
+                        :Item list
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Picture</th>
+                                <th>Items Name</th>
+                                <th>Quantity</th>
+                                <th>ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%for(var item=0; item<history.itemID.length;item++){ %>
+                            <tr>
+                                <td><img src="/<%=history.pic[item]%>" style="width:50px;"></td>
+                                <td>
+                                    <%=history.itemName[item]%></strong></p>
+
+                                </td>
+                                <td>
+                                    <%if(history.ID[item]==""){%>
+                                    <%=history.qty[item]%>
+                                    <%}else{%>
+                                    <%=history.qty[item]%>
+                                    <%}%>
+                                </td>
+
+                                <%if(history.ID[item]==""){%>
+
+                                <td>Non-ID</td>
+                                <%}else{%>
+                                <td>
+                                    <%for(var ID=0; ID<history.ID[item].length;ID++){ %>
+                                    <p>
+                                        <%=history.ID[item][ID]%>
+                                    </p>
+                                    <%}%>
+                                </td>
+                                <%}%>
+                            </tr>
+                            <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%})%>
+    <script src="/script/script.js"></script>
+
+</body>
+
+</html>
