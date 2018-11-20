@@ -20,35 +20,34 @@
             <%include ../partials/navbar%>
             <div class="registerform">
                 <legend>
-                    <h1><%=type%></h1>
+                    <h1>Not Return</h1>
                 </legend>
                 <table class="table table-hover paginated">
                     <thead>
                         <tr>
-                            <th>Return ID</th>
-                            <th>Type</th>
-                            <th>Author</th>
-                            <th>Approver</th>
                             <th>Date</th>
-                            <th></th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Detail</th>
                         </tr>
                     </thead>
                     <tbody>
                         <%histories.forEach(function(history){%>
+                            <%if(history.itemID!=""){%>
                         <tr>
                             <td>
                                 <%=history.date.toDateString()%>
                                 <%=history.date.toLocaleTimeString()%>
                             </td>
-                            <td><%=history.type%></td>
                             <td>
-                                <%=history.author.name%>
+                                <%=history.author.name%> <%=history.author.surname%>
                             </td>
-                            <td><%=history.approver.name%> <%=history.approver.surname%></td>
+                            <td>Late</td>
                             <td>
                                 <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal<%=history._id%>">detail</a>
                             </td>
                         </tr>
+                        <%}%>
                         <%})%>
                     </tbody>
             </div>
