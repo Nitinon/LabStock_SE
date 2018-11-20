@@ -6,13 +6,33 @@ var Item = require("../models/item");
 var middleware = require("../middleware");
 
 router.get("/", function (req, res) {
-    Item.find({}, function (err, allItems) {
-        middleware.countQty(req,function(numcart){
-            res.render('index', { message: req.flash('error'), items: allItems, category: "all", numcart: numcart });
-        });
-    })
+    res.redirect("/p/1")
 })
-
+router.get('/p/:page', function (req, res, next) {
+    var perPage = 6
+    var page = req.params.page || 1
+    Item
+        .find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function (err, allItems) {
+            Item.count().exec(function (err, count) {
+                if (err) return next(err)
+                middleware.countQty(req, function (numcart) {
+                    // res.render('index', { message: req.flash('error'), items: allItems, category: "all", numcart: numcart });
+                    res.render('index', {
+                        message: req.flash('error'),
+                        items: allItems,
+                        category: "all",
+                        numcart: numcart,
+                        current: page,
+                        pages: Math.ceil(count / perPage),
+                        found: true
+                    })
+                });
+            })
+        })
+})
 router.get("/register", function (req, res) {
     res.render("register")
 })
@@ -44,14 +64,12 @@ router.post("/register", function (req, res) {
         })
     }
 })
-router.post("/login", passport.authenticate("local",
-    {
-        successRedirect: "/",
-        failureRedirect: "/",
-        failureFlash: true,
-        successFlash: 'Welcome!'
-    }
-))
+router.post("/login", passport.authenticate("local", {
+    successRedirect: "/p/1",
+    failureRedirect: "/p/1",
+    failureFlash: true,
+    successFlash: 'Welcome!'
+}))
 router.get("/logout", function (req, res) {
     req.session.edit = null
     req.logout();
@@ -59,12 +77,17 @@ router.get("/logout", function (req, res) {
     res.redirect("/");
 });
 router.get("/editInfo/:user_id", middleware.isLoggedIn, function (req, res) {
+
     req.session.cart = {}
     User.findById(req.params.user_id, function (err, user) {
         if (err) {
             console.log(err)
         } else {
-            res.render("editInfo")
+            middleware.countQty(req, function (numcart) {
+                res.render("editInfo", {
+                    numcart: numcart
+                })
+            })
         }
     })
 })
@@ -75,13 +98,16 @@ router.put("/updateInfo/:user_id", function (req, res) {
             console.log(err)
         } else {
             req.flash("success", "Update Info Complete")
-            res.redirect("/")
+            res.redirect("/p/1")
         }
 
     })
 })
 router.get("/changePass/:user_id", middleware.isLoggedIn, function (req, res) {
-    res.render("changePass")
+    middleware.countQty(req, function (numcart) {
+
+        res.render("changePass",{numcart:numcart})
+    })
 })
 router.post("/changePass/:user_id", function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
@@ -95,11 +121,12 @@ router.post("/changePass/:user_id", function (req, res) {
                     req.flash("error", error)
                 } else {
                     req.flash("success", "change password success")
-                    res.redirect("/")
+                    res.redirect("/p/1")
                 }
             })
         }
     })
 })
+
 
 module.exports = router;

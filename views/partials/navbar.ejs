@@ -41,16 +41,23 @@
                 <%}else{%>
                 <li><a href="History-nonmem-br.html">History<span class="glyphicon glyphicon-calendar"></span></a></li>
                 <%}%>
-                <ul class="nav navbar-nav navbar-right">
-                    <%if(!currentUser){%>
-                        <li><a href="#home" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span>Login</a></li>
-                        <li><a href="/register"><span class="glyphicon glyphicon-edit"></span>Register</a></li>
-                    <%}else{%>
-                        <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="badge badge-warning"><%=numcart%></span></a></li>
-                        <li><a href="/editInfo/<%=currentUser._id%>"><%=currentUser.username%></a></li>
-                        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
-                    <%}%>
-                </ul>
-            </div>
+                <li><a href="/borrow/pending">Borrow<span class="glyphicon glyphicon-book"></span></a></li>
+                <li><a href="/return">Return<span class="glyphicon glyphicon-repeat"></span></a></li>
+            </ul>
+
+            <%}%>
+            <ul class="nav navbar-nav navbar-right">
+                <%if(!currentUser){%>
+                <li><a href="#home" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span>Login</a></li>
+                <li><a href="/register"><span class="glyphicon glyphicon-edit"></span>Register</a></li>
+                <%}else{%>
+                <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="badge badge-warning">
+                            <%=numcart%></span></a></li>
+                <li><a href="/editInfo/<%=currentUser._id%>">
+                        <%=currentUser.username%></a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+                <%}%>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>

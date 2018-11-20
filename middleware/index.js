@@ -1,6 +1,3 @@
-// 
-
-
 module.exports = middlewareObj;
 var Item = require("../models/item");
 var User = require("../models/user");
@@ -13,7 +10,7 @@ middlewareObj.isLoggedIn = function (req, res, next) {
     }
     console.log(req.user)
     req.flash("error", "Please Login First");
-    res.redirect("/");
+    res.redirect("/p/1");
 }
 middlewareObj.isMember = function (req, res, next) {
     if (req.isAuthenticated() && req.user.role == "member") {
@@ -30,20 +27,18 @@ middlewareObj.canEdit = function (req, res, next) {
         res.redirect("/");
     }
 }
-middlewareObj.countQty = function (req,callback) {
+middlewareObj.countQty = function (req, callback) {
     if (req.isAuthenticated()) {
         User.findById(req.user.id, function (err, user) {
             // count in cart
-            var num=0
+            var num = 0
             user.cart.qty.forEach(function (qty) {
                 num += parseInt(qty, 10)
             })
-            // console.log(user.cart)
-            console.log(num)
+            // console.log(num)
             return callback(num);
         })
-    }
-    else {
+    } else {
         return callback(0);
     }
 }

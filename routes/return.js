@@ -142,7 +142,7 @@ router.post("/returnn/confirm/:id_return",function(req,res){
         History.create(historyR,function(err,history){
             if(err) console.log(err)
             else{
-            User.findById(req.user._id,function(err,user){
+            User.findById(history.author.id,function(err,user){
                 if(err)console.log(err)
                 else{
                     user.history.push(history)

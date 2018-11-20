@@ -2,7 +2,6 @@
 
 <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
 <link rel="stylesheet" type="text/css" href="/stylesheet/add-app-return.css">
-
 <script>
     function toggle(source) {
   checkboxes = document.getElementsByName('item');
@@ -11,54 +10,55 @@
   }
 }
     </script>
-
 </head>
 
 <body>
     <div id="wrapper">
         <div id="content">
             <%include ../partials/navbar%>
-            <div class="registerform">
-                <legend>
-                    <h1><%=type%></h1>
-                </legend>
-                <table class="table table-hover paginated">
+            <div class="container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="/borrow/pending/member">Borrow pending</a></li>
+                    <li ><a href="/return/pending/member">Return pending</a></li>
+                </ul>
+            </div>
+            <div class="container">
+                <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Return ID</th>
-                            <th>Type</th>
-                            <th>Author</th>
-                            <th>Approver</th>
                             <th>Date</th>
+                            <th>Author</th>
+                            <th>Approve</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <%histories.forEach(function(history){%>
+                        <%borrows.forEach(function(borrow){%>
                         <tr>
+
                             <td>
-                                <%=history.date.toDateString()%>
-                                <%=history.date.toLocaleTimeString()%>
+                                <a class="btn btn-danger btn-xs" href="/borrow/del/<%=borrow._id%>">X</a>
+                                <%=borrow.date.toDateString()%> <%=borrow.date.toLocaleTimeString()%>
                             </td>
-                            <td><%=history.type%></td>
                             <td>
-                                <%=history.author.name%>
+                                <%=borrow.author.name%>
                             </td>
-                            <td><%=history.approver.name%> <%=history.approver.surname%></td>
                             <td>
-                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal<%=history._id%>">detail</a>
+                                <%=borrow.repatriate%>
+                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal2<%=borrow._id%>">detail</a>
+
                             </td>
                         </tr>
                         <%})%>
                     </tbody>
+                </table>
             </div>
-            </table>
         </div>
+        <% include ../partials/footer %>
     </div>
-    <% include ../partials/footer %>
-    </div>
-    <%histories.forEach(function(history){%>
-    <div class="modal fade" id="myModal<%=history._id%>" role="dialog">
+
+    <%borrows.forEach(function(borrow){%>
+    <div class="modal fade" id="myModal2<%=borrow._id%>" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -76,32 +76,31 @@
                                 <th>Items Name</th>
                                 <th>Quantity</th>
                                 <th>ID</th>
+                                <th>Del</th>
                             </tr>
+                            <form action="/borrow/confirm/<%=borrow._id%>" method="POST">
                         </thead>
                         <tbody>
-                            <%for(var item=0; item<history.itemID.length;item++){ %>
+                            <%for(var item=0; item<borrow.itemID.length;item++){ %>
                             <tr>
-                                <td><img src="/<%=history.pic[item]%>" style="width:50px;"></td>
+                                <td><img src="/<%=borrow.pic[item]%>" style="width:50px;"></td>
                                 <td>
-                                    <%=history.itemName[item]%></strong></p>
-
+                                    <%=borrow.itemName[item]%></strong></p>
                                 </td>
                                 <td>
-                                    <%if(history.ID[item]==""){%>
-                                    <%=history.qty[item]%>
+                                    <%if(borrow.ID[item]==""){%>
+                                    <%=borrow.qty[item]%>
                                     <%}else{%>
-                                    <%=history.qty[item]%>
+                                    <%=borrow.qty[item]%>
                                     <%}%>
                                 </td>
-
-                                <%if(history.ID[item]==""){%>
-
-                                <td>Non-ID</td>
+                                <%if(borrow.ID[item]==""){%>
+                                <td>Non-ID <input type="checkbox" name="item" value=<%=item%>></td>
                                 <%}else{%>
                                 <td>
-                                    <%for(var ID=0; ID<history.ID[item].length;ID++){ %>
+                                    <%for(var ID=0; ID<borrow.ID[item].length;ID++){ %>
                                     <p>
-                                        <%=history.ID[item][ID]%>
+                                        <%=borrow.ID[item][ID]%><input type="checkbox" name="item" value=<%=item%><%=ID%>>
                                     </p>
                                     <%}%>
                                 </td>
@@ -109,13 +108,15 @@
                             </tr>
                             <%}%>
                         </tbody>
+                        <input type="submit">
+                        <input type="checkbox" class="align-right" onClick="toggle(this)" />Approve All<br />
                     </table>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
     <%})%>
-    <script src="/script/script.js"></script>
 
 </body>
 

@@ -17,7 +17,8 @@
     border-color: blue;
     border: 10px solid transparent;
     width: 80%;
-    height: 200px;
+    /* height: 10em; */
+    height: 180px;
 }
 .itemPic2{
     border-radius: 5%;

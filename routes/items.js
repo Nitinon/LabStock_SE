@@ -27,8 +27,20 @@ var storage = multer.diskStorage({
 var upload = multer({
     storage: storage
 });
-
-
+router.get("/detail/:item_id", function (req, res) {
+    Item.findById(req.params.item_id, function (err, item) {
+        if (err) {
+            console.log(err)
+        } else {
+            middleware.countQty(req, function (numcart) {
+                res.render("items/detail", {
+                    item: item,
+                    numcart: numcart
+                })
+            })
+        }
+    })
+})
 router.get("/editItems", middleware.isMember, function (req, res) {
     req.session.edit = true
     res.redirect("/")
@@ -55,9 +67,12 @@ router.get("/editItems/:item_id", function (req, res) {
         if (err) {
             console.log(err)
         } else {
-            middleware.countQty(req,function(numcart){
-                res.render("items/edit", { item: item,numcart:numcart })
-            })  
+            middleware.countQty(req, function (numcart) {
+                res.render("items/edit", {
+                    item: item,
+                    numcart: numcart
+                })
+            })
         }
     })
 })
@@ -66,7 +81,8 @@ router.put("/editItems/:item_id", function (req, res) {
         if (err) {
             console.log(err)
         } else {
-            res.redirect("/")
+            req.flash("success", "updated")
+            res.redirect("/p/1");
         }
     })
 })
@@ -84,14 +100,15 @@ router.post("/editItems/:item_id/addID", function (req, res) {
         }
     })
 })
-
 router.post("/editItems/:item_id/delID", function (req, res) {
     Item.findById(req.params.item_id, function (err, foundedItem) {
         if (err) {
             console.log(err)
         } else {
             console.log(req.body)
-            foundedItem.itemID.splice(req.body.selectDel, 1)
+            console.log(foundedItem.itemID)
+            foundedItem.itemID.splice(foundedItem.itemID.indexOf(req.body.selectDel), 1)
+            console.log(foundedItem.itemID)
             foundedItem.qty--
             foundedItem.save()
             console.log(foundedItem)
@@ -116,11 +133,12 @@ router.get("/delItems/:id", middleware.isMember, function (req, res) {
         }
     })
 })
-
 router.get('/addItems', middleware.isMember, function (req, res, next) {
-    middleware.countQty(req,function(numcart){
-        res.render('items/add',{numcart:numcart});
-    })   
+    middleware.countQty(req, function (numcart) {
+        res.render('items/add', {
+            numcart: numcart
+        });
+    })
 });
 
 router.post('/addItems', upload.any(), function (req, res) {
@@ -154,13 +172,47 @@ router.post('/addItems', upload.any(), function (req, res) {
     })
 
 });
-
-router.get("/:category", function (req, res) {
-    Item.find({ category: req.params.category }, function (err, allItems) {
-        middleware.countQty(req,function(numcart){
-            res.render('index', { message: req.flash('error'), items: allItems, category: req.params.category, numcart: numcart });
-        });
-    })
+router.get("/:category/p/:page", function (req, res) {
+    var perPage = 6
+    var page = req.params.page || 1
+    Item
+        .find({
+            category: req.params.category
+        })
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function (err, allItems) {
+            Item.count({
+                category: req.params.category
+            }).exec(function (err, count) {
+                if (err) return next(err)
+                middleware.countQty(req, function (numcart) {
+                    // res.render('index', { message: req.flash('error'), items: allItems, category: "all", numcart: numcart });
+                    var found = true;
+                    if (count == 0) {
+                        found = false;
+                    }
+                    res.render('index', {
+                        message: req.flash('error'),
+                        items: allItems,
+                        category: req.params.category,
+                        numcart: numcart,
+                        current: page,
+                        pages: Math.ceil(count / perPage),
+                        found: found
+                    })
+                });
+            })
+        })
+    // Item.find({ category: req.params.category }, function (err, allItems) {
+    //         //     middleware.countQty(req,function(numcart){
+    // //         res.render('index', { message: req.flash('error'), items: allItems, category: req.params.category, numcart: numcart });
+    // //     });
+    // // })
+    //     middleware.countQty(req,function(numcart){
+    //         res.render('index', { message: req.flash('error'), items: allItems, category: req.params.category, numcart: numcart });
+    //     });
+    // })
 
 })
 

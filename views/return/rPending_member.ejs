@@ -2,7 +2,6 @@
 
 <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
 <link rel="stylesheet" type="text/css" href="/stylesheet/add-app-return.css">
-
 <script>
     function toggle(source) {
   checkboxes = document.getElementsByName('item');
@@ -11,54 +10,51 @@
   }
 }
     </script>
-
 </head>
 
 <body>
     <div id="wrapper">
         <div id="content">
             <%include ../partials/navbar%>
-            <div class="registerform">
-                <legend>
-                    <h1><%=type%></h1>
-                </legend>
-                <table class="table table-hover paginated">
+            <div class="container">
+                <ul class="nav nav-tabs">
+                    <li ><a href="/borrow/pending/member">Borrow pending</a></li>
+                    <li class="active"><a href="/return/pending/member">Return pending</a></li>
+                </ul>
+            </div>
+            <div class="container">
+                <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Return ID</th>
-                            <th>Type</th>
+                            <th>Date Pending</th>
                             <th>Author</th>
-                            <th>Approver</th>
                             <th>Date</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <%histories.forEach(function(history){%>
+                        <%returnns.forEach(function(returnn){%>
                         <tr>
                             <td>
-                                <%=history.date.toDateString()%>
-                                <%=history.date.toLocaleTimeString()%>
+                                    <%=returnn.date.toDateString()%> <%=returnn.date.toLocaleTimeString()%>
                             </td>
-                            <td><%=history.type%></td>
                             <td>
-                                <%=history.author.name%>
+                                <%=returnn.author.name%>
                             </td>
-                            <td><%=history.approver.name%> <%=history.approver.surname%></td>
                             <td>
-                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal<%=history._id%>">detail</a>
+                                <%=returnn.repatriate%>
+                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal2<%=returnn._id%>">detail</a>
                             </td>
                         </tr>
                         <%})%>
                     </tbody>
+                </table>
             </div>
-            </table>
         </div>
+        <% include ../partials/footer %>
     </div>
-    <% include ../partials/footer %>
-    </div>
-    <%histories.forEach(function(history){%>
-    <div class="modal fade" id="myModal<%=history._id%>" role="dialog">
+
+    <%returnns.forEach(function(returnn){%>
+    <div class="modal fade" id="myModal2<%=returnn._id%>" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -76,46 +72,52 @@
                                 <th>Items Name</th>
                                 <th>Quantity</th>
                                 <th>ID</th>
+                                <th>Del</th>
                             </tr>
+                            <form action="/returnn/confirm/<%=returnn._id%>" method="POST">
                         </thead>
                         <tbody>
-                            <%for(var item=0; item<history.itemID.length;item++){ %>
+                            <%for(var item=0; item<returnn.itemID.length;item++){ %>
                             <tr>
-                                <td><img src="/<%=history.pic[item]%>" style="width:50px;"></td>
+                                <td><img src="/<%=returnn.pic[item]%>" style="width:50px;"></td>
                                 <td>
-                                    <%=history.itemName[item]%></strong></p>
+                                    <%=returnn.itemName[item]%></strong></p>
 
                                 </td>
                                 <td>
-                                    <%if(history.ID[item]==""){%>
-                                    <%=history.qty[item]%>
+                                    <%if(returnn.ID[item]==""){%>
+                                    <%=returnn.qty[item]%>
                                     <%}else{%>
-                                    <%=history.qty[item]%>
+                                    <%=returnn.qty[item]%>
                                     <%}%>
                                 </td>
 
-                                <%if(history.ID[item]==""){%>
+                                <%if(returnn.ID[item]==""){%>
 
-                                <td>Non-ID</td>
+                                <td>Non-ID <input type="checkbox" name="item" value=<%=item%>></td>
                                 <%}else{%>
                                 <td>
-                                    <%for(var ID=0; ID<history.ID[item].length;ID++){ %>
+                                    <%for(var ID=0; ID<returnn.ID[item].length;ID++){ %>
                                     <p>
-                                        <%=history.ID[item][ID]%>
+                                        <%=returnn.ID[item][ID]%><input type="checkbox" name="item" value="<%=item%><%=ID%>">
                                     </p>
                                     <%}%>
                                 </td>
                                 <%}%>
                             </tr>
                             <%}%>
+
                         </tbody>
+                        <input type="submit">
+                        <input type="checkbox" class="align-right" onClick="toggle(this)" />Approve All<br />
                     </table>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
     <%})%>
-    <script src="/script/script.js"></script>
 
 </body>
 

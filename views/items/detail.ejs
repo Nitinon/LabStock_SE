@@ -1,0 +1,182 @@
+<% include ../partials/header%>
+<link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
+<link rel="stylesheet" type="text/css" href="/stylesheet/tump-btn.css">
+<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+
+<style>
+    .center-cropped {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.5px;
+            margin-left: 25%;
+            background-color: rgb(236, 236, 236);
+        }
+    </style>
+<script>
+    $(document).ready(function () {
+            document.getElementById("<%=item.category%>").selected = "true";
+
+        })
+    </script>
+<%if(item.qty==0){%>
+<script>
+    $(document).ready(function () {
+                document.getElementById("DelBT").disabled = "true";
+            })  
+        </script>
+<%}%>
+</head>
+
+<body>
+    <%include ../partials/navbar%>
+
+    <!------ Include the above in your HEAD tag ---------->
+    <div id="wrapper">
+        <div id="content">
+            <%include ../partials/flashMsg%>
+            <div class="container">
+                <div class="row">
+                    <div class="registerform">
+                        <form action="/editItems/<%=item._id%>?_method=PUT" class="form-horizontal" method="POST">
+                            <fieldset>
+                                <legend>
+                                    <h1>
+                                        <%=item.name%>
+                                    </h1>
+                                </legend>
+                                <div class="row">
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <div class="center-cropped">
+                                            <img class="itemPic2" src="../<%=item.originalname%>" alt="Paris">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="Name">Items Name</label>
+                                            <div class="col-md-5">
+                                                <p>
+                                                    <%=item.name%>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="mobilenumber">Category</label>
+                                            <div class="col-md-5" id="seleCat">
+                                                <p>
+                                                    <%=item.category%>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Text input-->
+                                        <div class="form-group">
+
+                                            <label class="col-md-4 control-label wrap2" for="qty">Quantity</label>
+                                            <div class="col-md-5">
+                                                <p>
+                                                    <%=item.qty%>
+                                                </p>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="limit">Duration
+                                                limit
+                                            </label>
+                                            <div class="col-md-5">
+                                                <p>
+                                                    <%=item.limit%>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Textarea -->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="address">Detail</label>
+                                            <div class="col-md-4">
+                                                <p>
+                                                    <%=item.detail%>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- Button -->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="submit"></label>
+                                            <div class="col-md-4 pull-right">
+                                                <a href="/p/1" class="btn btn-warning">Back</a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                        </form>
+
+                    </div>
+                </div>
+                <!-- modal -->
+                <div class="modal fade" id="modalAdd" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4> Add new Item ID</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-inline " action="/editItems/<%=item._id%>/addID" method="POST">
+                                    <div class="form-group mx-sm-3 mb-2 center">
+                                        <label for="ID">New ID</label>
+                                        <input type="text" Name="newID" class="form-control" id="ID" placeholder="New ID"
+                                            required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-2">Add ID</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modalDel" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4> Delete Item ID</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-inline " action="/editItems/<%=item._id%>/delID" method="POST">
+                                    <div class="form-group mx-sm-3 mb-2 center">
+                                        <label for="ID">Select ID</label>
+                                        <select name="selectDel" id="input" class="form-control" required="required">
+                                            <%item.itemID.forEach(function(foundedID){%>
+                                            <option value="<%=foundedID%>">
+                                                <%=foundedID%>
+                                            </option>
+                                            <%})%>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-2">Delete ID</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <% include ../partials/footer %>
+
+    </div>
+</body>
+
+</html>

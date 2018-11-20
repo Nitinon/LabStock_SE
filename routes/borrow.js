@@ -172,9 +172,11 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
         }
         console.log(historyB)
         History.create(historyB,function(err,history){
+            console.log("====================Hisssssssssss========================")
             if(err) console.log(err)
             else{
-            User.findById(req.user._id,function(err,user){
+            User.findById(history.author.id,function(err,user){
+            console.log(user)
                 if(err)console.log(err)
                 else{
                     user.history.push(history)

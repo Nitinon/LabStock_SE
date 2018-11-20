@@ -1,10 +1,10 @@
 <% include ../partials/header%>
-    <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheet/tump-btn.css">
-    <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
+<link rel="stylesheet" type="text/css" href="/stylesheet/tump-btn.css">
+<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
 
-    <style>
-        .center-cropped {
+<style>
+    .center-cropped {
             border: 1px solid #ddd;
             border-radius: 4px;
             padding: 0.5px;
@@ -12,186 +12,192 @@
             background-color: rgb(236, 236, 236);
         }
     </style>
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
             document.getElementById("<%=item.category%>").selected = "true";
 
         })
     </script>
-    <%if(item.qty==0){%>
-        <script>
-            $(document).ready(function () {
+<%if(item.qty==0){%>
+<script>
+    $(document).ready(function () {
                 document.getElementById("DelBT").disabled = "true";
             })  
         </script>
-        <%}%>
-    </head>
+<%}%>
+</head>
 
-    <body>
-        <%include ../partials/navbar%>
+<body>
+    <%include ../partials/navbar%>
 
-            <!------ Include the above in your HEAD tag ---------->
-            <div id="wrapper">
-                <div id="content">
-                    <div class="container">
-                        <div class="row">
-                            <div class="registerform">
-                                <form action="/editItems/<%=item._id%>?_method=PUT" class="form-horizontal" method="POST">
-                                    <fieldset>
-                                        <legend>
-                                            <h1>
-                                                <%=item.name%>
-                                            </h1>
-                                        </legend>
-                                        <div class="row">
-                                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                                <div class="center-cropped">
-                                                    <img class="itemPic2" src="../<%=item.originalname%>" alt="Paris">
-                                                </div>
+    <!------ Include the above in your HEAD tag ---------->
+    <div id="wrapper">
+        <div id="content">
+            <%include ../partials/flashMsg%>
+            <div class="container">
+                <div class="row">
+                    <div class="registerform">
+                        <form action="/editItems/<%=item._id%>?_method=PUT" class="form-horizontal" method="POST">
+                            <fieldset>
+                                <legend>
+                                    <h1>
+                                        <%=item.name%>
+                                    </h1>
+                                </legend>
+                                <div class="row">
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <div class="center-cropped">
+                                            <img class="itemPic2" src="../<%=item.originalname%>" alt="Paris">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="Name">Items Name</label>
+                                            <div class="col-md-5">
+                                                <input id="Name" name="item[name]" type="text" placeholder="Items Name"
+                                                    class="form-control input-md" value="<%=item.name%>" required="">
                                             </div>
-                                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                                                <!-- Text input-->
-                                                <div class="form-group">
-                                                    <label class="col-md-4 control-label" for="Name">Items Name</label>
-                                                    <div class="col-md-5">
-                                                        <input id="Name" name="item[name]" type="text" placeholder="Items Name" class="form-control input-md" value="<%=item.name%>"
-                                                            required="">
-                                                    </div>
-                                                </div>
-                                                <!-- Text input-->
-                                                <div class="form-group">
-                                                    <label class="col-md-4 control-label" for="mobilenumber">Category</label>
-                                                    <div class="col-md-5" id="seleCat">
-                                                        <select class="form-control" id="sel1" name="item[category]">
-                                                            <option id="general" value="general">General</option>
-                                                            <option id="network" value="network">Network Devices</option>
-                                                            <option id="stationary" value="staionary">Stationary</option>
-                                                            <option id="kitchenware" value="kitchenware">Kitchenware</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <%if(item.type=="ID"){%>
-                                                    <!-- Text input-->
-                                                    <div class="form-group">
-                                                        <label class="col-md-4 control-label wrap2" for="Name">Edit ID
-                                                        </label>
-                                                        <div class="col-md-3">
-                                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalAdd">Add</button>
-                                                            <button id="DelBT" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDel">Delete</button>
+                                        </div>
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="mobilenumber">Category</label>
+                                            <div class="col-md-5" id="seleCat">
+                                                <select class="form-control" id="sel1" name="item[category]">
+                                                    <option id="general" value="general">General</option>
+                                                    <option id="network" value="network">Network Devices</option>
+                                                    <option id="stationary" value="staionary">Stationary</option>
+                                                    <option id="kitchenware" value="kitchenware">Kitchenware</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <%if(item.type=="ID"){%>
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label wrap2" for="Name">Edit ID
+                                            </label>
+                                            <div class="col-md-3">
+                                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                    data-target="#modalAdd">Add</button>
+                                                <button id="DelBT" type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#modalDel">Delete</button>
 
-                                                        </div>
-                                                    </div>
-                                                    <!-- Text input-->
-                                                    <div class="form-group">
-                                                        <label class="col-md-4 control-label wrap2" for="qty">Quantity</label>
-                                                        <div class="col-md-5">
-                                                            <input id="qty" placeholder="Quantity" class="form-control input-md input-quantity" value="<%=item.qty%>" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <%}else{%>
-                                                        <!-- Text input-->
-                                                        <div class="form-group">
+                                            </div>
+                                        </div>
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label wrap2" for="qty">Quantity</label>
+                                            <div class="col-md-5">
+                                                <input id="qty" placeholder="Quantity" class="form-control input-md input-quantity"
+                                                    value="<%=item.qty%>" disabled>
+                                            </div>
+                                        </div>
+                                        <%}else{%>
+                                        <!-- Text input-->
+                                        <div class="form-group">
 
-                                                            <label class="col-md-4 control-label wrap2" for="qty">Quantity</label>
-                                                            <div class="col-md-5">
-                                                                <input id="qty" name="item[qty]" type="text" placeholder="Quantity" class="form-control input-md input-quantity" value="<%=item.qty%>"
-                                                                    required="">
-                                                            </div>
-                                                        </div>
-                                                        <%}%>
+                                            <label class="col-md-4 control-label wrap2" for="qty">Quantity</label>
+                                            <div class="col-md-5">
+                                                <input id="qty" name="item[qty]" type="text" placeholder="Quantity"
+                                                    class="form-control input-md input-quantity" value="<%=item.qty%>"
+                                                    required="">
+                                            </div>
+                                        </div>
+                                        <%}%>
 
 
-                                                            <!-- Text input-->
-                                                            <div class="form-group">
-                                                                <label class="col-md-4 control-label" for="limit">Duration
-                                                                    limit
-                                                                </label>
-                                                                <div class="col-md-5">
-                                                                    <input id="limit" name="item[limit]" type="text" placeholder="7 Days" class="form-control input-md" value="<%=item.limit%>"
-                                                                        required="">
-                                                                </div>
-                                                            </div>
+                                        <!-- Text input-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="limit">Duration
+                                                limit
+                                            </label>
+                                            <div class="col-md-5">
+                                                <input id="limit" name="item[limit]" type="text" placeholder="7 Days"
+                                                    class="form-control input-md" value="<%=item.limit%>" required="">
+                                            </div>
+                                        </div>
 
-                                                            <!-- Textarea -->
-                                                            <div class="form-group">
-                                                                <label class="col-md-4 control-label" for="address">Detail</label>
-                                                                <div class="col-md-4">
-                                                                    <textarea class="form-control" id="Detail" name="item[detail]"><%=item.detail%></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Button -->
-                                                            <div class="form-group">
-                                                                <label class="col-md-4 control-label" for="submit"></label>
-                                                                <div class="col-md-4 pull-right">
-                                                                    <input type="submit" class="btn btn-success" name="submit" value="submit">
-                                                                </div>
-
-                                                            </div>
-
+                                        <!-- Textarea -->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="address">Detail</label>
+                                            <div class="col-md-4">
+                                                <textarea class="form-control" id="Detail" name="item[detail]"><%=item.detail%></textarea>
+                                            </div>
+                                        </div>
+                                        <!-- Button -->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="submit"></label>
+                                            <div class="col-md-4 pull-right">
+                                                <input type="submit" class="btn btn-success" name="submit" value="submit">
                                             </div>
 
                                         </div>
-                                    </fieldset>
-                                </form>
 
-                            </div>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="modalAdd" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4> Add new Item ID</h4>
                                     </div>
-                                    <div class="modal-body">
-                                        <form class="form-inline " action="/editItems/<%=item._id%>/addID" method="POST">
-                                            <div class="form-group mx-sm-3 mb-2 center">
-                                                <label for="ID">New ID</label>
-                                                <input type="text" Name="newID" class="form-control" id="ID" placeholder="New ID" required>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary mb-2">Add ID</button>
-                                        </form>
-                                    </div>
+
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" id="modalDel" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4> Delete Item ID</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form class="form-inline " action="/editItems/<%=item._id%>/delID" method="POST">
-                                            <div class="form-group mx-sm-3 mb-2 center">
-                                                <label for="ID">Select ID</label>
-                                                <select name="selectDel" id="input" class="form-control" required="required">
-                                                    <%item.itemID.forEach(function(foundedID){%>
-                                                        <option value="<%=foundedID%>">
-                                                            <%=foundedID%>
-                                                        </option>
-                                                        <%})%>
-                                                </select>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary mb-2">Delete ID</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                            </fieldset>
+                        </form>
 
                     </div>
                 </div>
+                <!-- modal -->
+                <div class="modal fade" id="modalAdd" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4> Add new Item ID</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-inline " action="/editItems/<%=item._id%>/addID" method="POST">
+                                    <div class="form-group mx-sm-3 mb-2 center">
+                                        <label for="ID">New ID</label>
+                                        <input type="text" Name="newID" class="form-control" id="ID" placeholder="New ID"
+                                            required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-2">Add ID</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <% include ../partials/footer %>
+                <div class="modal fade" id="modalDel" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4> Delete Item ID</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-inline " action="/editItems/<%=item._id%>/delID" method="POST">
+                                    <div class="form-group mx-sm-3 mb-2 center">
+                                        <label for="ID">Select ID</label>
+                                        <select name="selectDel" id="input" class="form-control" required="required">
+                                            <%item.itemID.forEach(function(foundedID){%>
+                                            <option value="<%=foundedID%>">
+                                                <%=foundedID%>
+                                            </option>
+                                            <%})%>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-2">Delete ID</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
-    </body>
+        </div>
 
-    </html>
+        <% include ../partials/footer %>
+
+    </div>
+</body>
+
+</html>
