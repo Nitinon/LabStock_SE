@@ -1,7 +1,30 @@
+div.pager {
+    text-align: center;
+    margin: 1em 0;
+}
+div.pager span {
+    display: inline-block;
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8;
+    text-align: center;
+    cursor: pointer;
+    background: #000;
+    color: #fff;
+    margin-right: 0.5em;
+}
+
+div.pager span.active {
+    background: #f79400;
+}
+
+
+
 html,body{
     height: 100%;
     font-family: 'Athiti', sans-serif;
 }
+
 .out-of-stock{
     margin-bottom:0;
     color: red;

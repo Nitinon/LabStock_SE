@@ -132,7 +132,7 @@ router.post("/returnn/confirm/:id_return",function(req,res){
             author:returnn.author,
             approver:approver,
             type:"return",
-            itemID:temp2,
+            itemID:temp2.itemID,
             itemName:temp2.itemName,
             pic:temp2.pic,
             ID:temp2.ID,

@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
 <link rel="stylesheet" type="text/css" href="/stylesheet/add-app-return.css">
+
 <script>
     function toggle(source) {
   checkboxes = document.getElementsByName('item');
@@ -9,52 +10,55 @@
     checkboxes[i].checked = source.checked;
   }
 }
-</script>
+    </script>
+
 </head>
 
 <body>
     <div id="wrapper">
         <div id="content">
             <%include ../partials/navbar%>
-            <div class="container">
-                <ul class="nav nav-tabs ">
-                    <li ><a href="/borrow/pending" id="pending_tab">Borrow pending</a></li>
-                    <li ><a href="/borrow/borrowed" id="borrowed_tab">Borrowed</a></li>
-                </ul>
-            </div>
-            <script>
-                $('#<%=status%>_tab').addClass("Active");
-            </script>
-            <div class="container">
+            <div class="registerform">
+                <legend>
+                    <h1> history</h1>
+                </legend>
                 <table class="table table-hover paginated">
                     <thead>
                         <tr>
-                            <th>Borrow ID</th>
+                            <th>Return ID</th>
+                            <th>Type</th>
                             <th>Author</th>
+                            <th>Approver</th>
                             <th>Date</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <%borrows.forEach(function(borrow){%>
+                        <%histories.forEach(function(history){%>
                         <tr>
-                            <td  class="col-md-4"><%=borrow.date.toDateString()%> <%=borrow.date.toLocaleTimeString()%></td>
-                            <td class="col-md-4"><%=borrow.author.name%></td>
-                            <td class="col-md-4">
-                                <%=borrow.repatriate%>
-                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal3<%=borrow._id%>">detail</a>
-
+                            <td>
+                                <%=history.date.toDateString()%>
+                                <%=history.date.toLocaleTimeString()%>
                             </td>
+                            <td><%=history.type%></td>
+                            <td>
+                                <%=history.author.name%>
+                            </td>
+                            <td><%=history.approver.name%> <%=history.approver.surname%></td>
+                            <td>
+                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal<%=history._id%>">detail</a>
+                            </td>
+                        </tr>
                         <%})%>
                     </tbody>
-                </table>
             </div>
+            </table>
         </div>
-        <% include ../partials/footer %>
     </div>
-
-    <%borrows.forEach(function(borrow){%>
-    <div class="modal fade" id="myModal3<%=borrow._id%>" role="dialog">
+    <% include ../partials/footer %>
+    </div>
+    <%histories.forEach(function(history){%>
+    <div class="modal fade" id="myModal<%=history._id%>" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -75,29 +79,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <%for(var item=0; item<borrow.itemID.length;item++){ %>
+                            <%for(var item=0; item<history.itemID.length;item++){ %>
                             <tr>
-                                <td><img src="/<%=borrow.pic[item]%>" style="width:50px;"></td>
+                                <td><img src="/<%=history.pic[item]%>" style="width:50px;"></td>
                                 <td>
-                                    <%=borrow.itemName[item]%></strong></p>
+                                    <%=history.itemName[item]%></strong></p>
 
                                 </td>
                                 <td>
-                                    <%if(borrow.ID[item]==""){%>
-                                    <%=borrow.qty[item]%>
+                                    <%if(history.ID[item]==""){%>
+                                    <%=history.qty[item]%>
                                     <%}else{%>
-                                    <%=borrow.qty[item]%>
+                                    <%=history.qty[item]%>
                                     <%}%>
                                 </td>
 
-                                <%if(borrow.ID[item]==""){%>
+                                <%if(history.ID[item]==""){%>
 
                                 <td>Non-ID</td>
                                 <%}else{%>
                                 <td>
-                                    <%for(var ID=0; ID<borrow.ID[item].length;ID++){ %>
+                                    <%for(var ID=0; ID<history.ID[item].length;ID++){ %>
                                     <p>
-                                        <%=borrow.ID[item][ID]%>
+                                        <%=history.ID[item][ID]%>
                                     </p>
                                     <%}%>
                                 </td>

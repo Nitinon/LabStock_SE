@@ -156,14 +156,14 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
         var approver={
             id:req.user._id,
             name:req.user.name,
-            surname:req.user.name
+            surname:req.user.surname
         }
         var now=new Date();
         var historyB={
             author:borrow.author,
             approver:approver,
             type:"borrow",
-            itemID:temp2,
+            itemID:temp2.itemID,
             itemName:temp2.itemName,
             pic:temp2.pic,
             ID:temp2.ID,

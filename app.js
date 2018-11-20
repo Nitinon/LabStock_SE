@@ -14,8 +14,8 @@ var indexRoute = require("./routes/index"),
     cartRoute = require("./routes/cart"),
     itemRoute = require("./routes/items"),
     borrowRoute = require("./routes/borrow"),
-    returnRoute = require("./routes/return")
-
+    returnRoute = require("./routes/return"),
+    historyRoute=require("./routes/history")
 
 
 // var smtpTransport = nodemailer.createTransport({
@@ -65,6 +65,8 @@ app.use(cartRoute);
 app.use(itemRoute);
 app.use(borrowRoute);
 app.use(returnRoute);
+app.use(historyRoute);
+
 
 // app.get("/hihi", function (req, res) {
 //     User.find({}, "email", function (err, mails) {

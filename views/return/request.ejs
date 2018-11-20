@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
 <link rel="stylesheet" type="text/css" href="/stylesheet/add-app-return.css">
+
 <script>
     function toggle(source) {
   checkboxes = document.getElementsByName('item');
@@ -10,6 +11,7 @@
   }
 }
     </script>
+
 </head>
 
 <body>
@@ -20,7 +22,7 @@
                     <ul class="nav nav-tabs">
                         <li ><a href="/return" id="request_tab">Return request</a></li>
                         <li ><a href="/return/pending" id="pending_tab">Return pending</a></li>
-                        <li ><a href="/return/returned" id="pending_tab">Returned</a></li>
+                        <li ><a href="/return/returned" id="returned_tab">Returned</a></li>
 
                     </ul>
             </div>
@@ -28,7 +30,7 @@
                     $('#<%=status%>_tab').addClass("Active");
             </script>
             <div class="container">
-                <table class="table table-hover">
+                <table class="table table-hover paginated" >
                     <thead>
                         <tr>
                             <th>Return ID</th>
@@ -40,15 +42,9 @@
                     <tbody>
                         <%returnns.forEach(function(returnn){%>
                             <%if(returnn.itemID!=""){%>
-
                         <tr>
-
-                            <td>
-                                    <%=returnn.date.toDateString()%> <%=returnn.date.toLocaleTimeString()%>
-                            </td>
-                            <td>
-                                <%=returnn.author.name%>
-                            </td>
+                            <td><%=returnn.date.toDateString()%> <%=returnn.date.toLocaleTimeString()%></td>
+                            <td><%=returnn.author.name%></td>
                             <td>
                                 <%=returnn.repatriate%>
                                 <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal2<%=returnn._id%>">detail</a>
@@ -59,6 +55,7 @@
 
                         <%})%>
                     </tbody>
+                </div>
                 </table>
             </div>
         </div>
@@ -102,13 +99,13 @@
                                     <%}%>
                                 </td>
                                 <%if(returnn.ID[item]==""){%>
-                                <td>Non-ID <%if(status!="pending"){%><input type="checkbox" name="item" value=<%=item%><%}%></td>
+                                <td>Non-ID <%if(status=="request"){%><input type="checkbox" name="item" value=<%=item%><%}%></td>
                                 <%}else{%>
                                 <td>
                                     <%for(var ID=0; ID<returnn.ID[item].length;ID++){ %>
                                     <p>
 <!-- ===============================================Auto Format cation ============================================== -->
-                                        <%=returnn.ID[item][ID]%><%if(status!="pending"){%><input type="checkbox" name="item" value=<%=item%><%=ID%>><%}%>
+                                        <%=returnn.ID[item][ID]%><%if(status=="request"){%><input type="checkbox" name="item" value=<%=item%><%=ID%>><%}%>
                                     </p>
                                     <%}%>
                                 </td>
@@ -118,7 +115,7 @@
                             <%}%>
 
                         </tbody>
-                        <%if(status!="pending"){%>
+                        <%if(status=="request"){%>
                         <input type="submit">
                         <input type="checkbox" class="align-right" onClick="toggle(this)" />Approve All<br />
                         <%}%>
@@ -130,6 +127,7 @@
     </div>
 
     <%})%>
+    <script src="/script/script.js"></script>
 
 </body>
 
