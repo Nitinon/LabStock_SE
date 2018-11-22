@@ -8,8 +8,19 @@ var middleware = require("../middleware");
 router.get("/history/notReturn",middleware.isLoggedIn,function(req,res){
     User.findById(req.user._id,function(err,user){
         Borrow.find({approve:true},function(err,borrowNot){
-            console.log(borrowNot)
         middleware.countQty(req, function (numcart) {
+            borrowNot.forEach(function(borrow){
+                borrow.limit.forEach(function(limit){
+                    var tempDate=new Date(borrow.date)
+                    var DateNow=new Date(Date.now())
+                    tempDate.setDate(tempDate.getDate()+parseInt(limit))
+                    console.log(DateNow.toDateString()+" "+tempDate.toDateString())
+                    console.log(DateNow>tempDate)
+                    if(DateNow>tempDate)borrow.lateStatus=true;
+                    
+                })
+                borrow.save()
+            })
             res.render("history/historyNot", {
                 cart: user.cart,
                 numcart: numcart,

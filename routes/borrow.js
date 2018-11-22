@@ -131,6 +131,7 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
         borrow.qty = temp2.qty
         borrow.date=temp2.date
         borrow.approve = true
+        borrow.lateStatus=false
 // ==================================================================================
         borrow.itemID.forEach(function (itemID, i) {
             if (borrow.ID[i] == "") { //it's mean Non id
