@@ -167,6 +167,7 @@ router.get("/checkout",middleware.isLoggedIn,function (req, res) {
             date:now
             
         })
+        if(cart.itemID!=""){
         Borrow.create(newOrder, function (err, newBorrow) {
             if (err) {
                 console.log(err)
@@ -184,6 +185,10 @@ router.get("/checkout",middleware.isLoggedIn,function (req, res) {
                 res.redirect("/p/1")
             }
         })
+    }else{
+        req.flash("error","Cart is empty")
+        res.redirect("/p/1")
+    }
     })
 })
 router.get("/clearCart",middleware.isLoggedIn,function (req, res) {

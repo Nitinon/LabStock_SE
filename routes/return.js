@@ -71,14 +71,7 @@ router.post("/returnn/confirm/:id_return",function(req,res){
                  temp2.pic.splice(fItem, 1);
              }
          })
-         returnn.approve=true;
-         
-        //  console.log(temp)
-        //  console.log(temp2)
-        //  temp2 is seleted item
-        // temp is not selected item
-
-        //  ================== add item to DB================================================
+ //  ================== add item to DB================================================
 //  // ==================================================================================
         if(temp.itemID!=""){
             Borrow.findById(temp.borrowID,function(err,founded){
@@ -153,13 +146,14 @@ router.post("/returnn/confirm/:id_return",function(req,res){
         })
          returnn.save();
          res.redirect("/return/pending/member")
+         returnn.remove()
     })
 })
 router.get("/return/pending/member", function (req, res) {
     // User.findById(req.user._id).populate("borrow").exec(function (err, user) {
     User.findById(req.user._id, function (err, user) {
         Return.find({
-        approve: "false"
+            
         }, function (err, foundedReturn) {
             middleware.countQty(req, function (numcart) {
                 res.render("return/rPending_member", {
@@ -212,9 +206,7 @@ router.get("/return/returned", function (req, res) {
 router.get("/return/pending", function (req, res) {
     User.findById(req.user._id).populate({
         path: 'return',
-        match: {
-            approve: false
-        },
+        
         options:{sort:{date:-1}}
     }).exec(function (err, user) {
         middleware.countQty(req, function (numcart) {
@@ -292,8 +284,6 @@ router.post("/return/request/:borrow_id", function (req, res) {
                 temp2.pic.splice(fItem, 1);
             }
         })
-        // temp2.approve=true
-        // test
         var author = {
             id: req.user._id,
             name: req.user.name,
@@ -322,7 +312,6 @@ router.post("/return/request/:borrow_id", function (req, res) {
         console.log("=============================")
         console.log(requestReuturn)
 
-        
         Return.create(requestReuturn,function(err,request){
             if(err){
                 console.log(err)

@@ -5,12 +5,12 @@
 
 <script>
     function toggle(source) {
-  checkboxes = document.getElementsByName('item');
-  for(var i=0, n=checkboxes.length;i<n;i++) {
-    checkboxes[i].checked = source.checked;
-  }
-}
-    </script>
+        checkboxes = document.getElementsByName('item');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>
 
 </head>
 
@@ -37,14 +37,27 @@
                     <tbody>
                         <%studentInfo.forEach(function(student){%>
                         <tr>
-                            <td class="col-md-1"><%=student.studentID%></td>
-                            <td class="col-md-2"><%=student.name%> <%=student.surname%></td>
-                            <td class="col-md-2"><%=student.tel%></td>
-                            <td class="col-md-2"><%=student.lineID%></td>
-                            <td class="col-md-2"><%=student.email%></td>
-                            <td class="col-md-2"><%=student.address%></td>
                             <td class="col-md-1">
-                                <a class="btn btn-success btn-xs" data-toggle="modal" href="/editInfo/<%=student._id%>">Edit</a>
+                                <%=student.studentID%>
+                            </td>
+                            <td class="col-md-2">
+                                <%=student.name%>
+                                <%=student.surname%>
+                            </td>
+                            <td class="col-md-2">
+                                <%=student.tel%>
+                            </td>
+                            <td class="col-md-2">
+                                <%=student.lineID%>
+                            </td>
+                            <td class="col-md-2">
+                                <%=student.email%>
+                            </td>
+                            <td class="col-md-2">
+                                <%=student.address%>
+                            </td>
+                            <td class="col-md-1">
+                                <a class="btn btn-success btn-md" data-toggle="modal" href="/editInfo/<%=student._id%>">Edit</a>
                             </td>
                         </tr>
                         <%})%>
@@ -55,7 +68,7 @@
     </div>
     <% include ./partials/footer %>
     </div>
-   
+
     <script src="/script/script.js"></script>
 
 </body>

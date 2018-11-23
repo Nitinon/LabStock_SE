@@ -1,3 +1,9 @@
+p{
+    font-size: 18px;
+}
+table{
+    font-size: 18px;
+}
 div.pager {
     text-align: center;
     margin: 1em 0;
@@ -259,6 +265,7 @@ ul.nav.nav-tabs{
     margin-left: 15%;
     margin-right: 15%;
     margin-top:2%;
+    padding-bottom:2%;
     background-color: rgb(255, 255, 255);
     border-radius: 3%;
     -webkit-box-shadow: 10px 10px 31px -6px rgba(0,0,0,0.55);

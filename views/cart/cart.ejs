@@ -2,6 +2,12 @@
 
 <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
 <link rel="stylesheet" type="text/css" href="/stylesheet/add-app-return.css">
+<style>
+.registerform{
+    padding-bottom: 5%;
+}
+</style>
+<%var empty=true%>
 </head>
 
 <body>
@@ -9,56 +15,73 @@
         <div id="content">
             <%include ../partials/navbar%>
             <div class="container">
-                <h1>Check out</h1>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Picture</th>
-                            <th>Items Name</th>
-                            <th>Quantity</th>
-                            <th>ID</th>
-                            <th>Del</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%for(var item=0; item<cart.itemID.length;item++){ %>
-                        <tr>
-                            <td><img src="/<%=cart.pic[item]%>" style="width:50px;"></td>
-                            <td>
-                                <%=cart.name[item]%>
-                            </td>
-                            <td>
+                <div class="registerform">
+                    <legend>
+                        <h1>Check out</h1>
+                    </legend>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-2">Picture</th>
+                                <th class="col-md-3">Items Name</th>
+                                <th class="col-md-2">Quantity</th>
+                                <th class="col-md-2">ID</th>
+                                <th class="col-md-2">Del</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <%for(var item=0; item<cart.itemID.length;item++){ %>
+                            <tr>
+                                <td><img src="/<%=cart.pic[item]%>" style="width:50px;"></td>
+                                <td>
+                                    <%=cart.name[item]%>
+                                </td>
+                                <td>
+                                    <%if(cart.ID[item]==""){%>
+
+                                    <a href="/cart/incItem/<%=item%>" class="btn btn-success btn-xs"> + </a>
+                                    <%=cart.qty[item]%> <a href="/cart/decItem/<%=item%>" class="btn btn-success btn-xs">
+                                        -
+                                    </a>
+                                    <%}else{%>
+                                    <%=cart.qty[item]%>
+                                    <%}%>
+
+                                </td>
                                 <%if(cart.ID[item]==""){%>
-
-                                <a href="/cart/incItem/<%=item%>" class="btn btn-success btn-xs"> + </a>
-                                <%=cart.qty[item]%> <a href="/cart/decItem/<%=item%>" class="btn btn-success btn-xs"> -
-                                </a>
+                                <td>Non-ID</td>
                                 <%}else{%>
-                                <%=cart.qty[item]%>
+                                <td>
+                                    <%cart.ID[item].forEach(function(ID){%>
+                                    <div>
+                                        <%=ID%><a href="/cart/<%=item%>/<%=cart.ID[item].indexOf(ID)%>" class="btn btn-danger btn-xs pull-right">x</a></div>
+                                    <%})%>
+                                </td>
                                 <%}%>
-
-                            </td>
-                            <%if(cart.ID[item]==""){%>
-                            <td>Non-ID</td>
-                            <%}else{%>
-                            <td>
-                                <%cart.ID[item].forEach(function(ID){%>
-                                <p>
-                                    <%=ID%> <a href="/cart/<%=item%>/<%=cart.ID[item].indexOf(ID)%>" class="btn btn-danger btn-xs pull-right">x</a></p>
-
-                                <%})%>
-                            </td>
+                                <td><a href="/cart/delItem/<%=item%>" class="btn btn-danger">Del</a></td>
+                            </tr>
                             <%}%>
-                            <td><a href="/cart/delItem/<%=item%>" class="btn btn-danger">Del</a></td>
-                        </tr>
-                        <%}%>
 
-                    </tbody>
-                </table>
-                <a href="/clearCart"><button class="btn btn-warning pull-right">ClearCart</button></a>
-                <a href="/checkout"> <button class="btn btn-success pull-right">Checkout</button></a>
+                        </tbody>
+
+                    </table>
+                    <%if(cart.itemID.length==0){%>
+                    <div class="jumbotron" style="heigth:200px;">
+                        <div class="container">
+                            <h1 class="text-center" style="color:gray;"> Empty Cart</h1>
+                        </div>
+                    </div>
+                    <%}%>
+                    <div>
+                        <a href="/clearCart"><button class="btn btn-warning pull-right">ClearCart</button></a>
+                        <a href="/checkout"> <button class="btn btn-success pull-right">Checkout</button></a>
+                    </div>
+
+                </div>
             </div>
         </div>
+
     </div>
 
 </body>

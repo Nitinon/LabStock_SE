@@ -10,8 +10,8 @@
   }
 }
     </script>
+<%var empty=true%>
 </head>
-
 <body>
     <div id="wrapper">
         <div id="content">
@@ -23,31 +23,40 @@
                 </ul>
             </div>
             <div class="container">
-                <table class="table table-hover">
+                <table class="table table-striped table-bordered paginated" style="background-color: rgb(209, 209, 209);">
                     <thead>
                         <tr>
-                            <th>Date Pending</th>
-                            <th>Author</th>
-                            <th>Date</th>
+                            <th class="col-md-3">Date Pending</th>
+                            <th class="col-md-3">Author</th>
+                            <th class="col-md-3">Approve</th>
                         </tr>
                     </thead>
                     <tbody>
                         <%returnns.forEach(function(returnn){%>
                         <tr>
+                            <%empty=false%>
                             <td>
-                                    <%=returnn.date.toDateString()%> <%=returnn.date.toLocaleTimeString()%>
+                                <%=returnn.date.toDateString()%> <%=returnn.date.toLocaleTimeString()%>
                             </td>
                             <td>
                                 <%=returnn.author.name%>
                             </td>
                             <td>
                                 <%=returnn.repatriate%>
-                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal2<%=returnn._id%>">detail</a>
+                                <a class="btn btn-success btn-md text-center" data-toggle="modal" data-target="#myModal2<%=returnn._id%>">detail</a>
                             </td>
                         </tr>
                         <%})%>
+                    
                     </tbody>
                 </table>
+                <%if(empty==true){%>
+                    <div class="jumbotron">
+                        <div class="container">
+                            <h1 class="text-center" style="color:gray;"> Empty</h1>
+                        </div>
+                    </div>
+                <%}%>
             </div>
         </div>
         <% include ../partials/footer %>
@@ -72,7 +81,6 @@
                                 <th>Items Name</th>
                                 <th>Quantity</th>
                                 <th>ID</th>
-                                <th>Del</th>
                             </tr>
                             <form action="/returnn/confirm/<%=returnn._id%>" method="POST">
                         </thead>
@@ -118,6 +126,7 @@
     </div>
 
     <%})%>
+    <script src="/script/script2.js"></script>
 
 </body>
 

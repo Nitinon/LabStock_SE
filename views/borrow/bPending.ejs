@@ -10,6 +10,8 @@
   }
 }
 </script>
+<%var empty=true%>
+
 </head>
 
 <body>
@@ -26,27 +28,34 @@
                 $('#<%=status%>_tab').addClass("Active");
             </script>
             <div class="container">
-                <table class="table table-hover paginated">
+                    <table class="table table-striped table-bordered" style="background-color: rgb(209, 209, 209);">                
                     <thead>
                         <tr>
-                            <th>Borrow ID</th>
-                            <th>Author</th>
-                            <th>Date</th>
-                            <th></th>
+                            <th class="col-md-3">Date</th>
+                            <th class="col-md-3">Author</th>
+                            <th class="col-md-3">Detial</th>
                         </tr>
                     </thead>
                     <tbody>
                         <%borrows.forEach(function(borrow){%>
+                            <%empty=false%>
                         <tr>
                             <td  class="col-md-4"><%=borrow.date.toDateString()%> <%=borrow.date.toLocaleTimeString()%></td>
                             <td class="col-md-4"><%=borrow.author.name%></td>
                             <td class="col-md-4">
                                 <%=borrow.repatriate%>
-                                <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal3<%=borrow._id%>">detail</a>
+                                <a class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal3<%=borrow._id%>">detail</a>
                             </td>
                         <%})%>
                     </tbody>
                 </table>
+                <%if(empty==true){%>
+                    <div class="jumbotron">
+                        <div class="container">
+                            <h1 class="text-center" style="color:gray;"> Empty</h1>
+                        </div>
+                    </div>
+                <%}%>
             </div>
         </div>
         <% include ../partials/footer %>
@@ -105,6 +114,7 @@
                             <%}%>
                         </tbody>
                     </table>
+             
                 </div>
             </div>
         </div>

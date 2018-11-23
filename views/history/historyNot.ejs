@@ -11,7 +11,7 @@
   }
 }
     </script>
-
+<%var empty=true%>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
                 <legend>
                     <h1>Not Return</h1>
                 </legend>
-                <table class="table table-hover paginated">
+                <table class="table table-hover paginated table-striped">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -34,12 +34,14 @@
                     <tbody>
                         <%histories.forEach(function(history){%>
                             <%if(history.itemID!=""){%>
+                                <%empty=false%>
+
                         <tr>
-                            <td>
+                            <td class="col-md-4">
                                 <%=history.date.toDateString()%>
                                 <%=history.date.toLocaleTimeString()%>
                             </td>
-                            <td>
+                            <td class="col-md-3">
                                 <%=history.author.name%> <%=history.author.surname%>
                             </td>
                             <%var lated%>
@@ -47,7 +49,7 @@
                                 <%lated="Lated"%>
                             <%}else{ lated="Not Late"}%>
                                 
-                            <td><%=lated%></td>
+                            <td class="col-md-3"><%=lated%></td>
                             <td>
                                 <a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal<%=history._id%>">detail</a>
                             </td>
@@ -57,6 +59,13 @@
                     </tbody>
             </div>
             </table>
+            <%if(empty==true){%>
+                <div class="jumbotron">
+                    <div class="container">
+                        <h1 class="text-center" style="color:gray;"> Empty</h1>
+                    </div>
+                </div>
+            <%}%>
         </div>
     </div>
     <% include ../partials/footer %>
@@ -73,7 +82,7 @@
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-hover">
+                    <table class="table table-hover ">
                         <thead>
                             <tr>
                                 <th>Picture</th>

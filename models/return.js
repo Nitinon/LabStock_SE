@@ -23,7 +23,6 @@ var ReturnShcema = new mongoose.Schema({
     limit: [],
     ID: [],
     qty: [],
-    approve: Boolean,
     date: Date
 })
 module.exports = mongoose.model("Return", ReturnShcema)
