@@ -23,9 +23,6 @@ div.pager span {
 div.pager span.active {
     background: #f79400;
 }
-
-
-
 html,body{
     height: 100%;
     font-family: 'Athiti', sans-serif;
@@ -87,7 +84,7 @@ h1{
 ul.nav.nav-tabs{
     height: 100%;
 }
-.alert-danger{
+.alert{
     font-size: 20px;
 }
 .footer {

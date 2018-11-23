@@ -9,8 +9,7 @@ var express = require("express"),
     nodemailer = require("nodemailer"), //mail
     User = require("./models/user")
 var middleware = require("./middleware");
-
-
+// search engine-----------------------------------------
 var path = require('path');
 var indexRoute = require("./routes/index"),
     cartRoute = require("./routes/cart"),

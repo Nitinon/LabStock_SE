@@ -9,7 +9,7 @@ router.get("/", function (req, res) {
     res.redirect("/p/1")
 })
 router.get('/p/:page', function (req, res, next) {
-    var perPage = 6
+    var perPage = 12
     var page = req.params.page || 1
     Item
         .find({})
@@ -33,6 +33,25 @@ router.get('/p/:page', function (req, res, next) {
             })
         })
 })
+router.post('/search', function (req, res, next) {
+    Item.find({},function(error,allItems){
+        var tempfound=[];    
+        allItems.forEach(function(item){
+            if(item.name.includes(req.body.search)){tempfound.push(item)}
+            })
+                if (error) console.log(error)
+                middleware.countQty(req, function (numcart) {
+                    res.render('searchPage', {
+                        message: req.flash('error'),
+                        items: tempfound,
+                        category: "all",
+                        numcart: numcart,
+                        found: true,
+                    })
+            })
+        })
+})
+
 router.get("/register", function (req, res) {
     res.render("register")
 })

@@ -13,9 +13,7 @@ router.getImages = function (callback, limit) {
 router.getImageById = function (id, callback) {
     Item.findById(id, callback);
 }
-
 var ddd = Date.now()
-// To get more info about 'multer'.. you can go through https://www.npmjs.com/package/multer..
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/')
@@ -170,10 +168,9 @@ router.post('/addItems', upload.any(), function (req, res) {
             res.redirect("/")
         }
     })
-
 });
 router.get("/:category/p/:page", function (req, res) {
-    var perPage = 6
+    var perPage = 12
     var page = req.params.page || 1
     Item
         .find({
