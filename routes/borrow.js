@@ -3,7 +3,7 @@ var router = express.Router();
 var Item = require("../models/item");
 var User = require("../models/user");
 var Borrow = require("../models/borrow");
-var History=require("../models/history");
+var History = require("../models/history");
 var middleware = require("../middleware");
 
 router.get("/borrow/pending/member", function (req, res) {
@@ -29,32 +29,117 @@ router.get("/borrow/pending", function (req, res) {
         match: {
             approve: "false"
         },
-        options:{sort:{date:-1}}
+        options: {
+            sort: {
+                date: -1
+            }
+        }
     }).exec(function (err, user) {
         middleware.countQty(req, function (numcart) {
             res.render("borrow/bPending", {
                 cart: user.cart,
                 numcart: numcart,
                 borrows: user.borrow,
-                status:"pending"
+                status: "pending"
             })
         })
     })
 })
+// ===================search===============================
+router.post("/borrow/pending", function (req, res) {
+    User.findById(req.user._id).populate({
+        path: 'borrow',
+        match: {
+            approve: "false"
+        },
+        options: {
+            sort: {
+                date: -1
+            }
+        }
+    }).exec(function (err, user) {
+        var borrowItem = [];
+        user.borrow.forEach(function (borrow) {
+            var dayy = borrow.date.toDateString()+" "+borrow.date.toLocaleTimeString();
+            if (dayy.includes(req.body.search)) {
+                borrowItem.push(borrow)
+            } else {
+                borrow.itemName.forEach(function (name) {
+                    if (name.includes(req.body.search)) {
+                        borrowItem.push(borrow)
+                        return false
+                    }
+                })
+            }
+        })
+
+        middleware.countQty(req, function (numcart) {
+            res.render("borrow/bPending", {
+                cart: user.cart,
+                numcart: numcart,
+                borrows: borrowItem,
+                status: "pending"
+            })
+        })
+    })
+})
+
 router.get("/borrow/borrowed", function (req, res) {
     User.findById(req.user._id).populate({
         path: 'history',
         match: {
             type: "borrow"
         },
-        options:{sort:{date:-1}}
+        options: {
+            sort: {
+                date: -1
+            }
+        }
     }).exec(function (err, user) {
         middleware.countQty(req, function (numcart) {
             res.render("borrow/bPending", {
                 cart: user.cart,
                 numcart: numcart,
                 borrows: user.history,
-                status:"borrowed"
+                status: "borrowed"
+
+            })
+        })
+    })
+})
+
+router.post("/borrow/borrowed", function (req, res) {
+    User.findById(req.user._id).populate({
+        path: 'history',
+        match: {
+            type: "borrow"
+        },
+        options: {
+            sort: {
+                date: -1
+            }
+        }
+    }).exec(function (err, user) {
+        var borrowItem = [];
+        user.history.forEach(function (borrow) {
+            var dayy = borrow.date.toDateString()+" "+borrow.date.toLocaleTimeString();
+            if (dayy.includes(req.body.search)) {
+                borrowItem.push(borrow)
+            } else {
+                borrow.itemName.forEach(function (name) {
+                    if (name.includes(req.body.search)) {
+                        borrowItem.push(borrow)
+                        return false
+                    }
+                })
+            }
+        })
+        middleware.countQty(req, function (numcart) {
+            res.render("borrow/bPending", {
+                cart: user.cart,
+                numcart: numcart,
+                borrows: borrowItem,
+                status: "borrowed"
 
             })
         })
@@ -67,8 +152,8 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
         if (!Array.isArray(req.body.item)) { //กรณีส่งมาตัวเดียวมันจะไม่เป็น array ก็จับมันยัดเข้า array ไป 
             req.body.item = [req.body.item]
         }
-        var now=new Date();
-        temp2.date=now;
+        var now = new Date();
+        temp2.date = now;
         // กรณีส่งมาหลายตัว
         console.log(req.body.item)
         req.body.item.forEach(function (item, i) {
@@ -129,10 +214,10 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
         borrow.ID = temp2.ID
         borrow.limit = temp2.limit
         borrow.qty = temp2.qty
-        borrow.date=temp2.date
+        borrow.date = temp2.date
         borrow.approve = true
-        borrow.lateStatus=false
-// ==================================================================================
+        borrow.lateStatus = false
+        // ==================================================================================
         borrow.itemID.forEach(function (itemID, i) {
             if (borrow.ID[i] == "") { //it's mean Non id
                 console.log(borrow.itemID[i] + "  " + borrow.qty[i])
@@ -157,38 +242,38 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
             }
         })
         borrow.save()
-        var approver={
-            id:req.user._id,
-            name:req.user.name,
-            surname:req.user.surname
+        var approver = {
+            id: req.user._id,
+            name: req.user.name,
+            surname: req.user.surname
         }
-        var historyB={
-            author:borrow.author,
-            approver:approver,
-            type:"borrow",
-            itemID:temp2.itemID,
-            itemName:temp2.itemName,
-            pic:temp2.pic,
-            ID:temp2.ID,
-            qty:temp2.qty,
-            date:temp2.date
+        var historyB = {
+            author: borrow.author,
+            approver: approver,
+            type: "borrow",
+            itemID: temp2.itemID,
+            itemName: temp2.itemName,
+            pic: temp2.pic,
+            ID: temp2.ID,
+            qty: temp2.qty,
+            date: temp2.date
         }
         console.log(historyB)
-        History.create(historyB,function(err,history){
+        History.create(historyB, function (err, history) {
             console.log("====================Hisssssssssss========================")
-            if(err) console.log(err)
-            else{
-            User.findById(history.author.id,function(err,user){
-            console.log(user)
-                if(err)console.log(err)
-                else{
-                    user.history.push(history)
-                    user.save()
-                }
-            })
-        }
+            if (err) console.log(err)
+            else {
+                User.findById(history.author.id, function (err, user) {
+                    console.log(user)
+                    if (err) console.log(err)
+                    else {
+                        user.history.push(history)
+                        user.save()
+                    }
+                })
+            }
         })
-// ==================================================================================
+        // ==================================================================================
         res.redirect("/borrow/pending/member")
     })
 })

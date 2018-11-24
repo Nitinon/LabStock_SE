@@ -21,6 +21,16 @@
             <%include ../partials/navbar%>
             <div class="container">
                     <ul class="nav nav-tabs">
+                            <form class="navbar-form navbar-right" action="/return/<%=status%>" method="POST" style="margin-right:1%;">
+                                <div class="input-group">
+                                    <input name="search" type="text" class="form-control" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button class="btn " type="submit">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         <li ><a href="/return" id="request_tab">Return request</a></li>
                         <li ><a href="/return/pending" id="pending_tab">Return pending</a></li>
                         <li ><a href="/return/returned" id="returned_tab">Returned</a></li>

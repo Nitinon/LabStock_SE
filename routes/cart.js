@@ -152,7 +152,8 @@ router.get("/checkout",middleware.isLoggedIn,function (req, res) {
         var author = {
             id: req.user._id,
             name: req.user.name,
-            surname: req.user.surname
+            surname: req.user.surname,
+            stdID:req.user.studentID
         };
         var now=new Date();
         var newOrder = new Borrow({

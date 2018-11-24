@@ -38,11 +38,12 @@
                 <table class="table table-hover paginated table-striped">
                     <thead>
                         <tr>
-                            <th>Return ID</th>
-                            <th>Type</th>
-                            <th>Author</th>
-                            <th>Approver</th>
-                            <th>Date</th>
+                            <th class="col-md-3">Return ID</th>
+                            <th class="col-md-1">Type</th>
+                            <th class="col-md-2">Author</th>
+                            <th class="col-md-2">Author studentID</th>
+                            <th class="col-md-2">Approver</th>
+                            <th class="col-md-1">Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,6 +59,7 @@
                             <td>
                                 <%=history.author.name%> <%=history.author.surname%>
                             </td>
+                            <td><%=history.author.stdID%></td>
                             <td><%=history.approver.name%> <%=history.approver.surname%></td>
                             <td>
                                 <a class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal<%=history._id%>">detail</a>

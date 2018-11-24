@@ -41,7 +41,11 @@ router.post("/history/notReturn", middleware.isLoggedIn, function (req, res) {
             var borrowItem = [];
             borrowNot.forEach(function (borrow) {
                 var name = borrow.author.name + " " + borrow.author.surname;
-                if (name.includes(req.body.search)) {
+                var dayy = borrow.date.toDateString() + " " + borrow.date.toLocaleTimeString();
+                if (dayy.includes(req.body.search)) {
+                    borrowItem.push(borrow)
+                } else
+                if (name.includes(req.body.search) || borrow.author.stdID.includes(req.body.search)) {
                     borrowItem.push(borrow)
                 } else {
                     borrow.itemName.forEach(function (name) {
@@ -94,6 +98,10 @@ router.post("/history", middleware.isLoggedIn, function (req, res) {
     }).exec(function (err, user) {
         var borrowItem = [];
         user.history.forEach(function (borrow) {
+            var dayy = borrow.date.toDateString() + " " + borrow.date.toLocaleTimeString();
+            if (dayy.includes(req.body.search)) {
+                borrowItem.push(borrow)
+            } else
             if (borrow.type.includes(req.body.search)) {
                 borrowItem.push(borrow)
             } else {
@@ -143,10 +151,11 @@ router.post("/history/all", function (req, res) {
             // searching algorithm
             history.forEach(function (borrow) {
                 var name = borrow.author.name + " " + borrow.author.surname;
-                if (name.includes(req.body.search)) {
-                    historyItem.push(borrow)
+                var dayy = borrow.date.toDateString() + " " + borrow.date.toLocaleTimeString();
+                if (dayy.includes(req.body.search)) {
+                    borrowItem.push(borrow)
                 } else
-                if (borrow.type.includes(req.body.search)) {
+                if (name.includes(req.body.search) || borrow.author.stdID.includes(req.body.search) || borrow.type.includes(req.body.search)) {
                     historyItem.push(borrow)
                 } else {
                     borrow.itemName.forEach(function (name) {

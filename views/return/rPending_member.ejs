@@ -18,6 +18,16 @@
             <%include ../partials/navbar%>
             <div class="container">
                 <ul class="nav nav-tabs">
+                        <form class="navbar-form navbar-right" action="/return" method="POST" style="margin-right:1%;">
+                            <div class="input-group">
+                                <input name="search" type="text" class="form-control" placeholder="Search">
+                                <div class="input-group-btn">
+                                    <button class="btn " type="submit">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     <li ><a href="/borrow/pending/member">Borrow pending</a></li>
                     <li class="active"><a href="/return/pending/member">Return pending</a></li>
                 </ul>

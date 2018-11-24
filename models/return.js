@@ -7,7 +7,8 @@ var ReturnShcema = new mongoose.Schema({
             ref: "User"
         },
         name: String,
-        surname: String
+        surname: String,
+        stdID:String
     },
     borrowID:{
         type: mongoose.Schema.ObjectId,
