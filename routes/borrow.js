@@ -230,16 +230,25 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
                         if (err) {
                             console.log(err)
                         }
+                        if(item.qty>0&&item.qty-borrow.qty[i]>=0){
                         item.qty -= borrow.qty[i];
                         item.save();
+                        }else{
+                            console.log("============================================")
+                            req.flash("error","some item error")
+                        }
                     })
                 } else {
                     Item.findById(borrow.itemID[i], function (err, item) {
                         borrow.ID[i].forEach(function (ID) {
+                            if(item.itemID.indexOf(ID)!=-1){
                             console.log("ID: " + ID)
                             console.log("itemID " + borrow.itemID[i])
                             item.itemID.splice(item.itemID.indexOf(ID), 1)
                             item.qty--;
+                            }else{
+                                req.flash("error","some item error")
+                            }
                         })
                         item.save();
                     })

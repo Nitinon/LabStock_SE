@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "alert-node": "^1.2.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "connect": "^3.6.6",
