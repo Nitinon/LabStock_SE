@@ -56,8 +56,12 @@ router.get("/register", function (req, res) {
     res.render("register")
 })
 router.post("/register", function (req, res) {
+    var role=""
+    if(req.body.role==undefined)role="borrower"
+    else role=req.body.role
+
     var user = new User({
-        role: "borrower",
+        role: role,
         username: req.body.username,
         studentID: req.body.studentID,
         name: req.body.name,

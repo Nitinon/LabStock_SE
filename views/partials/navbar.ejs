@@ -9,7 +9,7 @@
             <a class="navbar-brand" href="/">LabStock</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
-            <%if(currentUser){%>
+            <%if(currentUser&&currentUser.role!="admin"){%>
             <ul class="nav navbar-nav navbar-left">
                 <%if(currentUser.role=="member"){%>
                 <li class="dropdown">
@@ -45,14 +45,33 @@
                 <li><a href="/return">Return<span class="glyphicon glyphicon-repeat"></span></a></li>
             </ul>
 
+            <%}else if(currentUser&&currentUser.role=="admin"){%>
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="/register">Register member<span class="glyphicon glyphicon-book"></span></a></li>
+                <li><a href="/history/all">All history</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">items
+                        <span class="glyphicon glyphicon-list-alt"></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/addItems">Add</a></li>
+                        <li><a href="/editItems">Edit</a></li>
+                    </ul>
+                </li>
+                <li><a href="/studentInfo">Student info<span class="glyphicon glyphicon-info-sign"></span></a></li>
+            </ul>
+
             <%}%>
+
+
             <ul class="nav navbar-nav navbar-right">
                 <%if(!currentUser){%>
                 <li><a href="#home" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span>Login</a></li>
                 <li><a href="/register"><span class="glyphicon glyphicon-edit"></span>Register</a></li>
-                <%}else{%>
+                <%}else if(currentUser){%>
+                <%if(currentUser.role!="admin"){%>
                 <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="badge badge-warning">
                             <%=numcart%></span></a></li>
+                <%}%>
                 <li><a href="/editInfo/<%=currentUser._id%>">
                         <%=currentUser.username%></a></li>
                 <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>

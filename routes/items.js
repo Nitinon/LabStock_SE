@@ -78,6 +78,8 @@ router.put("/editItems/:item_id", function (req, res) {
     Item.findByIdAndUpdate(req.params.item_id, req.body.item, function (err) {
         if (err) {
             console.log(err)
+            req.flash("error","Duplicated Name Item")
+            res.redirect("/p/1")
         } else {
             req.flash("success", "updated")
             res.redirect("/p/1");
@@ -163,9 +165,11 @@ router.post('/addItems', upload.any(), function (req, res) {
     Item.create(newItem, function (err) {
         if (err) {
             console.log(err)
+            req.flash("error","Duplicated Name Item")
+            res.redirect("/p/1")
         } else {
-            console.log("success")
-            res.redirect("/")
+            req.flash("success","Add item complete")
+            res.redirect("/p/1")
         }
     })
 });

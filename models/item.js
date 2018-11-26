@@ -1,7 +1,11 @@
 var mongoose = require("mongoose")
+var uniqueValidator = require("mongoose-unique-validator")
 
 var ItemShcema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        unique: true
+    },
     category: String,
     type: String,
     itemID: [],

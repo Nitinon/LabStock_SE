@@ -9,7 +9,6 @@ var HistorySchema = new mongoose.Schema({
         name: String,
         surname: String,
         stdID:String
-
     },
     approver: {
         id: {

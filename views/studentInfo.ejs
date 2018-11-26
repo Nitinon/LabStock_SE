@@ -36,6 +36,7 @@
                     </thead>
                     <tbody>
                         <%studentInfo.forEach(function(student){%>
+                            <%if(student.role!="admin"){%>
                         <tr>
                             <td class="col-md-1">
                                 <%=student.studentID%>
@@ -60,6 +61,7 @@
                                 <a class="btn btn-success btn-md" data-toggle="modal" href="/editInfo/<%=student._id%>">Edit</a>
                             </td>
                         </tr>
+                        <%}%>
                         <%})%>
                     </tbody>
             </div>

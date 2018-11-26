@@ -1,6 +1,11 @@
 <% include ./partials/header%>
     <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
     <link rel="stylesheet" type="text/css" href="/stylesheet/tump-btn.css">
+    <style type="text/css">
+        body {
+            overflow-y:hidden;
+        }
+        </style>
     </head>
 
     <body>
@@ -28,12 +33,10 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="Name">Username</label>
                                         <div class="col-md-5">
-                                            <input id="Name" name="username" type="text" placeholder="username" class="form-control input-md" value="<%=user.username%>"
-                                                disabled>
+                                            <input id="Name" name="user[username]" type="text" placeholder="username" class="form-control input-md" value="<%=user.username%>"
+                                                >
                                         </div>
                                     </div>
-
-
 
                                     <!-- ST-ID input-->
                                     <div class="form-group">

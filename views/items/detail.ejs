@@ -11,20 +11,11 @@
             margin-left: 25%;
             background-color: rgb(236, 236, 236);
         }
+        .registerform p{
+            font-size: 26px;
+        }
     </style>
-<script>
-    $(document).ready(function () {
-            document.getElementById("<%=item.category%>").selected = "true";
 
-        })
-    </script>
-<%if(item.qty==0){%>
-<script>
-    $(document).ready(function () {
-                document.getElementById("DelBT").disabled = "true";
-            })  
-        </script>
-<%}%>
 </head>
 
 <body>

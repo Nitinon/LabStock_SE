@@ -48,6 +48,9 @@
                         <tr>
                             <th class="col-md-3">Date</th>
                             <th class="col-md-3">Author</th>
+                            <%if(status=="request"){%>
+                            <th class="col-md-3">Status</th>
+                            <%}%>
                             <th class="col-md-3">Detial</th>
                         </tr>
                     </thead>
@@ -59,6 +62,13 @@
                         <tr>
                             <td><%=returnn.date.toDateString()%> <%=returnn.date.toLocaleTimeString()%></td>
                             <td><%=returnn.author.name%></td>
+                            <%if(status=="request"){%>
+                                <%var lated%>
+                                <%if(returnn.lateStatus){%>
+                                    <%lated="Lated"%>
+                                <%}else{ lated="Not Late"}%>
+                                <th class="col-md-3"><%=lated%></th>
+                            <%}%>
                             <td>
                                 <%=returnn.repatriate%>
                                 <a class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal2<%=returnn._id%>">detail</a>
@@ -100,6 +110,10 @@
                             <tr>
                                 <th>Picture</th>
                                 <th>Items Name</th>
+                                <%if(status=="request"){%>
+                                
+                                    <th>Dead Line</th>
+                                <%}%>
                                 <th>Quantity</th>
                                 <th>ID</th>
                             </tr>
@@ -112,6 +126,11 @@
                                 <td>
                                     <%=returnn.itemName[item]%></strong></p>
                                 </td>
+                                <%if(status=="request"){%>
+                                    <%var temp =new Date(returnn.date)%>
+                                    <%temp.setDate(temp.getDate()+parseInt(returnn.limit[item]))%>
+                                    <td><%=temp.toDateString()%></td>
+                                <%}%>
                                 <td>
                                     <%if(returnn.ID[item]==""){%>
                                     <%=returnn.qty[item]%>

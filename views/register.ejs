@@ -2,6 +2,7 @@
 <link rel="stylesheet" type="text/css" href="/stylesheet/testall.css">
 <link rel="stylesheet" type="text/css" href="/stylesheet/tump-btn.css">
 <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+
 </head>
 
 <body>
@@ -122,7 +123,9 @@
                                         <textarea class="form-control" id="address" name="address"></textarea>
                                     </div>
                                 </div>
-
+                                <%if(currentUser&&currentUser.role=="admin"){%>
+                                <input name="role" value="member" hidden>
+                                <%}%>
                                 <!-- Button -->
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="submit"></label>

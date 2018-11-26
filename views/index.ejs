@@ -97,7 +97,9 @@
                                 <a class="btn btn-primary btn-md " data-toggle="modal" href="/editItems/<%=items[i]._id%>">Edit</a>
                                 <%}else{%>
                                 <%if(items[i].qty!=0){%>
+                                    <%if(currentUser&&currentUser.role!="admin"){%>
                                 <button class="btn btn-success btn-md " data-toggle="modal" data-target="#myModal2<%=items[i]._id%>">Add</button>
+                                <%}%>
                                 <!-- <button class="btn btn-success btn-md " data-toggle="modal" data-target="#myModal2">Add</button> -->
                                 <a href="/detail/<%=items[i]._id%>" class="btn btn-warning btn-md ">more
                                     detail</a>
