@@ -155,11 +155,13 @@
                             <%}%>
 
                         </tbody>
-                        <%if(status=="request"){%>
-                        <input type="submit">
-                        <input type="checkbox" class="align-right" onClick="toggle(this)" />Approve All<br />
-                        <%}%>
                     </table>
+                    <%if(status=="request"){%>
+                    <input type="submit" class="btn btn-success">
+                     <div class="pull-right">
+                        <input type="checkbox"  class="styled" onClick="toggle(this)" />Approve All<br />
+                     </div> 
+                    <%}%>
                     </form>
                 </div>
             </div>
