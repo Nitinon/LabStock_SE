@@ -8,7 +8,8 @@ var BorrowShcema = new mongoose.Schema({
         },
         name: String,
         surname: String,
-        stdID:String
+        stdID:String,
+        email:String
     },
     itemID: [{
         type: mongoose.Schema.Types.ObjectId,

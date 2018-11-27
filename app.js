@@ -6,7 +6,7 @@ var express = require("express"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
-    nodemailer = require("nodemailer"), //mail
+    // nodemailer = require("nodemailer"), //mail
     User = require("./models/user")
 var middleware = require("./middleware");
 // search engine-----------------------------------------
@@ -31,8 +31,8 @@ var indexRoute = require("./routes/index"),
 app.use(express.static(__dirname + "/public"))
 app.use(express.static(__dirname + "/uploads"));
 
-// mongoose.connect("mongodb://localhost/Lab_stock")
-mongoose.connect("mongodb://Nitinon556:Nitinon.556@ds261440.mlab.com:61440/labstock")
+mongoose.connect("mongodb://localhost/Lab_stock")
+// mongoose.connect("mongodb://Nitinon556:Nitinon.556@ds261440.mlab.com:61440/labstock")
 
 
 app.use(bodyParser.urlencoded({
@@ -41,6 +41,7 @@ app.use(bodyParser.urlencoded({
 app.set("view engine", "ejs")
 app.use(methodOverride("_method"))
 app.use(flash())
+
 
 app.use(require("express-session")({
     secret: "Secret",

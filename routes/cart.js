@@ -158,7 +158,8 @@ router.get("/checkout", middleware.isLoggedIn, function (req, res) {
             id: req.user._id,
             name: req.user.name,
             surname: req.user.surname,
-            stdID: req.user.studentID
+            stdID: req.user.studentID,
+            email:req.user.email
         };
         var now = new Date();
         var newOrder = new Borrow({

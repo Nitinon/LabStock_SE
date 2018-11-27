@@ -4,7 +4,74 @@ var Item = require("../models/item");
 var User = require("../models/user");
 var Borrow = require("../models/borrow");
 var History = require("../models/history");
+var System = require("../models/system");
+var nodemailer = require("nodemailer"); //mail
+
+
 var middleware = require("../middleware");
+
+var smtpTransport = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    auth: {
+        user: "LabStock.KMITL@gmail.com",
+        pass: "Nitinon.556"
+    }
+});
+router.get("/borrow/pending/member/:borrow_id/:history_id", function (req, res) {
+    console.log(req.params.history_id)
+    System.findOne({}, function (err, sys) {
+        console.log(sys)
+        if (sys.statusError == true) {
+            Borrow.findByIdAndDelete(req.params.borrow_id, function (err, borrow) {
+                var mailOptions = {
+                    to: borrow.author.email,
+                    subject: "Reject you borrow order.",
+                    text: "ปฏิเสธรายการยืมอุปกรณ์ของคุณเนื่องจาก มีอุปกรณ์บางชิ้นไม่ครบ"
+                }
+                smtpTransport.sendMail(mailOptions, function (error, response) {
+                    if (error) {
+                        console.log(error);
+                        res.end("error");
+                    } else {
+                        console.log("Message sent: " + response.message);
+                        res.end("sent");
+                    }
+                });
+            })
+            History.findByIdAndDelete(req.params.history_id, function () {})
+
+        } else {
+            Borrow.findById(req.params.borrow_id, function (err, borrow) {
+                if (err) console.log(err)
+                else {
+                    var txt = ""
+                    borrow.itemName.forEach(function (name) {
+                        txt += name + " ,"
+                    })
+                    console.log("txt: " + txt)
+                    var mailOptions = {
+                        to: borrow.author.email,
+                        subject: "Approve your order complete.",
+                        text: "อนุมัติการยืมอุปกรณ์เรียบร้อย : " + txt
+                    }
+                    smtpTransport.sendMail(mailOptions, function (error, response) {
+                        if (error) {
+                            console.log(error);
+                            res.end("error");
+                        } else {
+                            console.log("Message sent: " + response.message);
+                            res.end("sent");
+                        }
+                    });
+                }
+            })
+        }
+        sys.statusError = false
+        sys.save()
+    })
+    res.redirect("/borrow/pending/member")
+})
 
 router.get("/borrow/pending/member", function (req, res) {
     // User.findById(req.user._id).populate("borrow").exec(function (err, user) {
@@ -146,8 +213,9 @@ router.post("/borrow/borrowed", function (req, res) {
     })
 })
 router.post("/borrow/confirm/:borrow_id", function (req, res) {
+
     if (req.body.item == undefined) {
-        req.flash("error","Please select item to approve")
+        req.flash("error", "Please select item to approve")
         res.redirect("/borrow/pending/member")
     } else {
         Borrow.findById(req.params.borrow_id, function (err, borrow) {
@@ -165,7 +233,7 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
                     var indexItem = item.substring(0, 1)
                     // console.log(indexItem + " " + borrow.itemID[indexItem] + " " + borrow.itemName[indexItem])
                     var indexID = item.substring(1, )
-                    console.log("ItemID: " + borrow.ID[indexItem][indexID])
+                    // console.log("ItemID: " + borrow.ID[indexItem][indexID])
 
                     var fItem = String(borrow.itemID[indexItem]);
                     var indexItem_temp = temp.itemID.indexOf(fItem);
@@ -222,39 +290,47 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
             borrow.approve = true
             borrow.lateStatus = false
             // ==================================================================================
-            borrow.itemID.forEach(function (itemID, i) {
-                if (borrow.ID[i] == "") { //it's mean Non id
-                    console.log(borrow.itemID[i] + "  " + borrow.qty[i])
+            temp2.itemID.forEach(function (itemID, i) {
+                if (temp2.ID[i] == "") { //it's mean Non id
                     // ค่า i
-                    Item.findById(borrow.itemID[i], function (err, item) {
+                    Item.findById(temp2.itemID[i], function (err, item) {
                         if (err) {
                             console.log(err)
                         }
-                        if(item.qty>0&&item.qty-borrow.qty[i]>=0){
-                        item.qty -= borrow.qty[i];
-                        item.save();
-                        }else{
-                            console.log("============================================")
-                            req.flash("error","some item error")
+                        if (item.qty > 0 && item.qty - temp2.qty[i] >= 0) {
+                            item.qty -= temp2.qty[i];
+                            item.save();
+                        } else {
+                            System.findOne({}, function (err, sys) {
+                                console.log("============================================")
+                                sys.statusError = true;
+                                console.log(sys)
+                                sys.save()
+                            })
                         }
                     })
                 } else {
-                    Item.findById(borrow.itemID[i], function (err, item) {
-                        borrow.ID[i].forEach(function (ID) {
-                            if(item.itemID.indexOf(ID)!=-1){
-                            console.log("ID: " + ID)
-                            console.log("itemID " + borrow.itemID[i])
-                            item.itemID.splice(item.itemID.indexOf(ID), 1)
-                            item.qty--;
-                            }else{
-                                req.flash("error","some item error")
+                    Item.findById(temp2.itemID[i], function (err, item) {
+                        temp2.ID[i].forEach(function (ID) {
+                            if (item.itemID.indexOf(ID) != -1) {
+                                // console.log("ID: " + ID)
+                                // console.log("itemID " + temp2.itemID[i])
+                                item.itemID.splice(item.itemID.indexOf(ID), 1)
+                                item.qty--;
+                            } else {
+                                req.flash("error", "some item error")
+                                System.findOne({}, function (err, sys) {
+                                    console.log("============================================")
+                                    sys.statusError = true;
+                                    console.log(sys)
+                                    sys.save()
+                                })
                             }
                         })
                         item.save();
                     })
                 }
             })
-            borrow.save()
             var approver = {
                 id: req.user._id,
                 name: req.user.name,
@@ -271,13 +347,12 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
                 qty: temp2.qty,
                 date: temp2.date
             }
-            console.log(historyB)
             History.create(historyB, function (err, history) {
                 console.log("====================Hisssssssssss========================")
                 if (err) console.log(err)
                 else {
                     User.findById(history.author.id, function (err, user) {
-                        console.log(user)
+                        // console.log(user)
                         if (err) console.log(err)
                         else {
                             user.history.push(history)
@@ -285,10 +360,15 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
                         }
                     })
                 }
+                res.redirect("/borrow/pending/member/" + borrow._id + "/" + history._id)
+
             })
             // ==================================================================================
-            res.redirect("/borrow/pending/member")
+            borrow.save()
+
         })
+
+
     }
 })
 router.get("/borrow/del/:borrow_id", function (req, res) {
