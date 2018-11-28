@@ -374,6 +374,24 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
 router.get("/borrow/del/:borrow_id", function (req, res) {
     Borrow.findByIdAndRemove(req.params.borrow_id, function (err, borrow) {
         User.findById(req.user._id, function (err, user) {
+            var txt = ""
+            borrow.itemName.forEach(function (name) {
+                txt += name + " ,"
+            })
+            var mailOptions = {
+                to: user.email,
+                subject: "Reject you borrow order.",
+                text: "รายการการยืมอุปกรณ์ "+txt+" ของคุณถูกปฏิเสธจากสมาชิก"
+            }
+            smtpTransport.sendMail(mailOptions, function (error, response) {
+                if (error) {
+                    console.log(error);
+                    res.end("error");
+                } else {
+                    console.log("Message sent: " + response.message);
+                    res.end("sent");
+                }
+            });
             user.borrow.splice(user.borrow.indexOf(borrow._id), 1);
             user.save();
         })

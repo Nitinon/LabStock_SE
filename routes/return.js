@@ -6,6 +6,19 @@ var Borrow = require("../models/borrow");
 var Return = require("../models/return");
 var History = require("../models/history")
 var middleware = require("../middleware");
+var nodemailer = require("nodemailer"); //mail
+
+
+var middleware = require("../middleware");
+
+var smtpTransport = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    auth: {
+        user: "LabStock.KMITL@gmail.com",
+        pass: "Nitinon.556"
+    }
+});
 
 router.post("/returnn/confirm/:id_return", function (req, res) {
     Return.findById(req.params.id_return, function (err, returnn) {
@@ -140,6 +153,24 @@ router.post("/returnn/confirm/:id_return", function (req, res) {
                     else {
                         user.history.push(history)
                         user.save()
+                        var txt = ""
+                        history.itemName.forEach(function (name) {
+                            txt += name + " ,"
+                        })
+                        var mailOptions = {
+                            to: user.email,
+                            subject: "Approve your return order complete.",
+                            text: "อนุมัติการคืนอุปกรณ์เรียบร้อย: " + txt
+                        }
+                        smtpTransport.sendMail(mailOptions, function (error, response) {
+                            if (error) {
+                                console.log(error);
+                                res.end("error");
+                            } else {
+                                console.log("Message sent: " + response.message);
+                                res.end("sent");
+                            }
+                        });
                     }
                 })
             }

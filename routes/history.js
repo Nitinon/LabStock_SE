@@ -5,6 +5,18 @@ var User = require("../models/user");
 var Borrow = require("../models/borrow");
 var History = require("../models/history");
 var middleware = require("../middleware");
+var middleware = require("../middleware");
+var nodemailer = require("nodemailer"); //mail
+
+
+var smtpTransport = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    auth: {
+        user: "LabStock.KMITL@gmail.com",
+        pass: "Nitinon.556"
+    }
+});
 router.get("/history/notReturn", middleware.isLoggedIn, function (req, res) {
     User.findById(req.user._id, function (err, user) {
         Borrow.find({
@@ -18,7 +30,23 @@ router.get("/history/notReturn", middleware.isLoggedIn, function (req, res) {
                         tempDate.setDate(tempDate.getDate() + parseInt(limit))
                         console.log(DateNow.toDateString() + " " + tempDate.toDateString())
                         console.log(DateNow > tempDate)
-                        if (DateNow > tempDate) borrow.lateStatus = true;
+                        if (DateNow > tempDate) {
+                            borrow.lateStatus = true;
+                            var mailOptions = {
+                                to: borrow.author.email,
+                                subject: "Some order lated",
+                                text: "มีรายการยืมอุปกรณ์ของคุณเลยกำหนดโปรดนำมาคืนโดนด่วน"
+                            }
+                            smtpTransport.sendMail(mailOptions, function (error, response) {
+                                if (error) {
+                                    console.log(error);
+                                    res.end("error");
+                                } else {
+                                    console.log("Message sent: " + response.message);
+                                    res.end("sent");
+                                }
+                            });
+                        }
                     })
                     borrow.save()
                 })
