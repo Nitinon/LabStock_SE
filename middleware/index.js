@@ -13,7 +13,7 @@ middlewareObj.isLoggedIn = function (req, res, next) {
     res.redirect("/p/1");
 }
 middlewareObj.isMember = function (req, res, next) {
-    if (req.isAuthenticated() && req.user.role == "member") {
+    if (req.isAuthenticated() && (req.user.role == "member"||req.user.role == "admin")) {
         return next();
     }
     req.flash("error", "You Don't have permission to access");

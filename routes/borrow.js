@@ -18,7 +18,7 @@ var smtpTransport = nodemailer.createTransport({
         pass: "Nitinon.556"
     }
 });
-router.get("/borrow/pending/member/:borrow_id/:history_id", function (req, res) {
+router.get("/borrow/pending/member/:borrow_id/:history_id",middleware.isLoggedIn,function (req, res) {
     console.log(req.params.history_id)
     System.findOne({}, function (err, sys) {
         console.log(sys)
@@ -73,7 +73,7 @@ router.get("/borrow/pending/member/:borrow_id/:history_id", function (req, res) 
     res.redirect("/borrow/pending/member")
 })
 
-router.get("/borrow/pending/member", function (req, res) {
+router.get("/borrow/pending/member",middleware.isLoggedIn,function (req, res) {
     // User.findById(req.user._id).populate("borrow").exec(function (err, user) {
     User.findById(req.user._id, function (err, user) {
         Borrow.find({
@@ -90,7 +90,7 @@ router.get("/borrow/pending/member", function (req, res) {
         })
     })
 })
-router.get("/borrow/pending", function (req, res) {
+router.get("/borrow/pending",middleware.isLoggedIn,function (req, res) {
     User.findById(req.user._id).populate({
         path: 'borrow',
         match: {
@@ -113,7 +113,7 @@ router.get("/borrow/pending", function (req, res) {
     })
 })
 // ===================search===============================
-router.post("/borrow/pending", function (req, res) {
+router.post("/borrow/pending",middleware.isLoggedIn,function (req, res) {
     User.findById(req.user._id).populate({
         path: 'borrow',
         match: {
@@ -151,7 +151,7 @@ router.post("/borrow/pending", function (req, res) {
     })
 })
 
-router.get("/borrow/borrowed", function (req, res) {
+router.get("/borrow/borrowed",middleware.isLoggedIn, function (req, res) {
     User.findById(req.user._id).populate({
         path: 'history',
         match: {
@@ -371,7 +371,7 @@ router.post("/borrow/confirm/:borrow_id", function (req, res) {
 
     }
 })
-router.get("/borrow/del/:borrow_id", function (req, res) {
+router.get("/borrow/del/:borrow_id",middleware.isLoggedIn,function (req, res) {
     Borrow.findByIdAndRemove(req.params.borrow_id, function (err, borrow) {
         User.findById(req.user._id, function (err, user) {
             var txt = ""
@@ -381,7 +381,7 @@ router.get("/borrow/del/:borrow_id", function (req, res) {
             var mailOptions = {
                 to: user.email,
                 subject: "Reject you borrow order.",
-                text: "รายการการยืมอุปกรณ์ "+txt+" ของคุณถูกปฏิเสธจากสมาชิก"
+                text: "รายการการยืมอุปกรณ์ "+txt+" ของคุณถูกปฏิเสธจากสมาชิก "+req.user.name+" "+req.user.surname
             }
             smtpTransport.sendMail(mailOptions, function (error, response) {
                 if (error) {

@@ -59,7 +59,7 @@ router.get("/editItems/success", function (req, res) {
     req.session.edit = null
     res.redirect("/")
 })
-router.get("/editItems/:item_id", function (req, res) {
+router.get("/editItems/:item_id",middleware.isMember, function (req, res) {
     // router.get("/editItems/:item_id",middleware.canEdit, function (req, res) {
     Item.findById(req.params.item_id, function (err, item) {
         if (err) {

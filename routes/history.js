@@ -35,7 +35,7 @@ router.get("/history/notReturn", middleware.isLoggedIn, function (req, res) {
                             var mailOptions = {
                                 to: borrow.author.email,
                                 subject: "Some order lated",
-                                text: "มีรายการยืมอุปกรณ์ของคุณเลยกำหนดโปรดนำมาคืนโดนด่วน"
+                                text: "มีรายการยืมอุปกรณ์ของคุณเลยกำหนดโปรดนำมาคืนโดยด่วน"
                             }
                             smtpTransport.sendMail(mailOptions, function (error, response) {
                                 if (error) {
@@ -96,7 +96,7 @@ router.post("/history/notReturn", middleware.isLoggedIn, function (req, res) {
         })
     })
 })
-router.get("/history", function (req, res) {
+router.get("/history",middleware.isLoggedIn,function (req, res) {
     User.findById(req.user._id).populate({
         path: 'history',
         options: {
@@ -151,7 +151,7 @@ router.post("/history", middleware.isLoggedIn, function (req, res) {
         })
     })
 })
-router.get("/history/all", function (req, res) {
+router.get("/history/all",middleware.isLoggedIn,middleware.isLoggedIn,function (req, res) {
     User.findById(req.user._id, function (err, user) {
         History.find({}).sort({
             date: -1
@@ -170,7 +170,7 @@ router.get("/history/all", function (req, res) {
         })
     })
 })
-router.post("/history/all", function (req, res) {
+router.post("/history/all",middleware.isLoggedIn, function (req, res) {
     User.findById(req.user._id, function (err, user) {
         History.find({}).sort({
             date: -1

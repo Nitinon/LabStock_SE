@@ -40,7 +40,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="Name">Username</label>
                                     <div class="col-md-5">
-                                        <input id="Name" name="username" type="text" placeholder="username" class="form-control input-md"
+                                        <input id="Name" pattern="[a-zA-Z0-9-]+" max="20" name="username" type="text" placeholder="username" class="form-control input-md"
                                             required="">
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="emailId">Email</label>
                                     <div class="col-md-5">
-                                        <input id="emailId" name="email" type="text" placeholder="user@domain.com"
+                                        <input id="emailId" name="email" type="email" placeholder="user@domain.com"
                                             class="form-control input-md" required="">
                                     </div>
                                 </div>
