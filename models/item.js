@@ -12,15 +12,16 @@ var ItemShcema = new mongoose.Schema({
     qty: Number,
     limit: Number,
     detail: String,
+    originalname:String
     // for pic
-    path: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    originalname: {
-        type: String,
-        required: true
-    }
+    // path: {
+    //     type: String,
+    //     required: true,
+    //     trim: true
+    // },
+    // originalname: {
+    //     type: String,
+    //     required: true
+    // }
 })
 module.exports = mongoose.model("Item", ItemShcema)

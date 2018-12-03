@@ -4,8 +4,13 @@ var passport = require("passport");
 var User = require("../models/user");
 var Item = require("../models/item");
 var middleware = require("../middleware");
+var System = require("../models/system");
 
 router.get("/", function (req, res) {
+    // var system=new System({
+    //     statusError:false
+    // })
+    // System.create(system,function(err,sys){})
     res.redirect("/p/1")
 })
 router.get('/p/:page', function (req, res, next) {

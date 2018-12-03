@@ -141,13 +141,14 @@ router.get('/addItems', middleware.isMember, function (req, res, next) {
     })
 });
 
-router.post('/addItems', upload.any(), function (req, res) {
-    var path = req.files[0].path;
-    var imageName = req.files[0].filename;
-    var imagepath = {};
-    imagepath['path'] = path;
-    imagepath['originalname'] = imageName;
-
+// router.post('/addItems', upload.any(), function (req, res) {
+//     var path = req.files[0].path;
+//     var imageName = req.files[0].filename;
+//     var imagepath = {};
+//     imagepath['path'] = path;
+//     imagepath['originalname'] = imageName;
+router.post('/addItems',function (req, res) {
+    console.log(req.body)
     var newItem = new Item({
         name: req.body.name,
         category: req.body.category,
@@ -156,8 +157,7 @@ router.post('/addItems', upload.any(), function (req, res) {
         qty: req.body.qty,
         limit: req.body.limit,
         detail: req.body.detail,
-        path: path,
-        originalname: imageName,
+        originalname:req.body.imgName,
     })
     if (req.body.type == "ID") {
         newItem.qty = 1;
