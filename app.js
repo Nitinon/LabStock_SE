@@ -111,6 +111,4 @@ app.get("/studentInfo", function (req, res) {
         })
     })
 })
-app.listen("3000", function () {
-    console.log("connected")
-})
+app.listen(process.env.PORT || 5000)
